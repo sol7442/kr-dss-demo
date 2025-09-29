@@ -1,0 +1,34 @@
+@startuml
+title Intel Attestation Service(IAS) 기반 TDX Remote Attestation
+
+actor "Verifier\n(예: TD-B)" as Verifier
+participant "TD-A\n(Trust Domain VM)" as TDA
+participant "QE / QvM\n(Quoting Enclave)" as QE
+participant "IAS\n(Intel Attestation Service)" as IAS
+
+== Quote 생성 ==
+TDA -> TDA : REPORT_A 생성\n(MRTD, Attributes, Ephemeral Key_A)
+TDA -> QE : REPORT_A 전달
+QE -> QE : REPORT_A 서명
+QE --> TDA : Quote_A 생성 완료
+
+== Quote 제출 ==
+TDA --> Verifier : Quote_A 전달
+
+== Quote 검증 요청 ==
+Verifier -> IAS : Quote_A 검증 요청\n(via REST API/HTTPS)
+
+== IAS 검증 ==
+IAS -> IAS : 서명 검증 (EPID/DCAP)
+IAS -> IAS : TCB 상태 확인\n(CPU, BIOS, Microcode 버전)
+IAS -> IAS : 취약점(CVE) 및 Advisory 확인
+IAS --> Verifier : 검증 결과 반환\n(Status: OK / OutOfDate / Revoked)
+
+== 상호 신뢰 확립 ==
+Verifier -> Verifier : Quote_A 신뢰 여부 판단
+note right of Verifier
+검증 성공 시
+TD-A가 진짜 Intel TDX VM임을 신뢰
+end note
+
+@enduml

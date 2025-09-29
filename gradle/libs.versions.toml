@@ -22,6 +22,7 @@ eu-europa-ec-joinup-sd-dss-dss-server-signing-rest = "6.3"
 eu-europa-ec-joinup-sd-dss-dss-server-signing-rest-client = "6.3"
 eu-europa-ec-joinup-sd-dss-dss-server-signing-soap = "6.3"
 eu-europa-ec-joinup-sd-dss-dss-service = "6.3"
+eu-europa-ec-joinup-sd-dss-dss-enumerations = "6.3"
 eu-europa-ec-joinup-sd-dss-dss-signature-remote = "6.3"
 eu-europa-ec-joinup-sd-dss-dss-signature-rest = "6.3"
 eu-europa-ec-joinup-sd-dss-dss-signature-rest-client = "6.3"
@@ -88,6 +89,7 @@ eu-europa-ec-joinup-sd-dss-dss-server-signing-rest = { module = "eu.europa.ec.jo
 eu-europa-ec-joinup-sd-dss-dss-server-signing-rest-client = { module = "eu.europa.ec.joinup.sd-dss:dss-server-signing-rest-client", version.ref = "eu-europa-ec-joinup-sd-dss-dss-server-signing-rest-client" }
 eu-europa-ec-joinup-sd-dss-dss-server-signing-soap = { module = "eu.europa.ec.joinup.sd-dss:dss-server-signing-soap", version.ref = "eu-europa-ec-joinup-sd-dss-dss-server-signing-soap" }
 eu-europa-ec-joinup-sd-dss-dss-service = { module = "eu.europa.ec.joinup.sd-dss:dss-service", version.ref = "eu-europa-ec-joinup-sd-dss-dss-service" }
+eu-europa-ec-joinup-sd-dss-dss-enumerations = { module = "eu.europa.ec.joinup.sd-dss:dss-enumerations", version.ref = "eu-europa-ec-joinup-sd-dss-dss-enumerations" }
 eu-europa-ec-joinup-sd-dss-dss-signature-remote = { module = "eu.europa.ec.joinup.sd-dss:dss-signature-remote", version.ref = "eu-europa-ec-joinup-sd-dss-dss-signature-remote" }
 eu-europa-ec-joinup-sd-dss-dss-signature-rest = { module = "eu.europa.ec.joinup.sd-dss:dss-signature-rest", version.ref = "eu-europa-ec-joinup-sd-dss-dss-signature-rest" }
 eu-europa-ec-joinup-sd-dss-dss-signature-rest-client = { module = "eu.europa.ec.joinup.sd-dss:dss-signature-rest-client", version.ref = "eu-europa-ec-joinup-sd-dss-dss-signature-rest-client" }

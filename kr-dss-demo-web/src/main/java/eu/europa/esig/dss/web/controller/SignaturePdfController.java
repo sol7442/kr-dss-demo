@@ -37,6 +37,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.io.ByteArrayInputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 
@@ -136,8 +138,17 @@ public class SignaturePdfController extends AbstractSignatureController {
 			if (mimeType != null) {
 				response.setContentType(mimeType.getMimeTypeString());
 			}
-			response.setHeader("Content-Transfer-Encoding", "binary");
-			response.setHeader("Content-Disposition", "attachment; filename=\"" + signedDocument.getName() + "\"");
+//			response.setHeader("Content-Transfer-Encoding", "binary");
+//			response.setHeader("Content-Disposition", "attachment; filename=\"" + signedDocument.getName() + "\"");
+
+			// 파일명 처리
+			String fileName = signedDocument.getName();
+			String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString()).replace("+", "%20");
+
+			// Content-Disposition 헤더에 두 가지 방식 모두 지정
+			String contentDisposition = "attachment; filename=\"" + encodedFileName + "\"; filename*=UTF-8''" + encodedFileName;
+			response.setHeader("Content-Disposition", contentDisposition);
+
 			Utils.copy(new ByteArrayInputStream(signedDocument.getBytes()), response.getOutputStream());
 
 		} catch (Exception e) {
