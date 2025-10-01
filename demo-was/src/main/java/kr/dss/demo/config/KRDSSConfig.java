@@ -17,6 +17,7 @@ import eu.europa.esig.dss.spi.x509.aia.AIASource;
 import eu.europa.esig.dss.spi.x509.aia.DefaultAIASource;
 import eu.europa.esig.dss.spi.x509.revocation.crl.CRLSource;
 import eu.europa.esig.dss.spi.x509.revocation.ocsp.OCSPSource;
+import eu.europa.esig.dss.token.KeyStoreSignatureTokenConnection;
 import eu.europa.esig.dss.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
+import java.security.KeyStore;
 
 @Configuration
 public class KRDSSConfig {
@@ -152,8 +154,6 @@ public class KRDSSConfig {
             }
         }
 
-
-
         return trustedCertificateSource;
     }
 
@@ -209,4 +209,11 @@ public class KRDSSConfig {
 //        dataLoader.setProxyConfig(proxyConfig);
         return dataLoader;
     }
+
+    @Bean
+    public KeyStoreSignatureTokenConnection remoteToken() throws IOException {
+        return new KeyStoreSignatureTokenConnection(new ClassPathResource(userSourceFileName).getFile(), userSourceType,
+                new KeyStore.PasswordProtection(userSourcePassword.toCharArray()));
+    }
+
 }

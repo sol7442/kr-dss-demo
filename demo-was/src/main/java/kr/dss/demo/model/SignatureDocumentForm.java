@@ -2,13 +2,32 @@ package kr.dss.demo.model;
 
 import eu.europa.esig.dss.enumerations.ASiCContainerType;
 import eu.europa.esig.dss.enumerations.SignaturePackaging;
+import eu.europa.esig.dss.model.DSSDocument;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 public class SignatureDocumentForm extends AbstractSignatureForm implements ContainerDocumentForm {
 
-	//private MultipartFile documentToSign;
+	public MultipartFile getDocumentToSign() {
+		return documentToSign;
+	}
+
+	public void setDocumentToSign(MultipartFile documentToSign) {
+		this.documentToSign = documentToSign;
+	}
+
+	private MultipartFile documentToSign;
+
+	public DSSDocument getToSignDocument() {
+		return toSignDocument;
+	}
+
+	public void setToSignDocument(DSSDocument toSignDocument) {
+		this.toSignDocument = toSignDocument;
+	}
+
+	private DSSDocument toSignDocument;
 
 	private String fileName;
 	private String contentType;

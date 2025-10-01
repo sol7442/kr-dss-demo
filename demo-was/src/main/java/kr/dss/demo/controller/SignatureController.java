@@ -3,6 +3,7 @@ package kr.dss.demo.controller;
 import eu.europa.esig.dss.enumerations.MimeType;
 import eu.europa.esig.dss.model.DSSDocument;
 import eu.europa.esig.dss.model.InMemoryDocument;
+import eu.europa.esig.dss.spi.DSSUtils;
 import eu.europa.esig.dss.utils.Utils;
 import jakarta.validation.Valid;
 import kr.dss.demo.dto.SignDocumentRequest;
@@ -52,12 +53,12 @@ public class SignatureController extends AbstractSignatureController{
 
             SignatureDocumentForm form = SignatureFormMapper.toSignatureDocumentForm(signDocumentRequest);
 
-            form.setSignatureValue(signDocumentRequest.getSignatureValue());
 
-            InMemoryDocument document = signingService.signDocument(form);
+            DSSDocument document = signingService.signDocument(form);
+            String base64Document  = Base64.getEncoder().encodeToString(DSSUtils.toByteArray(document));
 
             signDocumentResponse.setFileName(document.getName());
-            signDocumentResponse.setDocumentBase64(document.getBase64Encoded());
+            signDocumentResponse.setDocumentBase64(base64Document);
 
             signDocumentResponse.setResult("SUCCESS");
             return signDocumentResponse;

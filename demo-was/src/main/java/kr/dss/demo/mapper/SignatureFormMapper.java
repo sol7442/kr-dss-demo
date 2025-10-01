@@ -49,6 +49,8 @@ public class SignatureFormMapper {
         form.setSignWithExpiredCertificate(request.isSignWithExpiredCertificate());
         form.setAddContentTimestamp(request.isAddContentTimestamp());
 
+        form.setSignatureValue(request.getSignatureValue());
+
         return form;
     }
 }
