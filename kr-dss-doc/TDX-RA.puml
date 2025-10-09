@@ -1,0 +1,46 @@
+@startuml
+title Intel TDX VM 간 Remote Attestation 기반 상호 검증
+
+actor "User / Service" as Client
+
+participant "TD-A\n(Trust Domain VM A)" as TDA
+participant "TD-B\n(Trust Domain VM B)" as TDB
+participant "IAS/DCAP\n(Attestation Service)" as IAS
+
+== Ephemeral Key 생성 ==
+TDA -> TDA : Ephemeral KeyPair_A 생성
+TDB -> TDB : Ephemeral KeyPair_B 생성
+
+== Quote 생성 ==
+TDA -> TDA : REPORT_A 생성 (MRTD, Attributes, Key_A)
+TDA -> TDA : Quote_A = Sign(REPORT_A)
+TDB -> TDB : REPORT_B 생성 (MRTD, Attributes, Key_B)
+TDB -> TDB : Quote_B = Sign(REPORT_B)
+
+== Quote 교환 ==
+TDA -> TDB : Quote_A 전달
+TDB -> IAS : Quote_A 검증 요청
+IAS --> TDB : 검증 결과(OK/Fail)
+
+TDB -> TDA : Quote_B 전달
+TDA -> IAS : Quote_B 검증 요청
+IAS --> TDA : 검증 결과(OK/Fail)
+
+== 상호 신뢰 확립 ==
+TDA -> TDA : Quote_B 확인 후 TD-B 신뢰
+TDB -> TDB : Quote_A 확인 후 TD-A 신뢰
+
+== 키 교환 ==
+TDA <-> TDB : Ephemeral Key_A, Key_B 사용하여 ECDH 수행
+note over TDA, TDB
+세션키(Session Key) 생성
+Quote에 바인딩된 키이므로
+MITM 공격 불가
+end note
+
+== 보안 채널 활성화 ==
+TDA <-> TDB : Secure Channel (TLS/DTLS/IPSec)
+Client -> TDA : 보안 통신 개시
+Client -> TDB : 보안 통신 개시
+
+@enduml

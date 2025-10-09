@@ -375,7 +375,7 @@ public class SigningService {
 			parameters.setCertificateChain(certificateChain);
 		}
 
-		fillTimestampParameters(parameters, form);
+		//fillTimestampParameters(parameters, form);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

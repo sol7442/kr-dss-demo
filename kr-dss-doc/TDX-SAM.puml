@@ -1,0 +1,41 @@
+@startuml
+title Intel TDX 기반 SSA + SAM 운영 아키텍처
+
+actor User as U
+rectangle "클라이언트 환경" {
+  component "SCA\n(Signature Creation App)" as SCA
+}
+
+node "원격 전자서명 서버 인프라" {
+  frame "TDX - 서버" {
+    component "SSA\n(Server Signing App - Trust Domain)" as SSA
+    component "SAM\n(Signature Activation Module-Trust Domain)" as SAM
+  }
+
+  cloud "Hypervisor / Host OS" as HV
+
+  node "보안 모듈" {
+    component "HSM\n(Cryptographic Module)" as HSM
+  }
+}
+
+
+
+U --> SCA : 문서 선택/서명 요청
+SCA --> SSA : Sign Request\n{문서해시, 인증데이터}
+SSA --> SAM : SAD 전달 및 검증 요청
+SAM --> HSM : 키 활성화 + 서명 요청 (Trusted Channel)
+HSM --> SAM : 서명값 반환
+SAM --> SSA : 서명 결과 전달
+SSA --> SCA : 최종 서명 결과 반환
+
+note right of SSA
+- SSA와 SAM은 Intel TDX 기반 VM 안에서 실행
+- VM 메모리/실행은 암호화되어
+  하이퍼바이저, 호스트 관리자 접근 불가
+- Remote Attestation 제공
+end note
+
+HV -[hidden]-> SSA
+
+@enduml

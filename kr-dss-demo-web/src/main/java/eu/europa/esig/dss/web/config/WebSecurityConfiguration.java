@@ -48,7 +48,7 @@ public class WebSecurityConfiguration {
 	
 	/** API urls (REST/SOAP webServices and server-sign) */
 	private static final String[] API_URLS = new String[] {
-			"/services/rest/**", "/services/soap/**", "/server-sign/**"
+			"/services/rest/**", "/services/soap/**", "/server-sign/**","/kr-dss/**"
 	};
 
 	@Bean
@@ -70,6 +70,7 @@ public class WebSecurityConfiguration {
 		http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests.anyRequest().permitAll());
 
 		// disable CSRF for API calls (REST/SOAP webServices)
+
 		http.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 				.ignoringRequestMatchers(getAntMatchers()));
 
