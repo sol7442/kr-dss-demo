@@ -1,7 +1,42 @@
-
-allprojects {
-    repositories {
-        mavenCentral()
-    }
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'idea'
 }
 
+group = 'kr.dss'
+version = '1.0.0'
+
+
+subprojects {
+    // 공통 플러그인 적용
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+
+    // Java 버전 설정 (프로젝트 통일)
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    // 인코딩 설정 (Eclipse 한글 깨짐 방지)
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+    }
+
+    // Eclipse Buildship 캐시 새로고침 방지 (catalog 관련)
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
+
+    // JUnit 5 (Spring Boot test 포함 시에도 자동 활성화)
+    tasks.withType(Test) {
+        useJUnitPlatform()
+    }
+
+    // 빌드 로깅 (Eclipse 동기화 확인용)
+    afterEvaluate {
+        logger.lifecycle("Configured subproject: ${project.name}")
+    }
+}
