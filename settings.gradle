@@ -14,6 +14,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "kr-dss-demo"
 include("demo-was")
+include("demo-cps")
 
 gradle.beforeProject { project ->
     project.logger.lifecycle("Configuring project: ${project.name}")

@@ -11,7 +11,6 @@ version = '1.0.0'
 subprojects {
     // 공통 플러그인 적용
     apply plugin: 'java'
-    apply plugin: 'eclipse'
     apply plugin: 'idea'
 
     // Java 버전 설정 (프로젝트 통일)
