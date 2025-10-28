@@ -2,6 +2,7 @@ package kr.dss.demo.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import eu.europa.esig.dss.enumerations.ValidationLevel;
 import kr.dss.demo.controller.SignatureController;
 import kr.dss.demo.dto.VerifySignedDocRequest;
 import kr.dss.demo.model.OriginalFile;
@@ -17,7 +18,7 @@ import java.util.List;
 
 
 public class ValidationFormMapper {
-    private static final Logger LOG = LoggerFactory.getLogger(SignatureController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ValidationFormMapper.class);
 
 
     //Detached, Enveloped ok
@@ -37,10 +38,9 @@ public class ValidationFormMapper {
         // 2. byte[] -> MultipartFile
         LOG.info("before byte[] to MultipartFile (original) ... ");
 
-        //2025.10.27_sujin : 파일명 수정 필요
         MultipartFile original = new MockMultipartFile(
                 "documentBase64",
-                "fileName",
+                "originalFile",
                 null,
                 documentBytes
         );
@@ -49,20 +49,23 @@ public class ValidationFormMapper {
         LOG.info("before byte[] to MultipartFile (signature) ... ");
         MultipartFile signatures = new MockMultipartFile(
                 "signatureBase64",
-                "fileName",
+                "signatureFile",
                 null,
                 signatureBytes
         );
 
-        LOG.info("before byte[] to MultipartFile (policy) ... ");
-        ObjectMapper objectMapper = new ObjectMapper();
-        byte[] jsonBytes = objectMapper.writeValueAsBytes(policyProperties);
-        MultipartFile policies = new MockMultipartFile(
-                "policy",
-                "fileName",
-                MediaType.APPLICATION_JSON_VALUE,
-                jsonBytes
-        );
+        MultipartFile policies = null;
+        if (policyProperties.getPolicyFile()!=null) {
+            LOG.info("before byte[] to MultipartFile (policy) ... ");
+            ObjectMapper objectMapper = new ObjectMapper();
+            byte[] jsonBytes = objectMapper.writeValueAsBytes(policyProperties.getPolicyFile());
+            policies = new MockMultipartFile(
+                    "policy",
+                    "policyFile",
+                    MediaType.APPLICATION_JSON_VALUE,
+                    jsonBytes
+            );
+        }
 
         // ------------------------------
         //2. set variables
@@ -71,10 +74,23 @@ public class ValidationFormMapper {
 
         OriginalFile originalFile = new OriginalFile();
         originalFile.setCompleteFile(original);
-        form.setOriginalFiles(List.of(originalFile)); //List<OriginalFile> original;
-        form.setPolicyFile(policies);
-        // ------------------------------
+        form.setOriginalFiles(List.of(originalFile));
+
+        form.setValidationLevel(policyProperties.getValidationLevel());
+
+        //if policyFile is null, then set defaultPolicy.
+        //else then set policyFile that inputFile(policyProperties.policyFile).
+        if (policyProperties.getPolicyFile()==null) {
+            form.setDefaultPolicy(true);
+        } else {
+            form.setPolicyFile(policies);
+        }
+
+        if (policyProperties.getValidationLevel()==null) {
+            form.setValidationLevel(ValidationLevel.BASIC_SIGNATURES); //default set B-B(Baseline-Basic)
+        }
 
         return form;
     }
 }
+

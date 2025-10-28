@@ -1,7 +1,10 @@
 package kr.dss.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import eu.europa.esig.dss.enumerations.ValidationLevel;
 import jakarta.validation.constraints.NotNull;
+
+import java.util.List;
 
 // Set Verify Request DTO for KR-DSS.
 public class VerifySignedDocRequest {
@@ -34,6 +37,22 @@ public class VerifySignedDocRequest {
         private String validationTime;
         private String trustAnchor;
 
+        //----------------------------------
+        //Add Variables - validationLevel, policyFile(optional)
+        private ValidationLevel validationLevel;
+        private byte[] policyFile;
+        //        private byte[] cryptographicSuite;
+        //        private byte[] signingCertificate;
+        //        private List<byte[]> adjunctCertificates;
+        //        private List<byte[]> evidenceRecordFiles;
+        //
+        //        private boolean includeCertificationTokens;
+        //        private boolean includeRevocationTokens;
+        //        private boolean includeTimestampTokens;
+        //        private boolean includeSemantics;
+        //        private boolean includeUserFriendlyIdentifiers = true;
+        //----------------------------------
+
         public String getValidationModel() { return validationModel; }
         public void setValidationModel(String v) { this.validationModel = v; }
         public String getDigestAlgorithmRequirement() { return digestAlgorithmRequirement; }
@@ -42,6 +61,11 @@ public class VerifySignedDocRequest {
         public void setValidationTime(String v) { this.validationTime = v; }
         public String getTrustAnchor() { return trustAnchor; }
         public void setTrustAnchor(String v) { this.trustAnchor = v; }
+
+        public void setValidationLevel(ValidationLevel level) { this.validationLevel = level; }
+        public ValidationLevel getValidationLevel() { return this.validationLevel; }
+        public void setPolicyFile(byte[] policyFile) { this.policyFile = policyFile; }
+        public byte[] getPolicyFile() { return this.policyFile; }
     }
 
     @Override
@@ -54,6 +78,8 @@ public class VerifySignedDocRequest {
                 + ", policy.digestAlgorithmRequirement=" + policy.digestAlgorithmRequirement
                 + ", policy.validationTime=" + policy.validationTime
                 + ", policy.trustAnchor=" + policy.trustAnchor + "}"
+                + ", policy.validationLevel=" + policy.validationLevel + "}"
+                + ", policy.policyFile=" + (policy.policyFile != null ? "[BASE64_PRESENT, length=" + policy.policyFile.length + "]" : "null")
                 + "}";
     }
 

@@ -88,11 +88,11 @@ public class ValidationController extends AbstractValidationController {
 	@Autowired
 	protected SignaturePolicyProvider signaturePolicyProvider;
 
-//	@InitBinder
-//	public void initBinder(WebDataBinder webDataBinder) {
-//		super.initBinder(webDataBinder);
-//		webDataBinder.registerCustomEditor(ValidationLevel.class, new EnumPropertyEditor(ValidationLevel.class));
-//	}
+	@InitBinder
+	public void initBinder(WebDataBinder webDataBinder) {
+		super.initBinder(webDataBinder);
+		webDataBinder.registerCustomEditor(ValidationLevel.class, new EnumPropertyEditor(ValidationLevel.class));
+	}
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder webDataBinder) {
@@ -124,53 +124,42 @@ public class ValidationController extends AbstractValidationController {
 
 
 		//--------------------------------------------------
-		// TODO - Validation Logic ...
-		// 1. verifyService.verify(sign, document, policy)
-		// 1-1. sign 파일 로딩
+		//sign 파일 로딩
 		SignedDocumentValidator documentValidator = SignedDocumentValidator
 				.fromDocument(WebAppUtils.toDSSDocument(form.getSignedFile()));
-		// 1-2. 검증자 세팅
+		//검증자 세팅
 		documentValidator.setCertificateVerifier(getCertificateVerifier(form));
 
-		// 1-3. 타임스탬프 토큰 <-- TSA 인증서
+		//타임스탬프 토큰 <-- TSA 인증서
 		documentValidator.setTokenExtractionStrategy(TokenExtractionStrategy.fromParameters(form.isIncludeCertificateTokens(),
 				form.isIncludeTimestampTokens(), form.isIncludeRevocationTokens(), false));
 
-		LOG.info("1111 ... ");
-		//IncludeSemantics? 의미 파악 필요
+		//IncludeSemantics
 		documentValidator.setIncludeSemantics(form.isIncludeSemantics());
 
-		LOG.info("2222 ... ");
-		//서명 정책 세팅(dssDocument 세팅)
+		//서명 정책 세팅(defaultPolicy or InputPolicyFile)
 		documentValidator.setSignaturePolicyProvider(signaturePolicyProvider);
 
-		LOG.info("3333 ... ");
-		//서명 레벨 세팅
+		//서명 레벨 세팅(default = B or InputValidationLevel)
 		documentValidator.setValidationLevel(form.getValidationLevel());
 
-		LOG.info("4444 ... ");
 		//검증 시간 세팅
 		documentValidator.setValidationTime(getValidationTime(form));
 
-		LOG.info("5555 ... ");
 		//User-friendly identifiers 세팅
 		TokenIdentifierProvider identifierProvider = form.isIncludeUserFriendlyIdentifiers() ?
 				new UserFriendlyIdentifierProvider() : new OriginalIdentifierProvider();
 		documentValidator.setTokenIdentifierProvider(identifierProvider);
 
-		LOG.info("6666 ... ");
-		//입력 받은 서명 인증서 세팅
+		//입력 받은 서명 인증서 세팅(optional)
 		setSigningCertificate(documentValidator, form);
 
-		LOG.info("7777 ... ");
-		//입력 받은 Adjunct 인증서 세팅
+		//입력 받은 Adjunct 인증서 세팅(optional)
 		setDetachedContents(documentValidator, form); //maxUploadFile ...
 
-		LOG.info("8888 ... ");
-		//입력 받은 Evidence Records 세팅
+		//입력 받은 Evidence Records 세팅(optional)
 		setDetachedEvidenceRecords(documentValidator, form);
 
-		LOG.info("9999 ... ");
 		Locale locale = request.getLocale();
 		LOG.trace("Requested locale : {}", locale);
 		if (locale == null) {
@@ -180,15 +169,13 @@ public class ValidationController extends AbstractValidationController {
 		//로컬 세팅
 		documentValidator.setLocale(locale);
 
-		LOG.info("Before reports... validate ... ");
 		// TODO - Insert Validation-data in Reports ...
-		Reports reports = validate(documentValidator, form); // error  <---here
+		Reports reports = validate(documentValidator, form);
 
-		LOG.info("SUCCESS ... ");
 		VerifySignedDocResponse response = new VerifySignedDocResponse();
 
-		// (1) Convert EU Report > KR Report & Custom KR Report
-		// indication, message, ... 필요 데이터 추출 -> 활용하는 방향
+		//TODO - Convert Validation Report To Custom KR Report
+		//indication, message, ... 필요 데이터 추출 -> 활용하는 방향
 		SimpleReport euSimple = reports.getSimpleReport();
 		String tokenId = euSimple.getFirstSignatureId();
 		Indication indication = euSimple.getIndication(tokenId);
@@ -199,72 +186,6 @@ public class ValidationController extends AbstractValidationController {
 		response.setValid(isValid);
 
 		return response;
-	}
-
-
-	@RequestMapping(method = RequestMethod.POST)
-	public String validate(@ModelAttribute("validationForm") @Valid ValidationForm validationForm, BindingResult result,
-						   Model model, HttpServletRequest request) {
-		LOG.trace("Validation BEGINS...");
-		if (result.hasErrors()) {
-			if (LOG.isDebugEnabled()) {
-				List<ObjectError> allErrors = result.getAllErrors();
-				for (ObjectError error : allErrors) {
-					LOG.debug(error.getDefaultMessage());
-				}
-			}
-			return VALIDATION_TILE;
-		}
-
-		//------------------------------------------------
-		//2025.10.13_sujin : 입력받은 값들 세팅하는 단계
-		//서명된 파일 로딩
-		SignedDocumentValidator documentValidator = SignedDocumentValidator
-				.fromDocument(WebAppUtils.toDSSDocument(validationForm.getSignedFile()));
-		//검증자 세팅
-		documentValidator.setCertificateVerifier(getCertificateVerifier(validationForm));
-//		//타임스탬프 토큰 <-- TSA 인증서
-//		documentValidator.setTokenExtractionStrategy(TokenExtractionStrategy.fromParameters(validationForm.isIncludeCertificateTokens(),
-//				validationForm.isIncludeTimestampTokens(), validationForm.isIncludeRevocationTokens(), false));
-//		//IncludeSemantics? 의미 파악 필요
-//		documentValidator.setIncludeSemantics(validationForm.isIncludeSemantics());
-//		//서명 정책 세팅(dssDocument 세팅)
-//		documentValidator.setSignaturePolicyProvider(signaturePolicyProvider);
-//		//서명 레벨 세팅
-//		documentValidator.setValidationLevel(validationForm.getValidationLevel());
-//		//검증 시간 세팅
-//		documentValidator.setValidationTime(getValidationTime(validationForm));
-//
-//		//User-friendly identifiers 세팅
-//		TokenIdentifierProvider identifierProvider = validationForm.isIncludeUserFriendlyIdentifiers() ?
-//				new UserFriendlyIdentifierProvider() : new OriginalIdentifierProvider();
-//		documentValidator.setTokenIdentifierProvider(identifierProvider);
-//
-//		//입력 받은 서명 인증서 세팅
-//		setSigningCertificate(documentValidator, validationForm);
-//		//입력 받은 Adjunct 인증서 세팅
-//		setDetachedContents(documentValidator, validationForm);
-//		//입력 받은 Evidence Records 세팅
-//		setDetachedEvidenceRecords(documentValidator, validationForm);
-//
-		Locale locale = request.getLocale();
-//		LOG.trace("Requested locale : {}", locale);
-//		if (locale == null) {
-//			locale = Locale.getDefault();
-//			LOG.warn("The request locale is null! Use the default one : {}", locale);
-//		}
-//		//로컬 세팅
-//		documentValidator.setLocale(locale);
-		//------------------------------------------------
-
-		//------------------------------------------------
-		//검증 수행 (결과물 : 보고서)
-		//입력값 : documentValidator, validationForm
-		Reports reports = validate(documentValidator, validationForm);
-		//검증 결과를 모델 attribute 로 세팅
-		setAttributesModels(model, reports);
-		//------------------------------------------------
-		return VALIDATION_RESULT_TILE;
 	}
 
 	private Date getValidationTime(ValidationForm validationForm) {
@@ -319,21 +240,18 @@ public class ValidationController extends AbstractValidationController {
 	private Reports validate(DocumentValidator documentValidator, ValidationForm validationForm) {
 		Reports reports = null;
 
-		//현재 검증 시간으로 세팅
+		//Set currentTime
 		Date start = new Date();
 
-		//검증을 위한 서명 정책 로더 - 초기화/선언
+		//Initialize ValidationPolicyLoader
 		ValidationPolicyLoader validationPolicyLoader;
 
-		//입력값으로부터 정책파일 세팅
+		//Set Input-PolicyFile(optional)
 		MultipartFile policyFile = validationForm.getPolicyFile();
 		if (!validationForm.isDefaultPolicy() && policyFile != null && !policyFile.isEmpty()) {
 			try (InputStream is = policyFile.getInputStream()) {
-				LOG.info("BEFORE. fromValidationPolicy(is)");
-				validationPolicyLoader = ValidationPolicyLoader.fromValidationPolicy(is); // error here ... check ...
-				LOG.info("AFTER. fromValidationPolicy(is)");
+				validationPolicyLoader = ValidationPolicyLoader.fromValidationPolicy(is);
 			} catch (IOException e) {
-				LOG.info("IOException: policyFile.getInputStream()");
 				throw new DSSException("Unable to load validation policy!", e);
 			}
 		} else if (defaultPolicy != null) {
@@ -347,7 +265,7 @@ public class ValidationController extends AbstractValidationController {
 			throw new IllegalStateException("Validation policy is not correctly initialized!");
 		}
 
-		//입력값으로부터 암호스위트 파일 세팅
+		//Set Input-CryptographicSuite (optional)
 		MultipartFile cryptographicSuiteFile = validationForm.getCryptographicSuite();
 		if (cryptographicSuiteFile != null && !cryptographicSuiteFile.isEmpty()) {
 			try (InputStream is = cryptographicSuiteFile.getInputStream()) {
@@ -358,7 +276,7 @@ public class ValidationController extends AbstractValidationController {
 		}
 
 		try {
-			//검증보고서 생성?? 검증??
+			//Verify -> Generate Reports
 			reports = documentValidator.validateDocument(validationPolicyLoader.create());
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

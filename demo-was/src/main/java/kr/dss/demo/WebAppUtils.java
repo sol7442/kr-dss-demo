@@ -29,7 +29,9 @@ public class WebAppUtils {
     public static DSSDocument toDSSDocument(MultipartFile multipartFile) {
         try {
             if (multipartFile != null && !multipartFile.isEmpty()) {
-                if (multipartFile.getSize() > MultipartResolverProvider.getInstance().getMaxFileSize()) {
+                if (multipartFile.getSize() > MultipartResolverProvider.getInstance().getMaxFileSize()
+                        && MultipartResolverProvider.getInstance().getMaxFileSize() >=0) {
+                //if (multipartFile.getSize() > MultipartResolverProvider.getInstance().getMaxFileSize()) {
                     throw new MaxUploadSizeExceededException(MultipartResolverProvider.getInstance().getMaxFileSize());
                 }
                 return new InMemoryDocument(multipartFile.getBytes(), multipartFile.getOriginalFilename());
@@ -122,7 +124,8 @@ public class WebAppUtils {
                     if (completeFile != null) {
                         dssDocument = toDSSDocument(completeFile);
                         inMemorySize += completeFile.getSize();
-                        if (inMemorySize > MultipartResolverProvider.getInstance().getMaxInMemorySize() && MultipartResolverProvider.getInstance().getMaxInMemorySize()>=0) {
+                        if (inMemorySize > MultipartResolverProvider.getInstance().getMaxInMemorySize()
+                                && MultipartResolverProvider.getInstance().getMaxInMemorySize()>=0) {
                             // if (inMemorySize > MultipartResolverProvider.getInstance().getMaxInMemorySize()) { //2025.10.27_SUJIN
                             throw new MaxUploadSizeExceededException(MultipartResolverProvider.getInstance().getMaxInMemorySize());
                         }
