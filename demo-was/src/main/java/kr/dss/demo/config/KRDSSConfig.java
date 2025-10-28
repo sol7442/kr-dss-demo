@@ -8,6 +8,7 @@ import eu.europa.esig.dss.service.http.commons.FileCacheDataLoader;
 import eu.europa.esig.dss.service.http.commons.OCSPDataLoader;
 import eu.europa.esig.dss.service.http.proxy.ProxyConfig;
 import eu.europa.esig.dss.service.ocsp.OnlineOCSPSource;
+import eu.europa.esig.dss.spi.policy.SignaturePolicyProvider;
 import eu.europa.esig.dss.spi.tsl.TrustedListsCertificateSource;
 import eu.europa.esig.dss.spi.validation.CertificateVerifier;
 import eu.europa.esig.dss.spi.validation.CommonCertificateVerifier;
@@ -34,6 +35,9 @@ import java.security.KeyStore;
 public class KRDSSConfig {
 
     private static final Logger LOG = LoggerFactory.getLogger(KRDSSConfig.class);
+
+    @Value("${default.validation.policy}")
+    private String defaultValidationPolicy;
 
     @Value("${dss.crl.maxNextUpdate:3600}") // 기본값 3600초
     private int crlMaxNextUpdate;
@@ -214,6 +218,18 @@ public class KRDSSConfig {
     public KeyStoreSignatureTokenConnection remoteToken() throws IOException {
         return new KeyStoreSignatureTokenConnection(new ClassPathResource(userSourceFileName).getFile(), userSourceType,
                 new KeyStore.PasswordProtection(userSourcePassword.toCharArray()));
+    }
+
+    @Bean
+    public ClassPathResource defaultPolicy() {
+        return new ClassPathResource(defaultValidationPolicy);
+    }
+
+    @Bean
+    public SignaturePolicyProvider signaturePolicyProvider() {
+        SignaturePolicyProvider signaturePolicyProvider = new SignaturePolicyProvider();
+        signaturePolicyProvider.setDataLoader(fileCacheDataLoader());
+        return signaturePolicyProvider;
     }
 
 }

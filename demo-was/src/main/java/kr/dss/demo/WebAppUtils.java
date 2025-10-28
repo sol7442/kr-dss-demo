@@ -1,12 +1,19 @@
 package kr.dss.demo;
 
 import eu.europa.esig.dss.model.DSSDocument;
+import eu.europa.esig.dss.model.DSSException;
+import eu.europa.esig.dss.model.DigestDocument;
 import eu.europa.esig.dss.model.InMemoryDocument;
+import eu.europa.esig.dss.model.x509.CertificateToken;
+import eu.europa.esig.dss.spi.DSSUtils;
+import eu.europa.esig.dss.spi.x509.CertificateSource;
+import eu.europa.esig.dss.spi.x509.CommonCertificateSource;
 import eu.europa.esig.dss.spi.x509.tsp.TimestampToken;
 import eu.europa.esig.dss.utils.Utils;
 import eu.europa.esig.dss.ws.dto.TimestampDTO;
 import eu.europa.esig.dss.ws.signature.common.TimestampTokenConverter;
 import kr.dss.demo.config.MultipartResolverProvider;
+import kr.dss.demo.model.OriginalFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -65,4 +72,72 @@ public class WebAppUtils {
     public static TimestampDTO fromTimestampToken(TimestampToken token) {
         return TimestampTokenConverter.toTimestampDTO(token);
     }
+
+
+    public static CertificateToken toCertificateToken(MultipartFile certificateFile) {
+        try {
+            if (certificateFile != null && !certificateFile.isEmpty()) {
+                byte[] certificateBytes = certificateFile.getBytes();
+                String certificateBytesString = new String(certificateBytes);
+                if (!isPem(certificateBytes) && Utils.isBase64Encoded(certificateBytesString)) {
+                    return DSSUtils.loadCertificateFromBase64EncodedString(certificateBytesString);
+                }
+                return DSSUtils.loadCertificate(certificateBytes);
+            }
+        } catch (DSSException | IOException e) {
+            LOG.warn("Cannot convert file to X509 Certificate", e);
+            throw new DSSException("Unsupported certificate or file format!");
+        }
+        return null;
+    }
+
+
+    // TODO : to remove after https://ec.europa.eu/digital-building-blocks/tracker/browse/DSS-3647 is resolved
+    private static boolean isPem(byte[] string) {
+        return Utils.startsWith(string, "-----".getBytes());
+    }
+
+    public static CertificateSource toCertificateSource(List<MultipartFile> certificateFiles) {
+        CertificateSource certSource = null;
+        if (Utils.isCollectionNotEmpty(certificateFiles)) {
+            certSource = new CommonCertificateSource();
+            for (MultipartFile file : certificateFiles) {
+                CertificateToken certificateChainItem = toCertificateToken(file);
+                if (certificateChainItem != null) {
+                    certSource.addCertificate(certificateChainItem);
+                }
+            }
+        }
+        return certSource;
+    }
+
+    public static List<DSSDocument> originalFilesToDSSDocuments(List<OriginalFile> originalFiles) {
+        List<DSSDocument> dssDocuments = new ArrayList<>();
+        if (Utils.isCollectionNotEmpty(originalFiles)) {
+            long inMemorySize = 0;
+            for (OriginalFile originalDocument : originalFiles) {
+                if (originalDocument.isNotEmpty()) {
+                    DSSDocument dssDocument;
+                    MultipartFile completeFile = originalDocument.getCompleteFile();
+                    if (completeFile != null) {
+                        dssDocument = toDSSDocument(completeFile);
+                        inMemorySize += completeFile.getSize();
+                        if (inMemorySize > MultipartResolverProvider.getInstance().getMaxInMemorySize() && MultipartResolverProvider.getInstance().getMaxInMemorySize()>=0) {
+                            // if (inMemorySize > MultipartResolverProvider.getInstance().getMaxInMemorySize()) { //2025.10.27_SUJIN
+                            throw new MaxUploadSizeExceededException(MultipartResolverProvider.getInstance().getMaxInMemorySize());
+                        }
+                    } else {
+                        dssDocument = new DigestDocument(originalDocument.getDigestAlgorithm(),
+                                originalDocument.getBase64Digest(), originalDocument.getFilename());
+                    }
+                    dssDocuments.add(dssDocument);
+                    LOG.debug("OriginalDocument with name {} added", originalDocument.getFilename());
+                }
+            }
+        }
+        LOG.debug("OriginalDocumentsLoaded : {}", dssDocuments.size());
+        return dssDocuments;
+    }
+
+
 }
