@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import kr.dss.demo.services.SigningService;
+
 public abstract class AbstractSignatureController {
 
     protected static final String SIGNATURE_PROCESS = "signature-process";
@@ -13,13 +15,13 @@ public abstract class AbstractSignatureController {
 
     @Value("${default.digest.algo}")
     protected String defaultDigestAlgo;
-//
-//    @Autowired
-//    protected SigningService signingService;
-//
-//    @ModelAttribute("isMockUsed")
-//    public boolean isMockUsed() {
-//        return signingService.isMockTSPSourceUsed();
-//    }
+
+    @Autowired
+    protected SigningService signingService;
+
+    @ModelAttribute("isMockUsed")
+    public boolean isMockUsed() {
+        return signingService.isMockTSPSourceUsed();
+    }
 
 }
