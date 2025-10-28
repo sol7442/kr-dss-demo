@@ -6,6 +6,8 @@ ch-qos-logback-logback-classic = "1.5.18"
 com-fasterxml-jackson-jakarta-rs-jackson-jakarta-rs-json-provider = "2.19.2"
 com-zaxxer-hikaricp = "7.0.0"
 commons-io-commons-io = "2.20.0"
+retrofit = "3.0.0"
+bouncycastle = "1.82"
 eu-europa-ec-joinup-sd-dss-dss-certificate-validation-rest = "6.3"
 eu-europa-ec-joinup-sd-dss-dss-certificate-validation-rest-client = "6.3"
 eu-europa-ec-joinup-sd-dss-dss-certificate-validation-soap = "6.3"
@@ -69,6 +71,13 @@ org-webjars-highlightjs = "11.11.1"
 org-webjars-jquery = "3.7.1"
 
 [libraries]
+org-bouncycastle-bcprov-jdk18on = { group = "org.bouncycastle", name = "bcprov-jdk18on", version.ref = "bouncycastle" }
+org-bouncycastle-bcpkix-jdk18on = { group = "org.bouncycastle", name = "bcpkix-jdk18on", version.ref = "bouncycastle" }
+
+retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
+retrofit-adapter-rxjava = { group = "com.squareup.retrofit2", name = "adapter-rxjava3", version.ref = "retrofit" }
+
 ch-qos-logback-logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "ch-qos-logback-logback-classic" }
 com-fasterxml-jackson-jakarta-rs-jackson-jakarta-rs-json-provider = { module = "com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-json-provider", version.ref = "com-fasterxml-jackson-jakarta-rs-jackson-jakarta-rs-json-provider" }
 com-zaxxer-hikaricp = { module = "com.zaxxer:HikariCP", version.ref = "com-zaxxer-hikaricp" }
