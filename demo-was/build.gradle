@@ -11,7 +11,13 @@ group = 'kr.dss'
 version = "0.1.0"
 description = 'demo-was'
 
-
+configurations.all {
+    //XML 파서 중복 방지 (java.xml 과 충돌 방지)
+    exclude group: 'xml-apis', module: 'xml-apis'
+    exclude group: 'xerces', module: 'xercesImpl'
+    exclude group: 'xalan', module: 'xalan'
+    //exclude group: 'org.apache.xmlgraphics', module: 'xmlgraphics-commons'
+}
 
 dependencies {
 
@@ -21,7 +27,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     implementation "org.springframework:spring-test"
-//    testImplementation libs.org.springframework.boot.spring.boot.starter.test
+    testImplementation libs.org.springframework.boot.spring.boot.starter.test
     testImplementation "org.testcontainers:junit-jupiter"
     testImplementation "org.testcontainers:mysql"
 

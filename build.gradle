@@ -8,6 +8,7 @@ group = 'kr.dss'
 version = '1.0.0'
 
 
+
 subprojects {
     // 공통 플러그인 적용
     apply plugin: 'java'
