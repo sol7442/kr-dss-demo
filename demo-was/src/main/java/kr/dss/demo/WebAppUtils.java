@@ -16,6 +16,7 @@ import kr.dss.demo.config.MultipartResolverProvider;
 import kr.dss.demo.model.OriginalFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +27,24 @@ import java.util.List;
 public class WebAppUtils {
     private static final Logger LOG = LoggerFactory.getLogger(WebAppUtils.class);
 
+    /**
+     * byte[]를 MultipartFile로 감싸서 반환합니다.
+     * @param fieldName  멀티파트 필드명 (예: "file")
+     * @param filename   파일명 (예: "document.pdf")
+     * @param contentType MIME 타입 (예: "application/pdf")
+     * @param bytes      파일 바이트
+     */
+    public static MultipartFile toMultipartFile(
+            String fieldName,
+            String filename,
+            String contentType,
+            byte[] bytes
+    ) {
+        if (contentType == null || contentType.isBlank()) {
+            contentType = "application/octet-stream";
+        }
+        return new MockMultipartFile(fieldName, filename, contentType, bytes);
+    }
     public static DSSDocument toDSSDocument(MultipartFile multipartFile) {
         try {
             if (multipartFile != null && !multipartFile.isEmpty()) {

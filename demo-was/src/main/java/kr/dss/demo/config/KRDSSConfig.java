@@ -6,7 +6,6 @@ import eu.europa.esig.dss.service.crl.OnlineCRLSource;
 import eu.europa.esig.dss.service.http.commons.CommonsDataLoader;
 import eu.europa.esig.dss.service.http.commons.FileCacheDataLoader;
 import eu.europa.esig.dss.service.http.commons.OCSPDataLoader;
-import eu.europa.esig.dss.service.http.proxy.ProxyConfig;
 import eu.europa.esig.dss.service.ocsp.OnlineOCSPSource;
 import eu.europa.esig.dss.spi.policy.SignaturePolicyProvider;
 import eu.europa.esig.dss.spi.tsl.TrustedListsCertificateSource;
@@ -18,11 +17,13 @@ import eu.europa.esig.dss.spi.x509.aia.AIASource;
 import eu.europa.esig.dss.spi.x509.aia.DefaultAIASource;
 import eu.europa.esig.dss.spi.x509.revocation.crl.CRLSource;
 import eu.europa.esig.dss.spi.x509.revocation.ocsp.OCSPSource;
+import eu.europa.esig.dss.spi.x509.tsp.TSPSource;
 import eu.europa.esig.dss.token.KeyStoreSignatureTokenConnection;
 import eu.europa.esig.dss.utils.Utils;
+import kr.dss.cps.client.TsaClient;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -84,8 +85,8 @@ public class KRDSSConfig {
 
 
 
-//    @Autowired
-//    private ProxyConfig proxyConfig;
+	@Value("${cps.base.url}")
+	private String cpsBaseUrl;
 
     @Bean
     public CertificateVerifier certificateVerifier() {
@@ -232,4 +233,9 @@ public class KRDSSConfig {
         return signaturePolicyProvider;
     }
 
+    @Bean
+    public TSPSource tspSource() {
+    	LOG.info("Initializing TSPSource with CPS Base URL: {}", cpsBaseUrl);
+    	return new TsaClient(cpsBaseUrl);
+    }
 }

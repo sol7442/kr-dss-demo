@@ -21,6 +21,8 @@ configurations.all {
 
 dependencies {
 
+	implementation project(":demo-cps:cps-api")
+	
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation libs.org.springframework.boot.spring.boot.starter.validation
     implementation libs.org.springframework.boot.spring.boot.starter.security

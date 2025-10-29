@@ -46,6 +46,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.Date;
@@ -347,11 +348,11 @@ public class SigningService {
     private void fillParameters(AbstractSignatureParameters parameters, AbstractSignatureForm form) {
 
 
-        if (form.getContentTimestamp() != null) {
-            parameters.setContentTimestamps(
-                    Collections.singletonList(WebAppUtils.toTimestampToken(form.getContentTimestamp())));
-        }
-
+//        if (form.getContentTimestamp() != null) {
+//            parameters.setContentTimestamps(
+//                    Collections.singletonList(WebAppUtils.toTimestampToken(form.getContentTimestamp())));
+//        }
+//
 //        CertificateToken signingCertificate = DSSUtils.loadCertificate(form.getCertificate());
 //        parameters.setSigningCertificate(signingCertificate);
 
@@ -410,23 +411,24 @@ public class SigningService {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public DSSDocument signDocument(SignatureDocumentForm form) {
         LOG.info("Start signDocument with one document");
-        DocumentSignatureService service = getSignatureService(form.getContainerType(), form.getSignatureForm(), form.isSignWithExpiredCertificate());
 
-        AbstractSignatureParameters parameters = fillParameters(form);
 
         try {
-
+        	MultipartFile file  = WebAppUtils.toMultipartFile("signatureMultipleDocumentsForm",form.getFileName(),form.getContenttype(),form.getDocumentBytes());
+        	form.setDocumentToSign(file);
+        	
+            DocumentSignatureService service = getSignatureService(form.getContainerType(), form.getSignatureForm(), form.isSignWithExpiredCertificate());
+            AbstractSignatureParameters parameters = fillParameters(form);
+            
 
             CertificateToken signingCertificate = parameters.getSigningCertificate();
             form.setEncryptionAlgorithm(EncryptionAlgorithm.forName(signingCertificate.getPublicKey().getAlgorithm()));
             form.setSigningDate(new Date());
-
-            if (form.isAddContentTimestamp()) {
-                form.setContentTimestamp(WebAppUtils.fromTimestampToken(getContentTimestamp(form)));
-            }
-
-            DSSDocument toSignDocument = new InMemoryDocument(form.getDocumentBytes(), form.getFileName());
-
+            
+                        
+            DSSDocument toSignDocument = new InMemoryDocument(form.getDocumentBytes(), form.getFileName());            
+            form.setToSignDocument(toSignDocument);
+            
             ToBeSigned dataToSign = service.getDataToSign(toSignDocument,parameters);
 
             SignatureAlgorithm sigAlgorithm = SignatureAlgorithm.getAlgorithm(form.getEncryptionAlgorithm(), form.getDigestAlgorithm());
