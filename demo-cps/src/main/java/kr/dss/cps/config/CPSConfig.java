@@ -51,11 +51,19 @@ public class CPSConfig {
 	@Value("${ocsp.key.password:changeit}")
 	private String ocspKeyPassword;
 
-	@Autowired
-	KeyStore keyStore;
+	@Bean
+	public KeyStore keyStore() throws IOException, KeyStoreException, NoSuchAlgorithmException,
+			CertificateException, FileNotFoundException {
+		File ksFile = new ClassPathResource(cpsKeyStorePath).getFile();
+		KeyStore keyStore = KeyStore.getInstance(cpsKeyStoreType);
+		try (FileInputStream fis = new FileInputStream(ksFile)) {
+			keyStore.load(fis, cpsKeyStorePassword.toCharArray());
+		}
+		return keyStore;
+	}
 	
 	@Bean
-	public X509Certificate tsaCert() throws CPSException {
+	public X509Certificate tsaCert(KeyStore keyStore) throws CPSException {
 		try {
 			X509Certificate cert = (X509Certificate) keyStore.getCertificate(tsaKeyAlias);
 			LOG.info("Loaded TSA Certificate: {}", cert.getSubjectX500Principal());
@@ -67,7 +75,7 @@ public class CPSConfig {
 	}
 
 	@Bean
-	public PrivateKey tsaKey() throws CPSException {
+	public PrivateKey tsaKey(KeyStore keyStore) throws CPSException {
 		try {
 			PrivateKey key = (PrivateKey) keyStore.getKey(tsaKeyAlias, tsaKeyPassword.toCharArray());
 			LOG.info("Loaded TSA Private Key for alias: {}", tsaKeyAlias);
@@ -78,7 +86,7 @@ public class CPSConfig {
 	}
 	
 	@Bean
-	public X509Certificate ocspCert() throws CPSException {
+	public X509Certificate ocspCert(KeyStore keyStore) throws CPSException {
 		try {
 			X509Certificate cert = (X509Certificate) keyStore.getCertificate(ocspKeyAlias);
 			LOG.info("Loaded OCSP Certificate: {}", cert.getSubjectX500Principal());
@@ -90,7 +98,7 @@ public class CPSConfig {
 	}
 
 	@Bean
-	public PrivateKey ocspKey() throws CPSException {
+	public PrivateKey ocspKey(KeyStore keyStore) throws CPSException {
 		try {
 			PrivateKey key = (PrivateKey) keyStore.getKey(ocspKeyAlias, ocspKeyPassword.toCharArray());
 			LOG.info("Loaded OCSP Private Key for alias: {}", ocspKeyAlias);
@@ -100,14 +108,5 @@ public class CPSConfig {
 		}
 	}
 
-	@Bean
-	private KeyStore keyStore() throws IOException, KeyStoreException, NoSuchAlgorithmException,
-			CertificateException, FileNotFoundException {
-		File ksFile = new ClassPathResource(cpsKeyStorePath).getFile();
-		KeyStore keyStore = KeyStore.getInstance(cpsKeyStoreType);
-		try (FileInputStream fis = new FileInputStream(ksFile)) {
-			keyStore.load(fis, cpsKeyStorePassword.toCharArray());
-		}
-		return keyStore;
-	}
+
 }
