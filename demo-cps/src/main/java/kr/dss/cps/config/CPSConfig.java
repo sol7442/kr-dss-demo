@@ -62,7 +62,7 @@ public class CPSConfig {
 		return keyStore;
 	}
 	
-	@Bean
+	@Bean(name = "tsaCert")
 	public X509Certificate tsaCert(KeyStore keyStore) throws CPSException {
 		try {
 			X509Certificate cert = (X509Certificate) keyStore.getCertificate(tsaKeyAlias);
@@ -74,7 +74,7 @@ public class CPSConfig {
 		}
 	}
 
-	@Bean
+	@Bean(name = "tsaKey")
 	public PrivateKey tsaKey(KeyStore keyStore) throws CPSException {
 		try {
 			PrivateKey key = (PrivateKey) keyStore.getKey(tsaKeyAlias, tsaKeyPassword.toCharArray());
@@ -85,7 +85,7 @@ public class CPSConfig {
 		}
 	}
 	
-	@Bean
+	@Bean(name = "ocspCert")
 	public X509Certificate ocspCert(KeyStore keyStore) throws CPSException {
 		try {
 			X509Certificate cert = (X509Certificate) keyStore.getCertificate(ocspKeyAlias);
@@ -97,7 +97,7 @@ public class CPSConfig {
 		}
 	}
 
-	@Bean
+	@Bean(name = "ocspKey")
 	public PrivateKey ocspKey(KeyStore keyStore) throws CPSException {
 		try {
 			PrivateKey key = (PrivateKey) keyStore.getKey(ocspKeyAlias, ocspKeyPassword.toCharArray());

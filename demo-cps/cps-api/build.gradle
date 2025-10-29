@@ -27,4 +27,9 @@ dependencies {
     implementation(libs.org.bouncycastle.bcprov.jdk18on)
     implementation(libs.org.bouncycastle.bcpkix.jdk18on)
     
+    implementation libs.eu.europa.ec.joinup.sd.dss.dss.utils.google.guava
+    
+    testImplementation libs.org.junit.jupiter.junit.jupiter.engine
+    testImplementation libs.ch.qos.logback.logback.classic
+    
 }

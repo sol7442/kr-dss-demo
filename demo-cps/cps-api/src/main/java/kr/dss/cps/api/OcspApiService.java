@@ -13,6 +13,6 @@ public interface OcspApiService {
         "Content-Type: application/ocsp-request",
         "Accept: application/ocsp-response"
     })
-    @POST("/ocsp") 
+    @POST("ocsp") 
     Call<ResponseBody> checkCertificateStatus(@Body RequestBody requestBody);
 }

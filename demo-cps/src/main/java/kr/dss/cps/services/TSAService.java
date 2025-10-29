@@ -24,15 +24,24 @@ import org.bouncycastle.tsp.TimeStampRequest;
 import org.bouncycastle.tsp.TimeStampResponse;
 import org.bouncycastle.tsp.TimeStampResponseGenerator;
 import org.bouncycastle.tsp.TimeStampTokenGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TASService {
+public class TSAService {
 	private final SecureRandom random = new SecureRandom();
 
-	private X509Certificate tsaCert;
-	private PrivateKey tsaKey;
+	private final X509Certificate tsaCert;
+	private final PrivateKey tsaKey;
 
+    @Autowired
+    public TSAService(@Qualifier("tsaKey") PrivateKey tsaKey,
+                      @Qualifier("tsaCert") X509Certificate tsaCert) {
+        this.tsaKey = tsaKey;
+        this.tsaCert = tsaCert;
+    }
+    
 	public byte[] generateTimestampResponse(byte[] requestBytes)
 			throws IOException, OperatorCreationException, TSPException, CertificateEncodingException {
 		TimeStampRequest request = new TimeStampRequest(requestBytes);

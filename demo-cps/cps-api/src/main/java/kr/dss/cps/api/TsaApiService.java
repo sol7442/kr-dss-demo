@@ -13,6 +13,6 @@ public interface TsaApiService {
         "Content-Type: application/timestamp-query",
         "Accept: application/timestamp-reply"
     })
-    @POST("/tsa") 
+    @POST("tsa") 
     Call<ResponseBody> requestTimestamp(@Body RequestBody  requestBody);
 }
