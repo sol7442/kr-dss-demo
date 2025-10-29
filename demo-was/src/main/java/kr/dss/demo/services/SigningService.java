@@ -21,11 +21,14 @@ import eu.europa.esig.dss.model.x509.CertificateToken;
 import eu.europa.esig.dss.pades.PAdESSignatureParameters;
 import eu.europa.esig.dss.pades.PAdESTimestampParameters;
 import eu.europa.esig.dss.pades.signature.PAdESService;
+import eu.europa.esig.dss.service.http.commons.CommonsDataLoader;
+import eu.europa.esig.dss.service.http.commons.TimestampDataLoader;
 import eu.europa.esig.dss.signature.AbstractSignatureParameters;
 import eu.europa.esig.dss.signature.CounterSignatureService;
 import eu.europa.esig.dss.signature.DocumentSignatureService;
 import eu.europa.esig.dss.signature.MultipleDocumentsSignatureService;
 import eu.europa.esig.dss.spi.DSSUtils;
+import eu.europa.esig.dss.spi.client.http.DataLoader;
 import eu.europa.esig.dss.spi.validation.CertificateVerifier;
 import eu.europa.esig.dss.spi.validation.CertificateVerifierBuilder;
 import eu.europa.esig.dss.spi.x509.CommonTrustedCertificateSource;
@@ -419,7 +422,7 @@ public class SigningService {
         	
             DocumentSignatureService service = getSignatureService(form.getContainerType(), form.getSignatureForm(), form.isSignWithExpiredCertificate());
             AbstractSignatureParameters parameters = fillParameters(form);
-            
+                        
 
             CertificateToken signingCertificate = parameters.getSigningCertificate();
             form.setEncryptionAlgorithm(EncryptionAlgorithm.forName(signingCertificate.getPublicKey().getAlgorithm()));
@@ -562,7 +565,7 @@ public class SigningService {
                     service = new CAdESService(cv);
                     break;
                 case PAdES:
-                    service = new PAdESService(cv);
+                    service = new PAdESService(cv);                    
                     break;
                 case XAdES:
                     service = new XAdESService(cv);
@@ -574,7 +577,9 @@ public class SigningService {
                     throw new IllegalArgumentException(String.format("Unknown signature form : %s", signatureForm));
             }
         }
+        
         service.setTspSource(tspSource);
+        LOG.info("DocumentSignatureService : {} ", signatureForm);
         return service;
     }
 
@@ -621,6 +626,7 @@ public class SigningService {
                 case PAdES:
                     PAdESSignatureParameters padesParams = new PAdESSignatureParameters();
                     padesParams.setContentSize(9472 * 2); // double reserved space for signature
+                    padesParams.setCheckCertificateRevocation(false);
                     parameters = padesParams;
                     break;
                 case XAdES:

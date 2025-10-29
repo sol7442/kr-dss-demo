@@ -20,6 +20,8 @@ import eu.europa.esig.dss.spi.x509.revocation.ocsp.OCSPSource;
 import eu.europa.esig.dss.spi.x509.tsp.TSPSource;
 import eu.europa.esig.dss.token.KeyStoreSignatureTokenConnection;
 import eu.europa.esig.dss.utils.Utils;
+import kr.dss.cps.client.IgnoreCRLSource;
+import kr.dss.cps.client.OcspClient;
 import kr.dss.cps.client.TsaClient;
 
 import org.slf4j.Logger;
@@ -91,14 +93,15 @@ public class KRDSSConfig {
     @Bean
     public CertificateVerifier certificateVerifier() {
         CommonCertificateVerifier certificateVerifier = new CommonCertificateVerifier();
-        certificateVerifier.setCrlSource(cachedCRLSource());
+        certificateVerifier.setCrlSource(new IgnoreCRLSource());
         certificateVerifier.setOcspSource(cachedOCSPSource());
-        certificateVerifier.setAIASource(cachedAIASource());
+        //certificateVerifier.setAIASource(cachedAIASource());
         certificateVerifier.setTrustedCertSources(trustedListSource(), trustedCertificateSource());
 
         // Default configs
         certificateVerifier.setAlertOnMissingRevocationData(new ExceptionOnStatusAlert());
         certificateVerifier.setCheckRevocationForUntrustedChains(false);
+        
 
         return certificateVerifier;
     }
@@ -119,19 +122,19 @@ public class KRDSSConfig {
     }
     @Bean
     public OCSPSource cachedOCSPSource() {
-         OnlineOCSPSource onlineOCSPSource = onlineOCSPSource();
+    	OcspClient onlineOCSPSource = new OcspClient(cpsBaseUrl);
         FileCacheDataLoader fileCacheDataLoader = initFileCacheDataLoader();
         fileCacheDataLoader.setDataLoader(ocspDataLoader());
         fileCacheDataLoader.setCacheExpirationTime(ocspMaxNextUpdate * 1000); // to millis
-        onlineOCSPSource.setDataLoader(fileCacheDataLoader);
+        //onlineOCSPSource.setDataLoader(fileCacheDataLoader);
         return onlineOCSPSource;
     }
-    @Bean
-    public OnlineOCSPSource onlineOCSPSource() {
-        OnlineOCSPSource onlineOCSPSource = new OnlineOCSPSource();
-        onlineOCSPSource.setDataLoader(ocspDataLoader());
-        return onlineOCSPSource;
-    }
+//    @Bean
+//    public OnlineOCSPSource onlineOCSPSource() {
+//        OnlineOCSPSource onlineOCSPSource = new OnlineOCSPSource();
+//        onlineOCSPSource.setDataLoader(ocspDataLoader());
+//        return onlineOCSPSource;
+//    }
     @Bean
     public AIASource cachedAIASource() {
         FileCacheDataLoader fileCacheDataLoader = fileCacheDataLoader();
@@ -238,4 +241,9 @@ public class KRDSSConfig {
     	LOG.info("Initializing TSPSource with CPS Base URL: {}", cpsBaseUrl);
     	return new TsaClient(cpsBaseUrl);
     }
+//    @Bean
+//    public OCSPSource ocspSource() {
+//    	LOG.info("Initializing TSPSource with CPS Base URL: {}", cpsBaseUrl);
+//    	return new OcspClient(cpsBaseUrl);
+//    }
 }

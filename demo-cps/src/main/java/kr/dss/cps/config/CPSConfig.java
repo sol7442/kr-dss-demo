@@ -51,6 +51,12 @@ public class CPSConfig {
 	@Value("${ocsp.key.password:changeit}")
 	private String ocspKeyPassword;
 
+	
+	@Value("${issuer.key.alias:tsa}")
+	private String issuerKeyAlias;
+
+	
+	
 	@Bean
 	public KeyStore keyStore() throws IOException, KeyStoreException, NoSuchAlgorithmException,
 			CertificateException, FileNotFoundException {
@@ -61,6 +67,21 @@ public class CPSConfig {
 		}
 		return keyStore;
 	}
+	
+	
+	
+	
+	@Bean(name = "issuerCert")
+	public X509Certificate issuerCert(KeyStore keyStore) throws CPSException {
+		try {
+			X509Certificate cert = (X509Certificate) keyStore.getCertificate(issuerKeyAlias);
+			LOG.info("Loaded issuer Certificate: {}", cert.getSubjectX500Principal());
+			
+			return cert;
+		} catch (Exception e) {
+			throw new CPSException("Unable to load TSA certificate from keystore: " + cpsKeyStorePath, e);
+		}
+	}	
 	
 	@Bean(name = "tsaCert")
 	public X509Certificate tsaCert(KeyStore keyStore) throws CPSException {
