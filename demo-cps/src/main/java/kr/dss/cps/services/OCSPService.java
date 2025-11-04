@@ -114,5 +114,11 @@ public class OCSPService {
 			throw new RuntimeException("OCSP Response generation failed: " + e.getMessage(), e);
 		}
 	}
+	public byte[] searchCRL() {
+		//load config - crl.alias
+		//open crl.
+		//return crl byte[]
+		return (null);
+	}
 
 }

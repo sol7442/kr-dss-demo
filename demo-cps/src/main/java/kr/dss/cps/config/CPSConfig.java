@@ -51,11 +51,11 @@ public class CPSConfig {
 	@Value("${ocsp.key.password:changeit}")
 	private String ocspKeyPassword;
 
-	
 	@Value("${issuer.key.alias:tsa}")
 	private String issuerKeyAlias;
 
-	
+	@Value("${crl.path:crl}")
+	private String crlPath;
 	
 	@Bean
 	public KeyStore keyStore() throws IOException, KeyStoreException, NoSuchAlgorithmException,
