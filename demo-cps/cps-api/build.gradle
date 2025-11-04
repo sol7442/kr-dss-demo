@@ -28,8 +28,9 @@ dependencies {
     implementation(libs.org.bouncycastle.bcpkix.jdk18on)
     
     implementation libs.eu.europa.ec.joinup.sd.dss.dss.utils.google.guava
-    
-    testImplementation libs.org.junit.jupiter.junit.jupiter.engine
+    testImplementation(platform("org.junit:junit-bom:5.11.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")         // API 포함
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")  // Gradle runner 안정
     testImplementation libs.ch.qos.logback.logback.classic
     
 }
