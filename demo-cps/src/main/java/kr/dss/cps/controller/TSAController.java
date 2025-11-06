@@ -30,12 +30,12 @@ public class TSAController {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.parseMediaType("application/timestamp-reply"));
             
-            LOG.info("✅ TSA response generated ({} bytes)", responseBytes.length);
+            LOG.info("TSA response generated ({} bytes)", responseBytes.length);
 
             return new ResponseEntity<>(responseBytes, headers, HttpStatus.OK);
 
         } catch (Exception e) {
-        	 LOG.error("❌ TSA Error", e);
+        	 LOG.error("TSA Error", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .contentType(MediaType.TEXT_PLAIN)
                     .body(("TSA Error: " + e.getMessage()).getBytes());
