@@ -129,10 +129,6 @@ public class SIG_TEST_BASIC {
         signatureDocumentForm.setDigestAlgorithm(DigestAlgorithm.SHA512);
         signatureDocumentForm.setSignatureValue(signatureValue);
 
-        //2025.11.03_sujin : Signing-certificae token was not found !
-        //ERROR - after kr-dss-users3.p12... (before kr-dss-user2.p12 ok...)
-        // why? 동일이름으로 인증서 다시 만들어보기!!!
-
         //2. TC1~TC16 : Packaging, Level, Hash Algorithm(fix SHA 512)
         SignaturePackaging[] packaging = {SignaturePackaging.ENVELOPED, SignaturePackaging.ENVELOPING,
                 SignaturePackaging.DETACHED}; //, SignaturePackaging.INTERNALLY_DETACHED

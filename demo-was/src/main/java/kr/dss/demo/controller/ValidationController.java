@@ -122,7 +122,6 @@ public class ValidationController extends AbstractValidationController {
 		ValidationForm form = ValidationFormMapper.toVerifyDocumentForm(verifySignedDocRequest);
 		LOG.info("form   : {}", form.toString());
 
-
 		//--------------------------------------------------
 		//sign 파일 로딩
 		SignedDocumentValidator documentValidator = SignedDocumentValidator
