@@ -1,0 +1,722 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DiagnosticData xmlns="http://dss.esig.europa.eu/validation/diagnostic">
+    <DocumentName>signatureFile</DocumentName>
+    <ValidationDate>2025-12-01T07:14:56Z</ValidationDate>
+    <Signatures>
+        <Signature Id="SIGNATURE_tester2_20251201-0714">
+            <SignatureFilename>signatureFile</SignatureFilename>
+            <ClaimedSigningTime>2025-12-01T07:14:09Z</ClaimedSigningTime>
+            <SignatureFormat>JAdES-BASELINE-T</SignatureFormat>
+            <SignatureType>application/jose+json</SignatureType>
+            <StructuralValidation valid="true"/>
+            <DigestMatchers>
+                <DigestMatcher type="JWS_SIGNING_INPUT_DIGEST">
+                    <DigestMethod>SHA512</DigestMethod>
+                    <DigestValue>ZqXXhNvsyha/pkZZ6LM2LCCLenknHgXSCbs9ocJS0Fx5fM6mE70/8fMEurl/sUXguSN/jGXO+eSyIsMWvcub6w==</DigestValue>
+                    <DataFound>true</DataFound>
+                    <DataIntact>true</DataIntact>
+                </DigestMatcher>
+                <DigestMatcher type="SIG_D_ENTRY" uri="270325.json" documentName="originalFile">
+                    <DigestMethod>SHA512</DigestMethod>
+                    <DigestValue>M0rY5oOAczhSOcOUXU1kexLupA8AN7/Ibdlx7SIsfHjTIUPewad7384jqJcjk2Myluq+WSjTyPngBCVyfTX9Ow==</DigestValue>
+                    <DataFound>true</DataFound>
+                    <DataIntact>true</DataIntact>
+                </DigestMatcher>
+            </DigestMatchers>
+            <BasicSignature>
+                <EncryptionAlgoUsedToSignThisToken>RSA</EncryptionAlgoUsedToSignThisToken>
+                <KeyLengthUsedToSignThisToken>4096</KeyLengthUsedToSignThisToken>
+                <DigestAlgoUsedToSignThisToken>SHA512</DigestAlgoUsedToSignThisToken>
+                <SignatureIntact>true</SignatureIntact>
+                <SignatureValid>true</SignatureValid>
+            </BasicSignature>
+            <SigningCertificate Certificate="CERTIFICATE_tester2_20251117-0407"/>
+            <CertificateChain>
+                <ChainItem Certificate="CERTIFICATE_tester2_20251117-0407"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505"/>
+            </CertificateChain>
+            <MimeType>application/json</MimeType>
+            <CommitmentTypeIndications/>
+            <SignerDocumentRepresentations HashOnly="false" DocHashOnly="false"/>
+            <FoundCertificates>
+                <RelatedCertificate Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404">
+                    <Origin>CERTIFICATE_VALUES</Origin>
+                </RelatedCertificate>
+                <RelatedCertificate Certificate="CERTIFICATE_FAKE-KISA-TSA_20251117-0406">
+                    <Origin>TIMESTAMP_VALIDATION_DATA</Origin>
+                </RelatedCertificate>
+                <RelatedCertificate Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406">
+                    <Origin>CERTIFICATE_VALUES</Origin>
+                </RelatedCertificate>
+                <RelatedCertificate Certificate="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505">
+                    <Origin>CERTIFICATE_VALUES</Origin>
+                </RelatedCertificate>
+                <RelatedCertificate Certificate="CERTIFICATE_tester2_20251117-0407">
+                    <Origin>KEY_INFO</Origin>
+                    <CertificateRef>
+                        <Origin>SIGNING_CERTIFICATE</Origin>
+                        <DigestAlgoAndValue match="true">
+                            <DigestMethod>SHA512</DigestMethod>
+                            <DigestValue>wtd1gFbIOmfFUW1mYjfj3iGJwkE1O1jHCZegl6J0Aaqr5rfv8sPl69jFBp57cvcGoebJioCaYNGr38mKlKzklg==</DigestValue>
+                        </DigestAlgoAndValue>
+                    </CertificateRef>
+                    <CertificateRef>
+                        <Origin>KEY_IDENTIFIER</Origin>
+                        <IssuerSerial match="true">MG0wVaRTMFExCzAJBgNVBAgMAktSMQ0wCwYDVQQKDARLSVNBMQ0wCwYDVQQLDAREQVBDMQ0wCwYDVQQLDARGQUtFMRUwEwYDVQQDDAxGQUtFLUtJU0EgQ0ECFFAB5cpR6vtc4imYszyVAZqP/3o2</IssuerSerial>
+                        <SerialInfo>
+                            <IssuerName>CN=FAKE-KISA CA, OU=FAKE, OU=DAPC, O=KISA, ST=KR</IssuerName>
+                            <SerialNumber>456761579970509747055115444952914018475857377846</SerialNumber>
+                        </SerialInfo>
+                    </CertificateRef>
+                </RelatedCertificate>
+            </FoundCertificates>
+            <FoundRevocations>
+                <RelatedRevocation Revocation="OCSP_FAKE-KISA-OCSP_20251201-0714">
+                    <Type>OCSP</Type>
+                    <Origin>REVOCATION_VALUES</Origin>
+                </RelatedRevocation>
+            </FoundRevocations>
+            <FoundTimestamps>
+                <FoundTimestamp Timestamp="TIMESTAMP_FAKE-KISA-TSA_20251201-0714"/>
+                <FoundTimestamp Timestamp="TIMESTAMP_FAKE-KISA-TSA_20251201-0714_2"/>
+            </FoundTimestamps>
+            <FoundEvidenceRecords/>
+            <SignatureScopes>
+                <SignatureScope SignerData="DOCUMENT_originalFile">
+                    <Scope>FULL</Scope>
+                    <Name>originalFile</Name>
+                    <Description>Full document</Description>
+                </SignatureScope>
+            </SignatureScopes>
+            <SignatureDigestReference>
+                <DigestMethod>SHA256</DigestMethod>
+                <DigestValue>S/trxi0PFDrAZDDnGKby9CvbOMWRSHhxv8IDWJo4pjk=</DigestValue>
+            </SignatureDigestReference>
+            <DataToBeSignedRepresentation>
+                <DigestMethod>SHA512</DigestMethod>
+                <DigestValue>ZqXXhNvsyha/pkZZ6LM2LCCLenknHgXSCbs9ocJS0Fx5fM6mE70/8fMEurl/sUXguSN/jGXO+eSyIsMWvcub6w==</DigestValue>
+            </DataToBeSignedRepresentation>
+            <SignatureValue>R9UvsUJo0VBrm1HF/neg13sApNrux51kdkQ6IisEdUauOJtGKdPLQmNCH3xaBnvtqDzFp6NlSrY4sutEcNO1XUkG/+UYnbxwxQuCBexqX2PHrkqnmIGRYOENJm0ukRGvlL+1iVxtxeKEFUHwL/0xUyB1380PLUzKsCSqUeTNdfAU7AINFchOjZPwPNcv8QLB3E+6xKYeGfH+tJ4r3UAjUHAOcbf0pyShrUkO8i/rmtaScRR82lI0cVpz/koLZkG/wwqmjjO4k3TpXyxhLxyjsamDtC6fKefJXRu3A7eVgD3yJq/umb/3lqr3wyHBlLrvsQCZZ24EB+K87aES4ZOuUaetYtR3ZTqNT0wQ0izvHttJ2CfV2xLvKTwDWxIy3qqOokLnOBdGwd/HrJGqRxS2G83Eu5iOo5TJG5Hv+r2RaRr8rCYhrpY2zM805fWyN8caHHiLp4fLKnGt0dyhjDh28LRHpiKQzcW0RCBOV5PheFMAwyh/sy81lQNz8zjHmYYmWpOhxDfQRomLBhXOM74vj42zSj2HhMXFweo/LhGPh4/H0MtaL/20WoJ53aS6QkfSYsFqB7X83hfzTeEJlbVOJVS74beCGNVQhTyHrE4CxfAKpyPeEBlTOB/QTqRHMMND4G0vEhSNP95ZpAECCZh/pnskPlg1kcEg8C86ZjVB1tY=</SignatureValue>
+        </Signature>
+    </Signatures>
+    <EvidenceRecords/>
+    <UsedCertificates>
+        <Certificate Id="CERTIFICATE_tester2_20251117-0407">
+            <SubjectDistinguishedName Format="CANONICAL">cn=tester2,c=kr</SubjectDistinguishedName>
+            <SubjectDistinguishedName Format="RFC2253">CN=tester2,C=KR</SubjectDistinguishedName>
+            <IssuerDistinguishedName Format="CANONICAL">cn=fake-kisa ca,ou=fake,ou=dapc,o=kisa,st=kr</IssuerDistinguishedName>
+            <IssuerDistinguishedName Format="RFC2253">CN=FAKE-KISA CA,OU=FAKE,OU=DAPC,O=KISA,ST=KR</IssuerDistinguishedName>
+            <SerialNumber>456761579970509747055115444952914018475857377846</SerialNumber>
+            <CommonName>tester2</CommonName>
+            <CountryName>KR</CountryName>
+            <Sources>
+                <Source>SIGNATURE</Source>
+                <Source>OTHER</Source>
+            </Sources>
+            <NotAfter>2026-11-17T04:07:56Z</NotAfter>
+            <NotBefore>2025-11-17T04:07:56Z</NotBefore>
+            <PublicKeySize>4096</PublicKeySize>
+            <PublicKeyEncryptionAlgo>RSA</PublicKeyEncryptionAlgo>
+            <EntityKey>EK-61369B8B60C0EBD59CC048FB2EF3392921332F0C9BA8AE86A45ED9E1A5A5258C</EntityKey>
+            <IssuerEntityKey key="true" subjectName="true">EK-534D87D96356C6244EAA1413A61F635EFEDBCA0CECB9751E95C3C7B45930216E</IssuerEntityKey>
+            <BasicSignature>
+                <EncryptionAlgoUsedToSignThisToken>RSA</EncryptionAlgoUsedToSignThisToken>
+                <KeyLengthUsedToSignThisToken>4096</KeyLengthUsedToSignThisToken>
+                <DigestAlgoUsedToSignThisToken>SHA256</DigestAlgoUsedToSignThisToken>
+                <SignatureIntact>true</SignatureIntact>
+                <SignatureValid>true</SignatureValid>
+            </BasicSignature>
+            <SigningCertificate Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404"/>
+            <CertificateChain>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505"/>
+            </CertificateChain>
+            <Trusted>false</Trusted>
+            <SelfSigned>false</SelfSigned>
+            <CertificateExtensions>
+                <AuthorityKeyIdentifier OID="2.5.29.35" critical="false">
+                    <keyIdentifier>8vQfN99HHF7XM8EPYvM07Mulpqg=</keyIdentifier>
+                    <authorityCertIssuerSerial>MHYwXqRcMFoxCzAJBgNVBAgMAktSMRIwEAYDVQQKDAlGQUtFLUtJU0ExDTALBgNVBAsMBERBUEMxDTALBgNVBAsMBEZBS0UxGTAXBgNVBAMMEEZBS0UtS0lTQSBSb290Q0ECFFoPpYsbb7zNH7lYEjGeAZqP/JQs</authorityCertIssuerSerial>
+                </AuthorityKeyIdentifier>
+                <SubjectKeyIdentifier OID="2.5.29.14" critical="false">
+                    <ski>o5C91J6TzsYjxMMAxpnRE/viJco=</ski>
+                </SubjectKeyIdentifier>
+                <KeyUsages OID="2.5.29.15" critical="true">
+                    <keyUsageBit>digitalSignature</keyUsageBit>
+                    <keyUsageBit>nonRepudiation</keyUsageBit>
+                </KeyUsages>
+                <CertificatePolicies OID="2.5.29.32" critical="true">
+                    <certificatePolicy cpsUrl="http://fake-kisa/cps">1.3.6.1.5.5.7.2.1</certificatePolicy>
+                </CertificatePolicies>
+                <AuthorityInformationAccess OID="1.3.6.1.5.5.7.1.1" critical="false"/>
+                <CRLDistributionPoints OID="2.5.29.31" critical="false">
+                    <crlUrl>http://localhost:8090/crl</crlUrl>
+                </CRLDistributionPoints>
+            </CertificateExtensions>
+            <TrustServiceProviders/>
+            <Revocations>
+                <CertificateRevocation Revocation="OCSP_FAKE-KISA-OCSP_20251201-0714">
+                    <Status>GOOD</Status>
+                </CertificateRevocation>
+                <CertificateRevocation Revocation="OCSP_FAKE-KISA-OCSP_20251201-0714_4">
+                    <Status>GOOD</Status>
+                </CertificateRevocation>
+            </Revocations>
+            <DigestAlgoAndValue>
+                <DigestMethod>SHA256</DigestMethod>
+                <DigestValue>AUcaGz2lbYhh0W0KV1vsmILn+PdqW1K+KBLmF3029f0=</DigestValue>
+            </DigestAlgoAndValue>
+        </Certificate>
+        <Certificate Id="CERTIFICATE_FAKE-KISA-CA_20251117-0404">
+            <SubjectDistinguishedName Format="CANONICAL">cn=fake-kisa ca,ou=fake,ou=dapc,o=kisa,st=kr</SubjectDistinguishedName>
+            <SubjectDistinguishedName Format="RFC2253">CN=FAKE-KISA CA,OU=FAKE,OU=DAPC,O=KISA,ST=KR</SubjectDistinguishedName>
+            <IssuerDistinguishedName Format="CANONICAL">cn=fake-kisa rootca,ou=fake,ou=dapc,o=fake-kisa,st=kr</IssuerDistinguishedName>
+            <IssuerDistinguishedName Format="RFC2253">CN=FAKE-KISA RootCA,OU=FAKE,OU=DAPC,O=FAKE-KISA,ST=KR</IssuerDistinguishedName>
+            <SerialNumber>514158101415020589161336097986752496206146737196</SerialNumber>
+            <CommonName>FAKE-KISA CA</CommonName>
+            <State>KR</State>
+            <OrganizationName>KISA</OrganizationName>
+            <OrganizationalUnit>DAPC</OrganizationalUnit>
+            <Sources>
+                <Source>SIGNATURE</Source>
+                <Source>OTHER</Source>
+            </Sources>
+            <NotAfter>2026-11-17T04:04:46Z</NotAfter>
+            <NotBefore>2025-11-17T04:04:46Z</NotBefore>
+            <PublicKeySize>4096</PublicKeySize>
+            <PublicKeyEncryptionAlgo>RSA</PublicKeyEncryptionAlgo>
+            <EntityKey>EK-534D87D96356C6244EAA1413A61F635EFEDBCA0CECB9751E95C3C7B45930216E</EntityKey>
+            <IssuerEntityKey key="true" subjectName="true">EK-E9EDF82BC507F4E99B68859B4F3F6A174230A6328962A882693D8F413FDB5AFE</IssuerEntityKey>
+            <BasicSignature>
+                <EncryptionAlgoUsedToSignThisToken>RSA</EncryptionAlgoUsedToSignThisToken>
+                <KeyLengthUsedToSignThisToken>4096</KeyLengthUsedToSignThisToken>
+                <DigestAlgoUsedToSignThisToken>SHA256</DigestAlgoUsedToSignThisToken>
+                <SignatureIntact>true</SignatureIntact>
+                <SignatureValid>true</SignatureValid>
+            </BasicSignature>
+            <SigningCertificate Certificate="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505"/>
+            <CertificateChain>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505"/>
+            </CertificateChain>
+            <Trusted>false</Trusted>
+            <SelfSigned>false</SelfSigned>
+            <CertificateExtensions>
+                <AuthorityKeyIdentifier OID="2.5.29.35" critical="false">
+                    <keyIdentifier>DmudNqtOTM4Bv76gahgOgNyGyaQ=</keyIdentifier>
+                    <authorityCertIssuerSerial>MGYwXqRcMFoxCzAJBgNVBAgMAktSMRIwEAYDVQQKDAlGQUtFLUtJU0ExDTALBgNVBAsMBERBUEMxDTALBgNVBAsMBEZBS0UxGTAXBgNVBAMMEEZBS0UtS0lTQSBSb290Q0ECBGjLkv0=</authorityCertIssuerSerial>
+                </AuthorityKeyIdentifier>
+                <SubjectKeyIdentifier OID="2.5.29.14" critical="false">
+                    <ski>8vQfN99HHF7XM8EPYvM07Mulpqg=</ski>
+                </SubjectKeyIdentifier>
+                <BasicConstraints CA="true" pathLenConstraint="0" OID="2.5.29.19" critical="true"/>
+                <KeyUsages OID="2.5.29.15" critical="true">
+                    <keyUsageBit>digitalSignature</keyUsageBit>
+                    <keyUsageBit>keyCertSign</keyUsageBit>
+                    <keyUsageBit>crlSign</keyUsageBit>
+                </KeyUsages>
+                <CertificatePolicies OID="2.5.29.32" critical="true">
+                    <certificatePolicy cpsUrl="http://fake-kisa/cps">1.2.410.200004.2.999</certificatePolicy>
+                </CertificatePolicies>
+                <AuthorityInformationAccess OID="1.3.6.1.5.5.7.1.1" critical="false"/>
+                <CRLDistributionPoints OID="2.5.29.31" critical="false">
+                    <crlUrl>http://localhost:8090/crl</crlUrl>
+                </CRLDistributionPoints>
+            </CertificateExtensions>
+            <Revocations>
+                <CertificateRevocation Revocation="OCSP_FAKE-KISA-OCSP_20251201-0714_2">
+                    <Status>GOOD</Status>
+                </CertificateRevocation>
+            </Revocations>
+            <DigestAlgoAndValue>
+                <DigestMethod>SHA256</DigestMethod>
+                <DigestValue>Mi98sisZ0ATMyonsWBmyeqdVOx3H1K1qvJC72bkLHuE=</DigestValue>
+            </DigestAlgoAndValue>
+        </Certificate>
+        <Certificate Id="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505">
+            <SubjectDistinguishedName Format="CANONICAL">cn=fake-kisa rootca,ou=fake,ou=dapc,o=fake-kisa,st=kr</SubjectDistinguishedName>
+            <SubjectDistinguishedName Format="RFC2253">CN=FAKE-KISA RootCA,OU=FAKE,OU=DAPC,O=FAKE-KISA,ST=KR</SubjectDistinguishedName>
+            <IssuerDistinguishedName Format="CANONICAL">cn=fake-kisa rootca,ou=fake,ou=dapc,o=fake-kisa,st=kr</IssuerDistinguishedName>
+            <IssuerDistinguishedName Format="RFC2253">CN=FAKE-KISA RootCA,OU=FAKE,OU=DAPC,O=FAKE-KISA,ST=KR</IssuerDistinguishedName>
+            <SerialNumber>1758171901</SerialNumber>
+            <CommonName>FAKE-KISA RootCA</CommonName>
+            <State>KR</State>
+            <OrganizationName>FAKE-KISA</OrganizationName>
+            <OrganizationalUnit>DAPC</OrganizationalUnit>
+            <Sources>
+                <Source>SIGNATURE</Source>
+                <Source>TRUSTED_STORE</Source>
+            </Sources>
+            <NotAfter>2026-09-18T05:05:01Z</NotAfter>
+            <NotBefore>2025-09-18T05:05:01Z</NotBefore>
+            <PublicKeySize>4096</PublicKeySize>
+            <PublicKeyEncryptionAlgo>RSA</PublicKeyEncryptionAlgo>
+            <EntityKey>EK-E9EDF82BC507F4E99B68859B4F3F6A174230A6328962A882693D8F413FDB5AFE</EntityKey>
+            <IssuerEntityKey key="true" subjectName="true">EK-E9EDF82BC507F4E99B68859B4F3F6A174230A6328962A882693D8F413FDB5AFE</IssuerEntityKey>
+            <BasicSignature>
+                <EncryptionAlgoUsedToSignThisToken>RSA</EncryptionAlgoUsedToSignThisToken>
+                <KeyLengthUsedToSignThisToken>4096</KeyLengthUsedToSignThisToken>
+                <DigestAlgoUsedToSignThisToken>SHA256</DigestAlgoUsedToSignThisToken>
+                <SignatureIntact>true</SignatureIntact>
+                <SignatureValid>true</SignatureValid>
+            </BasicSignature>
+            <CertificateChain/>
+            <Trusted>true</Trusted>
+            <SelfSigned>true</SelfSigned>
+            <CertificateExtensions>
+                <SubjectKeyIdentifier OID="2.5.29.14" critical="false">
+                    <ski>DmudNqtOTM4Bv76gahgOgNyGyaQ=</ski>
+                </SubjectKeyIdentifier>
+                <BasicConstraints CA="true" pathLenConstraint="2147483647" OID="2.5.29.19" critical="true"/>
+            </CertificateExtensions>
+            <TrustServiceProviders/>
+            <DigestAlgoAndValue>
+                <DigestMethod>SHA256</DigestMethod>
+                <DigestValue>f5xwSm6gUgyzRo4CiQvuOFtyMDtVRXGjjFGRJLBt6BA=</DigestValue>
+            </DigestAlgoAndValue>
+        </Certificate>
+        <Certificate Id="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406">
+            <SubjectDistinguishedName Format="CANONICAL">cn=fake-kisa ocsp,ou=fake,ou=dapc,o=kisa,st=kr</SubjectDistinguishedName>
+            <SubjectDistinguishedName Format="RFC2253">CN=FAKE-KISA OCSP,OU=FAKE,OU=DAPC,O=KISA,ST=KR</SubjectDistinguishedName>
+            <IssuerDistinguishedName Format="CANONICAL">cn=fake-kisa ca,ou=fake,ou=dapc,o=kisa,st=kr</IssuerDistinguishedName>
+            <IssuerDistinguishedName Format="RFC2253">CN=FAKE-KISA CA,OU=FAKE,OU=DAPC,O=KISA,ST=KR</IssuerDistinguishedName>
+            <SerialNumber>572634811834329392936683498583947610473543613114</SerialNumber>
+            <CommonName>FAKE-KISA OCSP</CommonName>
+            <State>KR</State>
+            <OrganizationName>KISA</OrganizationName>
+            <OrganizationalUnit>DAPC</OrganizationalUnit>
+            <Sources>
+                <Source>SIGNATURE</Source>
+                <Source>OCSP_RESPONSE</Source>
+            </Sources>
+            <NotAfter>2026-11-17T04:06:01Z</NotAfter>
+            <NotBefore>2025-11-17T04:06:01Z</NotBefore>
+            <PublicKeySize>4096</PublicKeySize>
+            <PublicKeyEncryptionAlgo>RSA</PublicKeyEncryptionAlgo>
+            <EntityKey>EK-DC59FFD70729578341BD70F28D406A1B5E517C891FA8886D9BACAC5F074ABD2F</EntityKey>
+            <IssuerEntityKey key="true" subjectName="true">EK-534D87D96356C6244EAA1413A61F635EFEDBCA0CECB9751E95C3C7B45930216E</IssuerEntityKey>
+            <BasicSignature>
+                <EncryptionAlgoUsedToSignThisToken>RSA</EncryptionAlgoUsedToSignThisToken>
+                <KeyLengthUsedToSignThisToken>4096</KeyLengthUsedToSignThisToken>
+                <DigestAlgoUsedToSignThisToken>SHA256</DigestAlgoUsedToSignThisToken>
+                <SignatureIntact>true</SignatureIntact>
+                <SignatureValid>true</SignatureValid>
+            </BasicSignature>
+            <SigningCertificate Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404"/>
+            <CertificateChain>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505"/>
+            </CertificateChain>
+            <Trusted>false</Trusted>
+            <SelfSigned>false</SelfSigned>
+            <CertificateExtensions>
+                <AuthorityKeyIdentifier OID="2.5.29.35" critical="false">
+                    <keyIdentifier>8vQfN99HHF7XM8EPYvM07Mulpqg=</keyIdentifier>
+                    <authorityCertIssuerSerial>MHYwXqRcMFoxCzAJBgNVBAgMAktSMRIwEAYDVQQKDAlGQUtFLUtJU0ExDTALBgNVBAsMBERBUEMxDTALBgNVBAsMBEZBS0UxGTAXBgNVBAMMEEZBS0UtS0lTQSBSb290Q0ECFFoPpYsbb7zNH7lYEjGeAZqP/JQs</authorityCertIssuerSerial>
+                </AuthorityKeyIdentifier>
+                <SubjectKeyIdentifier OID="2.5.29.14" critical="false">
+                    <ski>4ZlyzfOoiViASMM9yikSsVTGf04=</ski>
+                </SubjectKeyIdentifier>
+                <BasicConstraints CA="false" OID="2.5.29.19" critical="true"/>
+                <KeyUsages OID="2.5.29.15" critical="true">
+                    <keyUsageBit>digitalSignature</keyUsageBit>
+                    <keyUsageBit>nonRepudiation</keyUsageBit>
+                </KeyUsages>
+                <ExtendedKeyUsages OID="2.5.29.37" critical="true">
+                    <extendedKeyUsageOid Description="ocspSigning">1.3.6.1.5.5.7.3.9</extendedKeyUsageOid>
+                </ExtendedKeyUsages>
+            </CertificateExtensions>
+            <TrustServiceProviders/>
+            <Revocations>
+                <CertificateRevocation Revocation="OCSP_FAKE-KISA-OCSP_20251201-0714_3">
+                    <Status>GOOD</Status>
+                </CertificateRevocation>
+            </Revocations>
+            <DigestAlgoAndValue>
+                <DigestMethod>SHA256</DigestMethod>
+                <DigestValue>kgPsn5Dzifvn/3Jc0FLAj3U+CWReTTo+rvFxpItk7bc=</DigestValue>
+            </DigestAlgoAndValue>
+        </Certificate>
+        <Certificate Id="CERTIFICATE_FAKE-KISA-TSA_20251117-0406">
+            <SubjectDistinguishedName Format="CANONICAL">cn=fake-kisa tsa,ou=fake,ou=dapc,o=kisa,st=kr</SubjectDistinguishedName>
+            <SubjectDistinguishedName Format="RFC2253">CN=FAKE-KISA TSA,OU=FAKE,OU=DAPC,O=KISA,ST=KR</SubjectDistinguishedName>
+            <IssuerDistinguishedName Format="CANONICAL">cn=fake-kisa ca,ou=fake,ou=dapc,o=kisa,st=kr</IssuerDistinguishedName>
+            <IssuerDistinguishedName Format="RFC2253">CN=FAKE-KISA CA,OU=FAKE,OU=DAPC,O=KISA,ST=KR</IssuerDistinguishedName>
+            <SerialNumber>697732911535495898536845197015655348455715281737</SerialNumber>
+            <CommonName>FAKE-KISA TSA</CommonName>
+            <State>KR</State>
+            <OrganizationName>KISA</OrganizationName>
+            <OrganizationalUnit>DAPC</OrganizationalUnit>
+            <Sources>
+                <Source>SIGNATURE</Source>
+            </Sources>
+            <NotAfter>2026-11-17T04:06:59Z</NotAfter>
+            <NotBefore>2025-11-17T04:06:59Z</NotBefore>
+            <PublicKeySize>4096</PublicKeySize>
+            <PublicKeyEncryptionAlgo>RSA</PublicKeyEncryptionAlgo>
+            <EntityKey>EK-8FEDD54151AD3E126C7719EE8EE04A5CD8055A6A53D16F183095D5F1D8F84FD6</EntityKey>
+            <IssuerEntityKey key="true" subjectName="true">EK-534D87D96356C6244EAA1413A61F635EFEDBCA0CECB9751E95C3C7B45930216E</IssuerEntityKey>
+            <BasicSignature>
+                <EncryptionAlgoUsedToSignThisToken>RSA</EncryptionAlgoUsedToSignThisToken>
+                <KeyLengthUsedToSignThisToken>4096</KeyLengthUsedToSignThisToken>
+                <DigestAlgoUsedToSignThisToken>SHA256</DigestAlgoUsedToSignThisToken>
+                <SignatureIntact>true</SignatureIntact>
+                <SignatureValid>true</SignatureValid>
+            </BasicSignature>
+            <SigningCertificate Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404"/>
+            <CertificateChain>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505"/>
+            </CertificateChain>
+            <Trusted>false</Trusted>
+            <SelfSigned>false</SelfSigned>
+            <CertificateExtensions>
+                <AuthorityKeyIdentifier OID="2.5.29.35" critical="false">
+                    <keyIdentifier>8vQfN99HHF7XM8EPYvM07Mulpqg=</keyIdentifier>
+                    <authorityCertIssuerSerial>MHYwXqRcMFoxCzAJBgNVBAgMAktSMRIwEAYDVQQKDAlGQUtFLUtJU0ExDTALBgNVBAsMBERBUEMxDTALBgNVBAsMBEZBS0UxGTAXBgNVBAMMEEZBS0UtS0lTQSBSb290Q0ECFFoPpYsbb7zNH7lYEjGeAZqP/JQs</authorityCertIssuerSerial>
+                </AuthorityKeyIdentifier>
+                <SubjectKeyIdentifier OID="2.5.29.14" critical="false">
+                    <ski>K5qr4Ann2CmbifTNPhVU0nThs+Y=</ski>
+                </SubjectKeyIdentifier>
+                <BasicConstraints CA="false" OID="2.5.29.19" critical="true"/>
+                <KeyUsages OID="2.5.29.15" critical="true">
+                    <keyUsageBit>digitalSignature</keyUsageBit>
+                    <keyUsageBit>nonRepudiation</keyUsageBit>
+                </KeyUsages>
+                <ExtendedKeyUsages OID="2.5.29.37" critical="true">
+                    <extendedKeyUsageOid Description="timeStamping">1.3.6.1.5.5.7.3.8</extendedKeyUsageOid>
+                </ExtendedKeyUsages>
+            </CertificateExtensions>
+            <TrustServiceProviders/>
+            <Revocations>
+                <CertificateRevocation Revocation="OCSP_FAKE-KISA-OCSP_20251201-0714_5">
+                    <Status>GOOD</Status>
+                </CertificateRevocation>
+            </Revocations>
+            <DigestAlgoAndValue>
+                <DigestMethod>SHA256</DigestMethod>
+                <DigestValue>+ZHbGv4autw/i/3XZqcDbxQSydHzU7DxSLw7ii3lDiA=</DigestValue>
+            </DigestAlgoAndValue>
+        </Certificate>
+    </UsedCertificates>
+    <UsedRevocations>
+        <Revocation Id="OCSP_FAKE-KISA-OCSP_20251201-0714">
+            <Origin>INPUT_DOCUMENT</Origin>
+            <Type>OCSP</Type>
+            <ProductionDate>2025-12-01T07:14:10Z</ProductionDate>
+            <ThisUpdate>2025-12-01T07:14:10Z</ThisUpdate>
+            <NextUpdate>2025-12-01T19:14:10Z</NextUpdate>
+            <CertHashExtensionPresent>false</CertHashExtensionPresent>
+            <CertHashExtensionMatch>false</CertHashExtensionMatch>
+            <BasicSignature>
+                <EncryptionAlgoUsedToSignThisToken>RSA</EncryptionAlgoUsedToSignThisToken>
+                <KeyLengthUsedToSignThisToken>4096</KeyLengthUsedToSignThisToken>
+                <DigestAlgoUsedToSignThisToken>SHA256</DigestAlgoUsedToSignThisToken>
+                <SignatureIntact>true</SignatureIntact>
+                <SignatureValid>true</SignatureValid>
+            </BasicSignature>
+            <SigningCertificate Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406"/>
+            <CertificateChain>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505"/>
+            </CertificateChain>
+            <FoundCertificates>
+                <RelatedCertificate Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406">
+                    <Origin>BASIC_OCSP_RESP</Origin>
+                    <CertificateRef>
+                        <Origin>SIGNING_CERTIFICATE</Origin>
+                        <SerialInfo>
+                            <Ski>4ZlyzfOoiViASMM9yikSsVTGf04=</Ski>
+                        </SerialInfo>
+                    </CertificateRef>
+                </RelatedCertificate>
+            </FoundCertificates>
+            <DigestAlgoAndValue>
+                <DigestMethod>SHA256</DigestMethod>
+                <DigestValue>UeCJ0uv99WViT8pjXV4x9DFHXzEgMwUyyzq6dQA2wlE=</DigestValue>
+            </DigestAlgoAndValue>
+        </Revocation>
+        <Revocation Id="OCSP_FAKE-KISA-OCSP_20251201-0714_2">
+            <Origin>EXTERNAL</Origin>
+            <Type>OCSP</Type>
+            <SourceAddress>retrofit2.Retrofit$1@6f3f2340</SourceAddress>
+            <ProductionDate>2025-12-01T07:14:56Z</ProductionDate>
+            <ThisUpdate>2025-12-01T07:14:56Z</ThisUpdate>
+            <NextUpdate>2025-12-01T19:14:56Z</NextUpdate>
+            <CertHashExtensionPresent>false</CertHashExtensionPresent>
+            <CertHashExtensionMatch>false</CertHashExtensionMatch>
+            <BasicSignature>
+                <EncryptionAlgoUsedToSignThisToken>RSA</EncryptionAlgoUsedToSignThisToken>
+                <KeyLengthUsedToSignThisToken>4096</KeyLengthUsedToSignThisToken>
+                <DigestAlgoUsedToSignThisToken>SHA256</DigestAlgoUsedToSignThisToken>
+                <SignatureIntact>true</SignatureIntact>
+                <SignatureValid>true</SignatureValid>
+            </BasicSignature>
+            <SigningCertificate Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406"/>
+            <CertificateChain>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505"/>
+            </CertificateChain>
+            <FoundCertificates>
+                <RelatedCertificate Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406">
+                    <Origin>BASIC_OCSP_RESP</Origin>
+                    <CertificateRef>
+                        <Origin>SIGNING_CERTIFICATE</Origin>
+                        <SerialInfo>
+                            <Ski>4ZlyzfOoiViASMM9yikSsVTGf04=</Ski>
+                        </SerialInfo>
+                    </CertificateRef>
+                </RelatedCertificate>
+            </FoundCertificates>
+            <DigestAlgoAndValue>
+                <DigestMethod>SHA256</DigestMethod>
+                <DigestValue>anc8svyeHBmX30XGaiGhN4v17xaBqVshgbdEUv0KGw0=</DigestValue>
+            </DigestAlgoAndValue>
+        </Revocation>
+        <Revocation Id="OCSP_FAKE-KISA-OCSP_20251201-0714_3">
+            <Origin>EXTERNAL</Origin>
+            <Type>OCSP</Type>
+            <SourceAddress>retrofit2.Retrofit$1@6f3f2340</SourceAddress>
+            <ProductionDate>2025-12-01T07:14:56Z</ProductionDate>
+            <ThisUpdate>2025-12-01T07:14:56Z</ThisUpdate>
+            <NextUpdate>2025-12-01T19:14:56Z</NextUpdate>
+            <CertHashExtensionPresent>false</CertHashExtensionPresent>
+            <CertHashExtensionMatch>false</CertHashExtensionMatch>
+            <BasicSignature>
+                <EncryptionAlgoUsedToSignThisToken>RSA</EncryptionAlgoUsedToSignThisToken>
+                <KeyLengthUsedToSignThisToken>4096</KeyLengthUsedToSignThisToken>
+                <DigestAlgoUsedToSignThisToken>SHA256</DigestAlgoUsedToSignThisToken>
+                <SignatureIntact>true</SignatureIntact>
+                <SignatureValid>true</SignatureValid>
+            </BasicSignature>
+            <SigningCertificate Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406"/>
+            <CertificateChain>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505"/>
+            </CertificateChain>
+            <FoundCertificates>
+                <RelatedCertificate Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406">
+                    <Origin>BASIC_OCSP_RESP</Origin>
+                    <CertificateRef>
+                        <Origin>SIGNING_CERTIFICATE</Origin>
+                        <SerialInfo>
+                            <Ski>4ZlyzfOoiViASMM9yikSsVTGf04=</Ski>
+                        </SerialInfo>
+                    </CertificateRef>
+                </RelatedCertificate>
+            </FoundCertificates>
+            <DigestAlgoAndValue>
+                <DigestMethod>SHA256</DigestMethod>
+                <DigestValue>fiQvgZS8nfo1KggEmaVmu7UHilm9FMjK9zYyrG5r/lU=</DigestValue>
+            </DigestAlgoAndValue>
+        </Revocation>
+        <Revocation Id="OCSP_FAKE-KISA-OCSP_20251201-0714_4">
+            <Origin>EXTERNAL</Origin>
+            <Type>OCSP</Type>
+            <SourceAddress>retrofit2.Retrofit$1@6f3f2340</SourceAddress>
+            <ProductionDate>2025-12-01T07:14:56Z</ProductionDate>
+            <ThisUpdate>2025-12-01T07:14:56Z</ThisUpdate>
+            <NextUpdate>2025-12-01T19:14:56Z</NextUpdate>
+            <CertHashExtensionPresent>false</CertHashExtensionPresent>
+            <CertHashExtensionMatch>false</CertHashExtensionMatch>
+            <BasicSignature>
+                <EncryptionAlgoUsedToSignThisToken>RSA</EncryptionAlgoUsedToSignThisToken>
+                <KeyLengthUsedToSignThisToken>4096</KeyLengthUsedToSignThisToken>
+                <DigestAlgoUsedToSignThisToken>SHA256</DigestAlgoUsedToSignThisToken>
+                <SignatureIntact>true</SignatureIntact>
+                <SignatureValid>true</SignatureValid>
+            </BasicSignature>
+            <SigningCertificate Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406"/>
+            <CertificateChain>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505"/>
+            </CertificateChain>
+            <FoundCertificates>
+                <RelatedCertificate Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406">
+                    <Origin>BASIC_OCSP_RESP</Origin>
+                    <CertificateRef>
+                        <Origin>SIGNING_CERTIFICATE</Origin>
+                        <SerialInfo>
+                            <Ski>4ZlyzfOoiViASMM9yikSsVTGf04=</Ski>
+                        </SerialInfo>
+                    </CertificateRef>
+                </RelatedCertificate>
+            </FoundCertificates>
+            <DigestAlgoAndValue>
+                <DigestMethod>SHA256</DigestMethod>
+                <DigestValue>qXYnCWRPOVU38MG3yyZQgAD3NfMmEms0mHTVrfxSd8A=</DigestValue>
+            </DigestAlgoAndValue>
+        </Revocation>
+        <Revocation Id="OCSP_FAKE-KISA-OCSP_20251201-0714_5">
+            <Origin>EXTERNAL</Origin>
+            <Type>OCSP</Type>
+            <SourceAddress>retrofit2.Retrofit$1@6f3f2340</SourceAddress>
+            <ProductionDate>2025-12-01T07:14:56Z</ProductionDate>
+            <ThisUpdate>2025-12-01T07:14:56Z</ThisUpdate>
+            <NextUpdate>2025-12-01T19:14:56Z</NextUpdate>
+            <CertHashExtensionPresent>false</CertHashExtensionPresent>
+            <CertHashExtensionMatch>false</CertHashExtensionMatch>
+            <BasicSignature>
+                <EncryptionAlgoUsedToSignThisToken>RSA</EncryptionAlgoUsedToSignThisToken>
+                <KeyLengthUsedToSignThisToken>4096</KeyLengthUsedToSignThisToken>
+                <DigestAlgoUsedToSignThisToken>SHA256</DigestAlgoUsedToSignThisToken>
+                <SignatureIntact>true</SignatureIntact>
+                <SignatureValid>true</SignatureValid>
+            </BasicSignature>
+            <SigningCertificate Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406"/>
+            <CertificateChain>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505"/>
+            </CertificateChain>
+            <FoundCertificates>
+                <RelatedCertificate Certificate="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406">
+                    <Origin>BASIC_OCSP_RESP</Origin>
+                    <CertificateRef>
+                        <Origin>SIGNING_CERTIFICATE</Origin>
+                        <SerialInfo>
+                            <Ski>4ZlyzfOoiViASMM9yikSsVTGf04=</Ski>
+                        </SerialInfo>
+                    </CertificateRef>
+                </RelatedCertificate>
+            </FoundCertificates>
+            <DigestAlgoAndValue>
+                <DigestMethod>SHA256</DigestMethod>
+                <DigestValue>qxJtbY97Zm4GvRagj9L4nFLFPsQL801diC1IFzS337g=</DigestValue>
+            </DigestAlgoAndValue>
+        </Revocation>
+    </UsedRevocations>
+    <UsedTimestamps>
+        <Timestamp Type="SIGNATURE_TIMESTAMP" Id="TIMESTAMP_FAKE-KISA-TSA_20251201-0714">
+            <ProductionTime>2025-12-01T07:14:10Z</ProductionTime>
+            <DigestMatcher type="MESSAGE_IMPRINT">
+                <DigestMethod>SHA512</DigestMethod>
+                <DigestValue>ldz+ER0kcDJha0qtpEDtn336duKMFaiLakU0F+ioFTpzrGqHxEEfIM+/E1JjigADRzsUs2DQvR2EOc6c3iqLEA==</DigestValue>
+                <DataFound>true</DataFound>
+                <DataIntact>true</DataIntact>
+            </DigestMatcher>
+            <BasicSignature>
+                <EncryptionAlgoUsedToSignThisToken>RSA</EncryptionAlgoUsedToSignThisToken>
+                <KeyLengthUsedToSignThisToken>4096</KeyLengthUsedToSignThisToken>
+                <DigestAlgoUsedToSignThisToken>SHA256</DigestAlgoUsedToSignThisToken>
+                <SignatureIntact>true</SignatureIntact>
+                <SignatureValid>true</SignatureValid>
+            </BasicSignature>
+            <SigningCertificate Certificate="CERTIFICATE_FAKE-KISA-TSA_20251117-0406"/>
+            <CertificateChain>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-TSA_20251117-0406"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505"/>
+            </CertificateChain>
+            <SignerInformationStore>
+                <SignerInfo Current="true">
+                    <IssuerName>CN=FAKE-KISA CA, OU=FAKE, OU=DAPC, O=KISA, ST=KR</IssuerName>
+                    <SerialNumber>697732911535495898536845197015655348455715281737</SerialNumber>
+                </SignerInfo>
+            </SignerInformationStore>
+            <FoundCertificates>
+                <RelatedCertificate Certificate="CERTIFICATE_FAKE-KISA-TSA_20251117-0406">
+                    <CertificateRef>
+                        <Origin>SIGNING_CERTIFICATE</Origin>
+                        <IssuerSerial match="true">MG0wVaRTMFExCzAJBgNVBAgMAktSMQ0wCwYDVQQKDARLSVNBMQ0wCwYDVQQLDAREQVBDMQ0wCwYDVQQLDARGQUtFMRUwEwYDVQQDDAxGQUtFLUtJU0EgQ0ECFHo3bQO7Xi1J4BMaioicAZqP/ptJ</IssuerSerial>
+                        <DigestAlgoAndValue match="true">
+                            <DigestMethod>SHA256</DigestMethod>
+                            <DigestValue>+ZHbGv4autw/i/3XZqcDbxQSydHzU7DxSLw7ii3lDiA=</DigestValue>
+                        </DigestAlgoAndValue>
+                    </CertificateRef>
+                </RelatedCertificate>
+            </FoundCertificates>
+            <FoundRevocations/>
+            <FoundEvidenceRecords/>
+            <TimestampedObjects>
+                <TimestampedObject Token="DOCUMENT_originalFile" Category="SIGNED_DATA"/>
+                <TimestampedObject Token="SIGNATURE_tester2_20251201-0714" Category="SIGNATURE"/>
+                <TimestampedObject Token="CERTIFICATE_tester2_20251117-0407" Category="CERTIFICATE"/>
+            </TimestampedObjects>
+            <TimestampScopes/>
+            <DigestAlgoAndValue>
+                <DigestMethod>SHA256</DigestMethod>
+                <DigestValue>p6nboUv90VjTfJPa0+lEKxx6S32m64tkEYzVtjHxuUU=</DigestValue>
+            </DigestAlgoAndValue>
+        </Timestamp>
+        <Timestamp Type="ARCHIVE_TIMESTAMP" Id="TIMESTAMP_FAKE-KISA-TSA_20251201-0714_2">
+            <ArchiveTimestampType>JAdES</ArchiveTimestampType>
+            <ProductionTime>2025-12-01T07:14:10Z</ProductionTime>
+            <DigestMatcher type="MESSAGE_IMPRINT">
+                <DigestMethod>SHA512</DigestMethod>
+                <DigestValue>X6T7EPGACF4Q05l9Q8o9Q7IXKl229BuphZrkKKSvKI+82tZU2d7F6mMWIEAlyPO2MAQwgqSn7f8eUd8yBciz6Q==</DigestValue>
+                <DataFound>true</DataFound>
+                <DataIntact>true</DataIntact>
+            </DigestMatcher>
+            <BasicSignature>
+                <EncryptionAlgoUsedToSignThisToken>RSA</EncryptionAlgoUsedToSignThisToken>
+                <KeyLengthUsedToSignThisToken>4096</KeyLengthUsedToSignThisToken>
+                <DigestAlgoUsedToSignThisToken>SHA256</DigestAlgoUsedToSignThisToken>
+                <SignatureIntact>true</SignatureIntact>
+                <SignatureValid>true</SignatureValid>
+            </BasicSignature>
+            <SigningCertificate Certificate="CERTIFICATE_FAKE-KISA-TSA_20251117-0406"/>
+            <CertificateChain>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-TSA_20251117-0406"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-CA_20251117-0404"/>
+                <ChainItem Certificate="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505"/>
+            </CertificateChain>
+            <SignerInformationStore>
+                <SignerInfo Current="true">
+                    <IssuerName>CN=FAKE-KISA CA, OU=FAKE, OU=DAPC, O=KISA, ST=KR</IssuerName>
+                    <SerialNumber>697732911535495898536845197015655348455715281737</SerialNumber>
+                </SignerInfo>
+            </SignerInformationStore>
+            <FoundCertificates>
+                <RelatedCertificate Certificate="CERTIFICATE_FAKE-KISA-TSA_20251117-0406">
+                    <CertificateRef>
+                        <Origin>SIGNING_CERTIFICATE</Origin>
+                        <IssuerSerial match="true">MG0wVaRTMFExCzAJBgNVBAgMAktSMQ0wCwYDVQQKDARLSVNBMQ0wCwYDVQQLDAREQVBDMQ0wCwYDVQQLDARGQUtFMRUwEwYDVQQDDAxGQUtFLUtJU0EgQ0ECFHo3bQO7Xi1J4BMaioicAZqP/ptJ</IssuerSerial>
+                        <DigestAlgoAndValue match="true">
+                            <DigestMethod>SHA256</DigestMethod>
+                            <DigestValue>+ZHbGv4autw/i/3XZqcDbxQSydHzU7DxSLw7ii3lDiA=</DigestValue>
+                        </DigestAlgoAndValue>
+                    </CertificateRef>
+                </RelatedCertificate>
+            </FoundCertificates>
+            <FoundRevocations/>
+            <FoundEvidenceRecords/>
+            <TimestampedObjects>
+                <TimestampedObject Token="DOCUMENT_originalFile" Category="SIGNED_DATA"/>
+                <TimestampedObject Token="SIGNATURE_tester2_20251201-0714" Category="SIGNATURE"/>
+                <TimestampedObject Token="CERTIFICATE_tester2_20251117-0407" Category="CERTIFICATE"/>
+                <TimestampedObject Token="TIMESTAMP_FAKE-KISA-TSA_20251201-0714" Category="TIMESTAMP"/>
+                <TimestampedObject Token="CERTIFICATE_FAKE-KISA-TSA_20251117-0406" Category="CERTIFICATE"/>
+                <TimestampedObject Token="CERTIFICATE_FAKE-KISA-CA_20251117-0404" Category="CERTIFICATE"/>
+                <TimestampedObject Token="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505" Category="CERTIFICATE"/>
+                <TimestampedObject Token="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406" Category="CERTIFICATE"/>
+                <TimestampedObject Token="OCSP_FAKE-KISA-OCSP_20251201-0714" Category="REVOCATION"/>
+            </TimestampedObjects>
+            <TimestampScopes>
+                <TimestampScope SignerData="DOCUMENT_originalFile">
+                    <Scope>FULL</Scope>
+                    <Name>originalFile</Name>
+                    <Description>Full document</Description>
+                </TimestampScope>
+            </TimestampScopes>
+            <DigestAlgoAndValue>
+                <DigestMethod>SHA256</DigestMethod>
+                <DigestValue>otdRpPIdjf+wiMcsZbrhLqv708M9N4sOP694G55Ym9c=</DigestValue>
+            </DigestAlgoAndValue>
+        </Timestamp>
+    </UsedTimestamps>
+    <OriginalDocuments>
+        <SignerData Id="DOCUMENT_originalFile">
+            <ReferencedName>originalFile</ReferencedName>
+            <DigestAlgoAndValue>
+                <DigestMethod>SHA256</DigestMethod>
+                <DigestValue>+ZDVVw/ZJ7MEjXPlt9dwCMZv3akpWcWe5GLNtt+5b28=</DigestValue>
+            </DigestAlgoAndValue>
+        </SignerData>
+    </OriginalDocuments>
+    <TrustedLists/>
+</DiagnosticData>

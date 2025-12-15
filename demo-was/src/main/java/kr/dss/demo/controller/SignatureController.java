@@ -33,12 +33,8 @@ public class SignatureController extends AbstractSignatureController{
     private static final String[] ALLOWED_FIELDS = { "documentToSign", "containerType", "signatureForm", "signaturePackaging",
             "signatureLevel", "digestAlgorithm", "signWithExpiredCertificate", "addContentTimestamp" };
 
-
     @Autowired
     private SigningService signingService;
-
-
-
 
     @RequestMapping(value = "/sign-document", method = RequestMethod.POST)
     @ResponseBody

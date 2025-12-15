@@ -21,18 +21,18 @@ public class CRLController {
     private OCSPService ocspService;
     private static final Logger LOG = LoggerFactory.getLogger(CRLController.class);
 
-    @GetMapping(consumes= "application/crl")
+    @GetMapping(produces = "application/pkix-crl")
     public ResponseEntity<byte[]> checkCRL() {
         try {
             //search CRL
             byte[] responseBytes = ocspService.searchCRL();
 
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.parseMediaType("application/crl"));
+            headers.setContentType(MediaType.parseMediaType("application/pkix-crl"));
+            headers.setContentLength(responseBytes.length);
 
-            LOG.info("CRL response generated ({} bytes)", responseBytes.length);
+            LOG.info("CRL Check");
 
-            //return Certificate Revocation Lists
             return new ResponseEntity<>(responseBytes, headers, HttpStatus.OK);
         } catch (Exception e) {
             LOG.error("CRL Error", e);
@@ -40,4 +40,5 @@ public class CRLController {
                     .body(("CRL error : " + e.getMessage()).getBytes());
         }
     }
+
 }

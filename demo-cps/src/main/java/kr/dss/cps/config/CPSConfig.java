@@ -10,6 +10,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.Security;
 import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509CRL;
 import java.security.cert.X509Certificate;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -22,6 +24,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
 import kr.dss.cps.CPSException;
+import org.springframework.core.io.Resource;
 
 @Configuration
 public class CPSConfig {
@@ -129,5 +132,30 @@ public class CPSConfig {
 		}
 	}
 
+	@Bean(name = "crl")
+	public X509CRL crl() throws CPSException {
+		try {
+			// 1) CRL 파일 경로 또는 classpath 기반 (필요하면 외부에서 주입 가능)
+			// 예: "classpath:crl/rootca.crl"
+			Resource resource = new ClassPathResource(crlPath);
 
+//			if (!resource.exists()) {
+//				throw new CPSException("CRL file not found at path: " + resource.getDescription());
+//			}
+
+			// 2) CRL 파싱
+			CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
+			X509CRL crl = (X509CRL) certFactory.generateCRL(resource.getInputStream());
+
+			LOG.info("Loaded CRL: issuer={}, thisUpdate={}, nextUpdate={}",
+					crl.getIssuerX500Principal(),
+					crl.getThisUpdate(),
+					crl.getNextUpdate());
+
+			return crl;
+
+		} catch (Exception e) {
+			throw new CPSException("Failed to load CRL file: " + e.getMessage(), e);
+		}
+	}
 }

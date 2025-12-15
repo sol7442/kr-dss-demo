@@ -1,6 +1,7 @@
 package kr.dss.demo.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import eu.europa.esig.dss.detailedreport.DetailedReport;
 import eu.europa.esig.dss.diagnostic.CertificateWrapper;
 import eu.europa.esig.dss.diagnostic.DiagnosticData;
 import eu.europa.esig.dss.diagnostic.DiagnosticDataFacade;
@@ -18,14 +19,17 @@ import eu.europa.esig.dss.spi.DSSUtils;
 import eu.europa.esig.dss.spi.policy.SignaturePolicyProvider;
 import eu.europa.esig.dss.spi.validation.CertificateVerifier;
 import eu.europa.esig.dss.spi.validation.CertificateVerifierBuilder;
+import eu.europa.esig.dss.spi.validation.CommonCertificateVerifier;
 import eu.europa.esig.dss.spi.x509.CertificateSource;
 import eu.europa.esig.dss.spi.x509.CommonCertificateSource;
+import eu.europa.esig.dss.spi.x509.CommonTrustedCertificateSource;
 import eu.europa.esig.dss.utils.Utils;
 import eu.europa.esig.dss.validation.DocumentValidator;
 import eu.europa.esig.dss.validation.SignedDocumentValidator;
 import eu.europa.esig.dss.validation.identifier.UserFriendlyIdentifierProvider;
 import eu.europa.esig.dss.validation.policy.ValidationPolicyLoader;
 import eu.europa.esig.dss.validation.reports.Reports;
+import jakarta.xml.soap.Detail;
 import kr.dss.demo.WebAppUtils;
 import kr.dss.demo.dto.VerifySignedDocRequest;
 import kr.dss.demo.dto.VerifySignedDocResponse;
@@ -65,9 +69,9 @@ import java.util.List;
 import java.util.Locale;
 
 @Controller
+@SessionAttributes(value={"ValidationForm"})
 @RequestMapping(value = "/kr-dss")
 public class ValidationController extends AbstractValidationController {
-
 	private static final Logger LOG = LoggerFactory.getLogger(ValidationController.class);
 
 	private static final String VALIDATION_TILE = "validation";
@@ -84,6 +88,9 @@ public class ValidationController extends AbstractValidationController {
 	@Autowired
 	private Resource defaultPolicy;
 //	private boolean defaultPolicy;
+
+	@Autowired
+	private CommonTrustedCertificateSource userCertificateSource;
 
 	@Autowired
 	protected SignaturePolicyProvider signaturePolicyProvider;
@@ -111,6 +118,7 @@ public class ValidationController extends AbstractValidationController {
 
 
 	@PostMapping(value = "/verify-signature", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
 	public VerifySignedDocResponse verifySignature(
 			@Valid @RequestBody VerifySignedDocRequest verifySignedDocRequest,
 			HttpServletRequest request
@@ -118,46 +126,40 @@ public class ValidationController extends AbstractValidationController {
 
 		LOG.info("request : {}", verifySignedDocRequest.toString());
 
+		VerifySignedDocResponse response = new VerifySignedDocResponse();
+
 		// 0. request -> form
 		ValidationForm form = ValidationFormMapper.toVerifyDocumentForm(verifySignedDocRequest);
-		LOG.info("form   : {}", form.toString());
 
 		//--------------------------------------------------
-		//sign 파일 로딩
 		SignedDocumentValidator documentValidator = SignedDocumentValidator
 				.fromDocument(WebAppUtils.toDSSDocument(form.getSignedFile()));
-		//검증자 세팅
 		documentValidator.setCertificateVerifier(getCertificateVerifier(form));
 
-		//타임스탬프 토큰 <-- TSA 인증서
 		documentValidator.setTokenExtractionStrategy(TokenExtractionStrategy.fromParameters(form.isIncludeCertificateTokens(),
 				form.isIncludeTimestampTokens(), form.isIncludeRevocationTokens(), false));
 
-		//IncludeSemantics
 		documentValidator.setIncludeSemantics(form.isIncludeSemantics());
 
-		//서명 정책 세팅(defaultPolicy or InputPolicyFile)
+		//defaultPolicy (or If exists InputPolicyFile, then modify code that use it.)
 		documentValidator.setSignaturePolicyProvider(signaturePolicyProvider);
 
-		//서명 레벨 세팅(default = B or InputValidationLevel)
+		//InputValidationLevel
 		documentValidator.setValidationLevel(form.getValidationLevel());
 
-		//검증 시간 세팅
 		documentValidator.setValidationTime(getValidationTime(form));
 
-		//User-friendly identifiers 세팅
 		TokenIdentifierProvider identifierProvider = form.isIncludeUserFriendlyIdentifiers() ?
 				new UserFriendlyIdentifierProvider() : new OriginalIdentifierProvider();
 		documentValidator.setTokenIdentifierProvider(identifierProvider);
 
-		//입력 받은 서명 인증서 세팅(optional)
-		setSigningCertificate(documentValidator, form);
+		documentValidator.setSigningCertificateSource(userCertificateSource);
 
-		//입력 받은 Adjunct 인증서 세팅(optional)
-		setDetachedContents(documentValidator, form); //maxUploadFile ...
+		//if exists adjunct cert through input, then set the cert.(optional)
+		//setDetachedContents(documentValidator, form);
 
-		//입력 받은 Evidence Records 세팅(optional)
-		setDetachedEvidenceRecords(documentValidator, form);
+		//if exists Evidence Records through input, then set the ERs.(optional)
+		//setDetachedEvidenceRecords(documentValidator, form);
 
 		Locale locale = request.getLocale();
 		LOG.trace("Requested locale : {}", locale);
@@ -165,25 +167,36 @@ public class ValidationController extends AbstractValidationController {
 			locale = Locale.getDefault();
 			LOG.warn("The request locale is null! Use the default one : {}", locale);
 		}
-		//로컬 세팅
 		documentValidator.setLocale(locale);
 
-		// TODO - Insert Validation-data in Reports ...
 		Reports reports = validate(documentValidator, form);
 
-		VerifySignedDocResponse response = new VerifySignedDocResponse();
-
-		//TODO - Convert Validation Report To Custom KR Report
-		//indication, message, ... 필요 데이터 추출 -> 활용하는 방향
 		SimpleReport euSimple = reports.getSimpleReport();
+
 		String tokenId = euSimple.getFirstSignatureId();
 		Indication indication = euSimple.getIndication(tokenId);
+		SubIndication subIndication = euSimple.getSubIndication(tokenId);
 		boolean isValid = euSimple.isValid(tokenId);
-		String msg = euSimple.getAdESValidationInfo(tokenId).toString();
 
-		response.setMessage(indication.toString(), "[SUCCESS] "+msg);
+		String msg;
+		if (indication.toString().equals("TOTAL_PASSED")) {
+			msg = "[SUCCESS] ";
+		} else {
+			msg = "["+indication+"] "+ subIndication;
+		}
+//		response.setMessage(indication.toString(), msg);
+		response.setSimpleReport(reports);
+		response.setDetailedReport(reports);
+//		response.setDiagnosticDate(reports);
 		response.setValid(isValid);
 
+		//2025.11.18_sujin - purpose : print reports at Front-End
+		// response.setReports(reports);
+		LOG.info("{}, {}, {} ", indication, subIndication, isValid);
+//		LOG.info("response.getSimple : {}", response.getSimpleReport());
+//		LOG.info("response.getDetailedReport : {}", response.getDetailedReport());
+//		LOG.info("response.getDiagnosticTree : {}", response.getDiagnosticTree());
+//		LOG.info("response.getEtsiValidationReport : {}", response.getETSIValidationReport());
 		return response;
 	}
 
@@ -221,6 +234,34 @@ public class ValidationController extends AbstractValidationController {
 	}
 
 	private CertificateVerifier getCertificateVerifier(ValidationForm certValidationForm) {
+
+		List<CertificateToken> user_certs = userCertificateSource.getCertificates();//.getByEntityKey(new EntityIdentifier(userSourceAlias.getBytes()));
+		CertificateToken signingCertificate = user_certs.get(0);
+		CertificateToken issuerCertificate = certificateVerifier.getTrustedCertSources().getBySubject(signingCertificate.getIssuer()).iterator().next();
+		CertificateToken rootCertificate = certificateVerifier.getTrustedCertSources().getBySubject(issuerCertificate.getIssuer()).iterator().next();
+
+		CommonCertificateVerifier verifier = new CommonCertificateVerifier();
+
+		verifier.setTrustedCertSources(certificateVerifier.getTrustedCertSources());
+		verifier.setAdjunctCertSources(certificateVerifier.getAdjunctCertSources());
+		verifier.setCrlSource(certificateVerifier.getCrlSource());
+		verifier.setOcspSource(certificateVerifier.getOcspSource());
+		verifier.setAIASource(certificateVerifier.getAIASource());
+
+		CommonTrustedCertificateSource trusted = new CommonTrustedCertificateSource();
+		trusted.addCertificate(rootCertificate);
+		verifier.setTrustedCertSources(trusted);
+
+		CommonCertificateSource adjunctSource = new CommonCertificateSource();
+		adjunctSource.addCertificate(issuerCertificate);
+		adjunctSource.addCertificate(signingCertificate);
+		verifier.setAdjunctCertSources(adjunctSource);
+
+		LOG.info("verifier.getCrt : {}",verifier.getTrustedCertSources().toString());
+		LOG.info("verifier.getAdjunctCert : {} ",verifier.getAdjunctCertSources().toString());
+		return verifier;
+
+		/*
 		CertificateSource adjunctCertSource = WebAppUtils.toCertificateSource(certValidationForm.getAdjunctCertificates());
 
 		CertificateVerifier cv;
@@ -233,6 +274,7 @@ public class ValidationController extends AbstractValidationController {
 		}
 
 		return cv;
+		 */
 	}
 
 	//검증 로직(상세)

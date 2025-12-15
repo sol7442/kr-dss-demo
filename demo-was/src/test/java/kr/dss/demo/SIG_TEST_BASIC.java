@@ -8,9 +8,10 @@ import eu.europa.esig.dss.model.identifier.TokenIdentifierProvider;
 import eu.europa.esig.dss.model.x509.CertificateToken;
 import eu.europa.esig.dss.spi.policy.SignaturePolicyProvider;
 import eu.europa.esig.dss.spi.validation.CertificateVerifier;
-import eu.europa.esig.dss.spi.validation.CertificateVerifierBuilder;
+import eu.europa.esig.dss.spi.validation.CommonCertificateVerifier;
 import eu.europa.esig.dss.spi.x509.CertificateSource;
 import eu.europa.esig.dss.spi.x509.CommonCertificateSource;
+import eu.europa.esig.dss.spi.x509.CommonTrustedCertificateSource;
 import eu.europa.esig.dss.utils.Utils;
 import eu.europa.esig.dss.validation.DocumentValidator;
 import eu.europa.esig.dss.validation.SignedDocumentValidator;
@@ -32,19 +33,21 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 import static eu.europa.esig.dss.enumerations.ASiCContainerType.ASiC_E;
 import static eu.europa.esig.dss.enumerations.ASiCContainerType.ASiC_S;
 import static java.util.Locale.KOREA;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class SIG_TEST_BASIC {
@@ -58,6 +61,9 @@ public class SIG_TEST_BASIC {
 
     @Autowired
     protected SignaturePolicyProvider signaturePolicyProvider;
+
+    @Autowired
+    private CommonTrustedCertificateSource userCertificateSource;
 
     private static final Map<SignatureLevel, ValidationLevel> LEVEL_MAPPING =
             Map.ofEntries(
@@ -147,7 +153,7 @@ public class SIG_TEST_BASIC {
                 LOG.info("SUCCESS {}.{}.{}.{}", signatureDocumentForm.getSignatureForm(), signatureDocumentForm.getSignaturePackaging(),
                         signatureDocumentForm.getSignatureLevel(), signatureDocumentForm.getDigestAlgorithm());
 
-                String outputPath = "src/test/resources/output/XAdES/signed-"+signatureDocumentForm.getSignatureForm()+"-"+signatureDocumentForm.getSignaturePackaging()+"-"+
+                String outputPath = "src/test/resources/output/XAdES/data/signed-"+signatureDocumentForm.getSignatureForm()+"-"+signatureDocumentForm.getSignaturePackaging()+"-"+
                         signatureDocumentForm.getSignatureLevel()+"-"+signatureDocumentForm.getDigestAlgorithm().getName()+".xml";
                 Path outputFile = Paths.get(outputPath);
                 Files.createDirectories(outputFile.getParent());
@@ -176,6 +182,7 @@ public class SIG_TEST_BASIC {
 
                 //1. load file(signed-document)
                 String outputPath = "src/test/resources/output/XAdES/";
+                String testFileName = "signed-"+"XAdES"+"-"+var+"-"+lev+"-"+"SHA512"+".xml";
                 String testFile = "signed-"+"XAdES"+"-"+var+"-"+lev+"-"+"SHA512"+".xml";
 
                 Path path = Paths.get("src/test/resources/" + fileName);
@@ -186,7 +193,7 @@ public class SIG_TEST_BASIC {
                         null,
                         content
                 );
-                path = Paths.get(outputPath+testFile);
+                path = Paths.get(outputPath+"data/"+testFile);
                 byte[] signContent = Files.readAllBytes(path);
                 MultipartFile signatures = new MockMultipartFile(
                         "signatureBase64",
@@ -209,7 +216,6 @@ public class SIG_TEST_BASIC {
 
                 documentValidator.setCertificateVerifier(getCertificateVerifier(validationForm));
 
-                //타임스탬프 토큰 <-- TSA 인증서
                 documentValidator.setTokenExtractionStrategy(TokenExtractionStrategy.fromParameters(validationForm.isIncludeCertificateTokens(),
                         validationForm.isIncludeTimestampTokens(), validationForm.isIncludeRevocationTokens(), false));
 
@@ -225,19 +231,12 @@ public class SIG_TEST_BASIC {
                         new UserFriendlyIdentifierProvider() : new OriginalIdentifierProvider();
                 documentValidator.setTokenIdentifierProvider(identifierProvider);
 
-                setSigningCertificate(documentValidator, validationForm);
-
-                setDetachedContents(documentValidator, validationForm); //maxUploadFile ...
-
+                documentValidator.setSigningCertificateSource(userCertificateSource);
+                //------------------------------------
+                setDetachedContents(documentValidator, validationForm);
                 setDetachedEvidenceRecords(documentValidator, validationForm);
 
-                Locale locale = KOREA;
-                LOG.trace("Requested locale : {}", locale);
-                if (locale == null) {
-                    locale = Locale.getDefault();
-                    LOG.warn("The request locale is null! Use the default one : {}", locale);
-                }
-                documentValidator.setLocale(locale);
+                documentValidator.setLocale(KOREA);
 
                 Reports reports = validate(documentValidator, validationForm);
 
@@ -246,10 +245,10 @@ public class SIG_TEST_BASIC {
                 Indication indication = reports.getSimpleReport().getIndication(tokenId);
 
                 LOG.info("subIndication : {}", reports.getDetailedReport().getFinalSubIndication(tokenId));
+                LOG.info("{} / VERIFY XAdES : {}, {}, {}",  indication.toString(), isValid, indication.toString(), testFile);
 
-                LOG.info("SUCCESS VERIFY XAdES : {}, {}, {}", isValid, indication.toString(), testFile);
-                assertNotNull(reports.getXmlSimpleReport());
-                assertFalse(isValid);
+                assertTrue(isValid);
+                downloadReports(outputPath, testFileName, reports);
             }
         }
     }
@@ -296,7 +295,7 @@ public class SIG_TEST_BASIC {
                 LOG.info("SUCCESS {}.{}.{}.{}", signatureDocumentForm.getSignatureForm(), signatureDocumentForm.getSignaturePackaging(),
                         signatureDocumentForm.getSignatureLevel(), signatureDocumentForm.getDigestAlgorithm());
 
-                String outputPath = "src/test/resources/output/CAdES/signed-"+signatureDocumentForm.getSignatureForm()+"-"+signatureDocumentForm.getSignaturePackaging()+"-"+
+                String outputPath = "src/test/resources/output/CAdES/data/signed-"+signatureDocumentForm.getSignatureForm()+"-"+signatureDocumentForm.getSignaturePackaging()+"-"+
                         signatureDocumentForm.getSignatureLevel()+"-"+signatureDocumentForm.getDigestAlgorithm().getName()+".p7m";
                 Path outputFile = Paths.get(outputPath);
                 Files.createDirectories(outputFile.getParent());
@@ -325,6 +324,7 @@ public class SIG_TEST_BASIC {
 
                 //1. load file(signed-document)
                 String outputPath = "src/test/resources/output/CAdES/";
+                String testFileName ="signed-"+"CAdES"+"-"+var+"-"+lev+"-"+"SHA512"+".xml";
                 String testFile = "signed-"+"CAdES"+"-"+var+"-"+lev+"-"+"SHA512"+".p7m";
 
                 Path path = Paths.get("src/test/resources/" + fileName);
@@ -335,7 +335,7 @@ public class SIG_TEST_BASIC {
                         null,
                         content
                 );
-                path = Paths.get(outputPath+testFile);
+                path = Paths.get(outputPath+"data/"+testFile);
                 byte[] signContent = Files.readAllBytes(path);
                 MultipartFile signatures = new MockMultipartFile(
                         "signatureBase64",
@@ -358,7 +358,6 @@ public class SIG_TEST_BASIC {
 
                 documentValidator.setCertificateVerifier(getCertificateVerifier(validationForm));
 
-                //타임스탬프 토큰 <-- TSA 인증서
                 documentValidator.setTokenExtractionStrategy(TokenExtractionStrategy.fromParameters(validationForm.isIncludeCertificateTokens(),
                         validationForm.isIncludeTimestampTokens(), validationForm.isIncludeRevocationTokens(), false));
 
@@ -374,19 +373,12 @@ public class SIG_TEST_BASIC {
                         new UserFriendlyIdentifierProvider() : new OriginalIdentifierProvider();
                 documentValidator.setTokenIdentifierProvider(identifierProvider);
 
-                setSigningCertificate(documentValidator, validationForm);
-
-                setDetachedContents(documentValidator, validationForm); //maxUploadFile ...
-
+                documentValidator.setSigningCertificateSource(userCertificateSource);
+                //------------------------------------
+                setDetachedContents(documentValidator, validationForm);
                 setDetachedEvidenceRecords(documentValidator, validationForm);
 
-                Locale locale = KOREA;
-                LOG.trace("Requested locale : {}", locale);
-                if (locale == null) {
-                    locale = Locale.getDefault();
-                    LOG.warn("The request locale is null! Use the default one : {}", locale);
-                }
-                documentValidator.setLocale(locale);
+                documentValidator.setLocale(KOREA);
 
                 Reports reports = validate(documentValidator, validationForm);
 
@@ -395,10 +387,10 @@ public class SIG_TEST_BASIC {
                 Indication indication = reports.getSimpleReport().getIndication(tokenId);
 
                 LOG.info("subIndication : {}", reports.getDetailedReport().getFinalSubIndication(tokenId));
+                LOG.info("{} / VERIFY CAdES : {}, {}, {}",  indication.toString(), isValid, indication.toString(), testFile);
 
-                LOG.info("SUCCESS VERIFY CAdES : {}, {}, {}", isValid, indication.toString(), testFile);
-                assertNotNull(reports.getXmlSimpleReport());
-                assertFalse(isValid);
+                assertTrue(isValid);
+                downloadReports(outputPath, testFileName, reports);
             }
         }
     }
@@ -444,7 +436,7 @@ public class SIG_TEST_BASIC {
                 LOG.info("SUCCESS {}.{}.{}.{}", signatureDocumentForm.getSignatureForm(), signatureDocumentForm.getSignaturePackaging(),
                         signatureDocumentForm.getSignatureLevel(), signatureDocumentForm.getDigestAlgorithm());
 
-                String outputPath = "src/test/resources/output/PAdES/signed-"+signatureDocumentForm.getSignatureForm()+"-"+signatureDocumentForm.getSignaturePackaging()+"-"+
+                String outputPath = "src/test/resources/output/PAdES/data/signed-"+signatureDocumentForm.getSignatureForm()+"-"+signatureDocumentForm.getSignaturePackaging()+"-"+
                         signatureDocumentForm.getSignatureLevel()+"-"+signatureDocumentForm.getDigestAlgorithm().getName()+".pdf";
                 Path outputFile = Paths.get(outputPath);
                 Files.createDirectories(outputFile.getParent());
@@ -472,6 +464,7 @@ public class SIG_TEST_BASIC {
 
                 //1. load file(signed-document)
                 String outputPath = "src/test/resources/output/PAdES/";
+                String testFileName ="signed-" + "PAdES" + "-" + var + "-" + lev + "-" + "SHA512" +".xml";
                 String testFile = "signed-" + "PAdES" + "-" + var + "-" + lev + "-" + "SHA512" + ".pdf";
 
                 Path path = Paths.get("src/test/resources/" + fileName);
@@ -482,7 +475,7 @@ public class SIG_TEST_BASIC {
                         null,
                         content
                 );
-                path = Paths.get(outputPath + testFile);
+                path = Paths.get(outputPath + "data/" + testFile);
                 byte[] signContent = Files.readAllBytes(path);
                 MultipartFile signatures = new MockMultipartFile(
                         "signatureBase64",
@@ -505,7 +498,6 @@ public class SIG_TEST_BASIC {
 
                 documentValidator.setCertificateVerifier(getCertificateVerifier(validationForm));
 
-                //타임스탬프 토큰 <-- TSA 인증서
                 documentValidator.setTokenExtractionStrategy(TokenExtractionStrategy.fromParameters(validationForm.isIncludeCertificateTokens(),
                         validationForm.isIncludeTimestampTokens(), validationForm.isIncludeRevocationTokens(), false));
 
@@ -521,19 +513,12 @@ public class SIG_TEST_BASIC {
                         new UserFriendlyIdentifierProvider() : new OriginalIdentifierProvider();
                 documentValidator.setTokenIdentifierProvider(identifierProvider);
 
-                setSigningCertificate(documentValidator, validationForm);
-
-                setDetachedContents(documentValidator, validationForm); //maxUploadFile ...
-
+                documentValidator.setSigningCertificateSource(userCertificateSource);
+                //------------------------------------
+                setDetachedContents(documentValidator, validationForm);
                 setDetachedEvidenceRecords(documentValidator, validationForm);
 
-                Locale locale = KOREA;
-                LOG.trace("Requested locale : {}", locale);
-                if (locale == null) {
-                    locale = Locale.getDefault();
-                    LOG.warn("The request locale is null! Use the default one : {}", locale);
-                }
-                documentValidator.setLocale(locale);
+                documentValidator.setLocale(KOREA);
 
                 Reports reports = validate(documentValidator, validationForm);
 
@@ -542,11 +527,10 @@ public class SIG_TEST_BASIC {
                 Indication indication = reports.getSimpleReport().getIndication(tokenId);
 
                 LOG.info("subIndication : {}", reports.getDetailedReport().getFinalSubIndication(tokenId));
+                LOG.info("{} / VERIFY PAdES : {}, {}, {}",  indication.toString(), isValid, indication.toString(), testFile);
 
-                LOG.info("SUCCESS VERIFY PAdES : {}, {}, {}", isValid, indication.toString(), testFile);
-                assertNotNull(reports.getXmlSimpleReport());
-                assertFalse(isValid);
-
+                assertTrue(isValid);
+                downloadReports(outputPath, testFileName, reports);
             }
         }
     }
@@ -593,7 +577,7 @@ public class SIG_TEST_BASIC {
                 LOG.info("SUCCESS {}.{}.{}.{}", signatureDocumentForm.getSignatureForm(), signatureDocumentForm.getSignaturePackaging(),
                         signatureDocumentForm.getSignatureLevel(), signatureDocumentForm.getDigestAlgorithm());
 
-                String outputPath = "src/test/resources/output/JAdES/signed-"+signatureDocumentForm.getSignatureForm()+"-"+signatureDocumentForm.getSignaturePackaging()+"-"+
+                String outputPath = "src/test/resources/output/JAdES/data/signed-"+signatureDocumentForm.getSignatureForm()+"-"+signatureDocumentForm.getSignaturePackaging()+"-"+
                         signatureDocumentForm.getSignatureLevel()+"-"+signatureDocumentForm.getDigestAlgorithm().getName()+".json";
                 Path outputFile = Paths.get(outputPath);
                 Files.createDirectories(outputFile.getParent());
@@ -621,6 +605,7 @@ public class SIG_TEST_BASIC {
 
                 //1. load file(signed-document)
                 String outputPath = "src/test/resources/output/JAdES/";
+                String testFileName ="signed-"+"JAdES"+"-"+var+"-"+lev+"-"+"SHA512"+".xml";
                 String testFile = "signed-"+"JAdES"+"-"+var+"-"+lev+"-"+"SHA512"+".json";
 
                 Path path = Paths.get("src/test/resources/" + fileName);
@@ -631,7 +616,7 @@ public class SIG_TEST_BASIC {
                         null,
                         content
                 );
-                path = Paths.get(outputPath+testFile);
+                path = Paths.get(outputPath+"data/"+testFile);
                 byte[] signContent = Files.readAllBytes(path);
                 MultipartFile signatures = new MockMultipartFile(
                         "signatureBase64",
@@ -654,7 +639,6 @@ public class SIG_TEST_BASIC {
 
                 documentValidator.setCertificateVerifier(getCertificateVerifier(validationForm));
 
-                //타임스탬프 토큰 <-- TSA 인증서
                 documentValidator.setTokenExtractionStrategy(TokenExtractionStrategy.fromParameters(validationForm.isIncludeCertificateTokens(),
                         validationForm.isIncludeTimestampTokens(), validationForm.isIncludeRevocationTokens(), false));
 
@@ -670,19 +654,12 @@ public class SIG_TEST_BASIC {
                         new UserFriendlyIdentifierProvider() : new OriginalIdentifierProvider();
                 documentValidator.setTokenIdentifierProvider(identifierProvider);
 
-                setSigningCertificate(documentValidator, validationForm);
-
-                setDetachedContents(documentValidator, validationForm); //maxUploadFile ...
-
+                documentValidator.setSigningCertificateSource(userCertificateSource);
+                //-----------------------------------------------
+                setDetachedContents(documentValidator, validationForm);
                 setDetachedEvidenceRecords(documentValidator, validationForm);
 
-                Locale locale = KOREA;
-                LOG.trace("Requested locale : {}", locale);
-                if (locale == null) {
-                    locale = Locale.getDefault();
-                    LOG.warn("The request locale is null! Use the default one : {}", locale);
-                }
-                documentValidator.setLocale(locale);
+                documentValidator.setLocale(KOREA);
 
                 Reports reports = validate(documentValidator, validationForm);
 
@@ -691,10 +668,10 @@ public class SIG_TEST_BASIC {
                 Indication indication = reports.getSimpleReport().getIndication(tokenId);
 
                 LOG.info("subIndication : {}", reports.getDetailedReport().getFinalSubIndication(tokenId));
+                LOG.info("{} / VERIFY JAdES : {}, {}, {}",  indication.toString(), isValid, indication.toString(), testFile);
 
-                LOG.info("SUCCESS VERIFY JAdES : {}, {}, {}", isValid, indication.toString(), testFile);
-                assertNotNull(reports.getXmlSimpleReport());
-                assertFalse(isValid);
+                assertTrue(isValid);
+                downloadReports(outputPath, testFileName, reports);
             }
         }
 
@@ -754,7 +731,7 @@ public class SIG_TEST_BASIC {
                     LOG.info("SUCCESS {}.{}.{}.{}", signatureDocumentForm.getSignatureForm(), signatureDocumentForm.getSignaturePackaging(),
                             signatureDocumentForm.getSignatureLevel(), signatureDocumentForm.getDigestAlgorithm());
 
-                    String outputPath = "src/test/resources/output/ASiC-S/signed-"+"ASiC-S"+"-"+signatureDocumentForm.getSignaturePackaging()+"-"+
+                    String outputPath = "src/test/resources/output/ASiC-S/data/signed-"+"ASiC-S"+"-"+signatureDocumentForm.getSignaturePackaging()+"-"+
                             signatureDocumentForm.getSignatureLevel()+"-"+signatureDocumentForm.getDigestAlgorithm().getName()+".scs";
                     Path outputFile = Paths.get(outputPath);
                     Files.createDirectories(outputFile.getParent());
@@ -792,6 +769,7 @@ public class SIG_TEST_BASIC {
 
                     //1. load file(signed-document)
                     String outputPath = "src/test/resources/output/ASiC-S/";
+                    String testFileName = "signed-"+"ASiC-S"+"-"+var+"-"+lev+"-"+"SHA512"+".xml";
                     String testFile = "signed-"+"ASiC-S"+"-"+var+"-"+lev+"-"+"SHA512"+".scs";
                     LOG.info("testFile: {} ", testFile);
 
@@ -803,7 +781,7 @@ public class SIG_TEST_BASIC {
                             null,
                             content
                     );
-                    path = Paths.get(outputPath+testFile);
+                    path = Paths.get(outputPath+"data/"+testFile);
                     byte[] signContent = Files.readAllBytes(path);
                     MultipartFile signatures = new MockMultipartFile(
                             "signatureBase64",
@@ -826,7 +804,6 @@ public class SIG_TEST_BASIC {
 
                     documentValidator.setCertificateVerifier(getCertificateVerifier(validationForm));
 
-                    //타임스탬프 토큰 <-- TSA 인증서
                     documentValidator.setTokenExtractionStrategy(TokenExtractionStrategy.fromParameters(validationForm.isIncludeCertificateTokens(),
                             validationForm.isIncludeTimestampTokens(), validationForm.isIncludeRevocationTokens(), false));
 
@@ -842,19 +819,12 @@ public class SIG_TEST_BASIC {
                             new UserFriendlyIdentifierProvider() : new OriginalIdentifierProvider();
                     documentValidator.setTokenIdentifierProvider(identifierProvider);
 
-                    setSigningCertificate(documentValidator, validationForm);
-
-                    setDetachedContents(documentValidator, validationForm); //maxUploadFile ...
-
+                    documentValidator.setSigningCertificateSource(userCertificateSource);
+                    //------------------------------------
+                    setDetachedContents(documentValidator, validationForm);
                     setDetachedEvidenceRecords(documentValidator, validationForm);
 
-                    Locale locale = KOREA;
-                    LOG.trace("Requested locale : {}", locale);
-                    if (locale == null) {
-                        locale = Locale.getDefault();
-                        LOG.warn("The request locale is null! Use the default one : {}", locale);
-                    }
-                    documentValidator.setLocale(locale);
+                    documentValidator.setLocale(KOREA);
 
                     Reports reports = validate(documentValidator, validationForm);
 
@@ -863,10 +833,10 @@ public class SIG_TEST_BASIC {
                     Indication indication = reports.getSimpleReport().getIndication(tokenId);
 
                     LOG.info("subIndication : {}", reports.getDetailedReport().getFinalSubIndication(tokenId));
+                    LOG.info("{} / VERIFY XAdES : {}, {}, {}",  indication.toString(), isValid, indication.toString(), testFile);
 
-                    LOG.info("SUCCESS VERIFY XAdES : {}, {}, {}", isValid, indication.toString(), testFile);
-                    assertNotNull(reports.getXmlSimpleReport());
-                    assertFalse(isValid);
+                    assertTrue(isValid);
+                    downloadReports(outputPath, testFileName, reports);
                 }
             }
         }
@@ -924,7 +894,7 @@ public class SIG_TEST_BASIC {
                     LOG.info("SUCCESS {}.{}.{}.{}", signatureDocumentForm.getSignatureForm(), signatureDocumentForm.getSignaturePackaging(),
                             signatureDocumentForm.getSignatureLevel(), signatureDocumentForm.getDigestAlgorithm());
 
-                    String outputPath = "src/test/resources/output/ASiC-E/signed-"+"ASiC-E"+"-"+signatureDocumentForm.getSignaturePackaging()+"-"+
+                    String outputPath = "src/test/resources/output/ASiC-E/data/signed-"+"ASiC-E"+"-"+signatureDocumentForm.getSignaturePackaging()+"-"+
                             signatureDocumentForm.getSignatureLevel()+"-"+signatureDocumentForm.getDigestAlgorithm().getName()+".sce";
                     Path outputFile = Paths.get(outputPath);
                     Files.createDirectories(outputFile.getParent());
@@ -962,6 +932,7 @@ public class SIG_TEST_BASIC {
 
                     //1. load file(signed-document)
                     String outputPath = "src/test/resources/output/ASiC-E/";
+                    String testFileName = "signed-"+"ASiC-E"+"-"+var+"-"+lev+"-"+"SHA512"+".xml";
                     String testFile = "signed-"+"ASiC-E"+"-"+var+"-"+lev+"-"+"SHA512"+".sce";
                     LOG.info("testFile: {} ", testFile);
 
@@ -973,7 +944,7 @@ public class SIG_TEST_BASIC {
                             null,
                             content
                     );
-                    path = Paths.get(outputPath+testFile);
+                    path = Paths.get(outputPath+"data/"+testFile);
                     byte[] signContent = Files.readAllBytes(path);
                     MultipartFile signatures = new MockMultipartFile(
                             "signatureBase64",
@@ -996,7 +967,6 @@ public class SIG_TEST_BASIC {
 
                     documentValidator.setCertificateVerifier(getCertificateVerifier(validationForm));
 
-                    //타임스탬프 토큰 <-- TSA 인증서
                     documentValidator.setTokenExtractionStrategy(TokenExtractionStrategy.fromParameters(validationForm.isIncludeCertificateTokens(),
                             validationForm.isIncludeTimestampTokens(), validationForm.isIncludeRevocationTokens(), false));
 
@@ -1012,19 +982,12 @@ public class SIG_TEST_BASIC {
                             new UserFriendlyIdentifierProvider() : new OriginalIdentifierProvider();
                     documentValidator.setTokenIdentifierProvider(identifierProvider);
 
-                    setSigningCertificate(documentValidator, validationForm);
-
-                    setDetachedContents(documentValidator, validationForm); //maxUploadFile ...
-
+                    documentValidator.setSigningCertificateSource(userCertificateSource);
+                    //------------------------------------
+                    setDetachedContents(documentValidator, validationForm);
                     setDetachedEvidenceRecords(documentValidator, validationForm);
 
-                    Locale locale = KOREA;
-                    LOG.trace("Requested locale : {}", locale);
-                    if (locale == null) {
-                        locale = Locale.getDefault();
-                        LOG.warn("The request locale is null! Use the default one : {}", locale);
-                    }
-                    documentValidator.setLocale(locale);
+                    documentValidator.setLocale(KOREA);
 
                     Reports reports = validate(documentValidator, validationForm);
 
@@ -1033,10 +996,10 @@ public class SIG_TEST_BASIC {
                     Indication indication = reports.getSimpleReport().getIndication(tokenId);
 
                     LOG.info("subIndication : {}", reports.getDetailedReport().getFinalSubIndication(tokenId));
+                    LOG.info("{} / VERIFY XAdES : {}, {}, {}",  indication.toString(), isValid, indication.toString(), testFile);
 
-                    LOG.info("SUCCESS VERIFY XAdES : {}, {}, {}", isValid, indication.toString(), testFile);
-                    assertNotNull(reports.getXmlSimpleReport());
-                    assertFalse(isValid);
+                    assertTrue(isValid);
+                    downloadReports(outputPath, testFileName, reports);
                 }
             }
         }
@@ -1047,19 +1010,34 @@ public class SIG_TEST_BASIC {
     protected CertificateVerifier certificateVerifier;
 
     private CertificateVerifier getCertificateVerifier(ValidationForm certValidationForm) {
-        CertificateSource adjunctCertSource = WebAppUtils.toCertificateSource(certValidationForm.getAdjunctCertificates());
 
-        CertificateVerifier cv;
-        if (adjunctCertSource == null) {
-            // reuse the default one
-            cv = certificateVerifier;
-        } else {
-            cv = new CertificateVerifierBuilder(certificateVerifier).buildCompleteCopy();
-            cv.setAdjunctCertSources(adjunctCertSource);
-        }
+        List<CertificateToken> user_certs = userCertificateSource.getCertificates();//.getByEntityKey(new EntityIdentifier(userSourceAlias.getBytes()));
+        CertificateToken signingCertificate = user_certs.get(0);
+        CertificateToken issuerCertificate = certificateVerifier.getTrustedCertSources().getBySubject(signingCertificate.getIssuer()).iterator().next();
+        CertificateToken rootCertificate = certificateVerifier.getTrustedCertSources().getBySubject(issuerCertificate.getIssuer()).iterator().next();
 
-        return cv;
+        CommonCertificateVerifier verifier = new CommonCertificateVerifier();
+
+        verifier.setTrustedCertSources(certificateVerifier.getTrustedCertSources());
+        verifier.setAdjunctCertSources(certificateVerifier.getAdjunctCertSources());
+        verifier.setCrlSource(certificateVerifier.getCrlSource());
+        verifier.setOcspSource(certificateVerifier.getOcspSource());
+        verifier.setAIASource(certificateVerifier.getAIASource());
+
+        CommonTrustedCertificateSource trusted = new CommonTrustedCertificateSource();
+        trusted.addCertificate(rootCertificate);
+        verifier.setTrustedCertSources(trusted);
+
+        CommonCertificateSource adjunctSource = new CommonCertificateSource();
+        adjunctSource.addCertificate(issuerCertificate);
+        adjunctSource.addCertificate(signingCertificate);
+        verifier.setAdjunctCertSources(adjunctSource);
+
+        LOG.info("verifier.getCrt : {}",verifier.getTrustedCertSources().toString());
+        LOG.info("verifier.getAdjunctCert : {} ",verifier.getAdjunctCertSources().toString());
+        return verifier;
     }
+
     private Date getValidationTime(ValidationForm validationForm) {
         if (validationForm.getValidationTime() != null) {
             Calendar calendar = Calendar.getInstance();
@@ -1144,5 +1122,40 @@ public class SIG_TEST_BASIC {
         LOG.info("Validation process duration : {}ms", duration);
 
         return reports;
+    }
+
+    private void downloadReports(String outputPath, String testFileName, Reports reports) throws IOException {
+        // reportPath := outputPath+"reports/"
+        // seperateFolder := "simple/", "detailed/", "diagnostic/", "Validation/"
+        // testFile
+
+        //1. Simple
+        Path path = Paths.get(outputPath+"simple/"+testFileName);
+        Files.createDirectories(path.getParent());
+        String xml = reports.getXmlSimpleReport();
+        try (InputStream is = new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8))) {
+            Files.copy(is, path, StandardCopyOption.REPLACE_EXISTING);
+        }
+        //2. Detailed
+        path = Paths.get(outputPath+"detailed/"+testFileName);
+        Files.createDirectories(path.getParent());
+        xml = reports.getXmlDetailedReport();
+        try (InputStream is = new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8))) {
+            Files.copy(is, path, StandardCopyOption.REPLACE_EXISTING);
+        }
+        //3. Diagnostic Tree
+        path = Paths.get(outputPath+"diagnostic/"+testFileName);
+        Files.createDirectories(path.getParent());
+        xml = reports.getXmlDiagnosticData();
+        try (InputStream is = new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8))) {
+            Files.copy(is, path, StandardCopyOption.REPLACE_EXISTING);
+        }
+        //4. XmlETSI_Validation
+        path = Paths.get(outputPath+"Validation/"+testFileName);
+        Files.createDirectories(path.getParent());
+        xml = reports.getXmlValidationReport();
+        try (InputStream is = new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8))) {
+            Files.copy(is, path, StandardCopyOption.REPLACE_EXISTING);
+        }
     }
 }

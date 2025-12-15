@@ -51,6 +51,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.cert.X509Certificate;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
@@ -362,8 +363,6 @@ public class SigningService {
         List<CertificateToken> user_certs = userCertificateSource.getCertificates();//.getByEntityKey(new EntityIdentifier(userSourceAlias.getBytes()));
         CertificateToken signingCertificate = user_certs.get(0);
 
-
-
         parameters.setSignatureLevel(form.getSignatureLevel());
         parameters.setDigestAlgorithm(form.getDigestAlgorithm());
         parameters.setEncryptionAlgorithm(EncryptionAlgorithm.forKey(signingCertificate.getPublicKey()));
@@ -374,8 +373,11 @@ public class SigningService {
             parameters.setCertificateChain(signingCertificate);
         }else{
             CertificateToken issuerCertificate = certificateVerifier.getTrustedCertSources().getBySubject(signingCertificate.getIssuer()).iterator().next();
-            parameters.setCertificateChain(issuerCertificate);
-
+            //-------------------------------------------------
+            CertificateToken rootCertificate = certificateVerifier.getTrustedCertSources().getBySubject(issuerCertificate.getIssuer()).iterator().next();
+            parameters.setCertificateChain(rootCertificate, issuerCertificate, signingCertificate);
+//            parameters.setCertificateChain(issuerCertificate); //2025.11.13_sujin : keep original(기존꺼)
+            //-------------------------------------------------
             signingCertificate.isSignedBy(issuerCertificate);
         }
 
@@ -415,20 +417,35 @@ public class SigningService {
     public DSSDocument signDocument(SignatureDocumentForm form) {
         LOG.info("Start signDocument with one document");
 
-
         try {
         	MultipartFile file  = WebAppUtils.toMultipartFile("signatureMultipleDocumentsForm",form.getFileName(),form.getContenttype(),form.getDocumentBytes());
         	form.setDocumentToSign(file);
         	
             DocumentSignatureService service = getSignatureService(form.getContainerType(), form.getSignatureForm(), form.isSignWithExpiredCertificate());
             AbstractSignatureParameters parameters = fillParameters(form);
-                        
 
             CertificateToken signingCertificate = parameters.getSigningCertificate();
+
+            //---------------------------------------------------
+            //2025.11.12_sujin : add log
+            List<CertificateToken> chain = parameters.getCertificateChain();
+            form.setCertificate(signingCertificate.getEncoded());
+
+            List<byte[]> chainBytes = chain.stream()
+                    .map(certToken -> {
+                        try {
+                            return certToken.getEncoded();  // X509 DER
+                        } catch (Exception e) {
+                            throw new RuntimeException("Failed to encode cert", e);
+                        }
+                    })
+                    .toList();
+            form.setCertificateChain(chainBytes);
+            LOG.info("form.getCertificateChain : {}", form.getCertificateChain());
+            //---------------------------------------------------
             form.setEncryptionAlgorithm(EncryptionAlgorithm.forName(signingCertificate.getPublicKey().getAlgorithm()));
             form.setSigningDate(new Date());
-            
-                        
+
             DSSDocument toSignDocument = new InMemoryDocument(form.getDocumentBytes(), form.getFileName());            
             form.setToSignDocument(toSignDocument);
             
@@ -438,13 +455,6 @@ public class SigningService {
             SignatureValue signatureValue = new SignatureValue(sigAlgorithm, sign(dataToSign, form.getDigestAlgorithm()));
 
             DSSDocument signedDocument = service.signDocument(toSignDocument, parameters, signatureValue);
-
-
-            // getDataToSign(form);
-            //form.setSignatureValue(sign(dataToSign, form.getDigestAlgorithm()));
-
-            //DSSDocument toSignDocument = new InMemoryDocument(form.getDocumentBytes(), form.getFileName());
-            //WebAppUtils.toDSSDocument(form.getDocumentToSign());
 
             LOG.info("End signDocument with one document");
             return signedDocument;

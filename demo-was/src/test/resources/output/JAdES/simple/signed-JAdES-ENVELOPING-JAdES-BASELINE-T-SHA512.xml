@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SimpleReport ValidationTime="2025-12-01T07:14:55Z" xmlns="http://dss.esig.europa.eu/validation/simple-report">
+    <ValidationPolicy>
+        <PolicyName>QES AdESQC TL based</PolicyName>
+        <PolicyDescription>Validates electronic signatures and indicates whether they are Advanced electronic Signatures (AdES), AdES supported by a Qualified Certificate (AdES/QC) or a
+		Qualified electronic Signature (QES). All certificates and their related chains supporting the signatures are validated against the EU Member State Trusted Lists (this includes
+		signer's certificate and certificates used to validate certificate validity status services - CRLs, OCSP, and time-stamps).
+	</PolicyDescription>
+    </ValidationPolicy>
+    <DocumentName>signatureFile</DocumentName>
+    <ValidSignaturesCount>1</ValidSignaturesCount>
+    <SignaturesCount>1</SignaturesCount>
+    <Signature SignatureFormat="JAdES-BASELINE-T" Id="SIGNATURE_tester2_20251201-0714">
+        <CertificateChain>
+            <Certificate Id="CERTIFICATE_tester2_20251117-0407">
+                <QualifiedName>tester2</QualifiedName>
+            </Certificate>
+            <Certificate Id="CERTIFICATE_FAKE-KISA-CA_20251117-0404">
+                <QualifiedName>FAKE-KISA CA</QualifiedName>
+            </Certificate>
+            <Certificate Id="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505" trusted="true">
+                <QualifiedName>FAKE-KISA RootCA</QualifiedName>
+            </Certificate>
+        </CertificateChain>
+        <Indication>TOTAL_PASSED</Indication>
+        <AdESValidationDetails>
+            <Warning Key="BBB_XCV_AIA_PRES_ANS">The authority info access is not present!</Warning>
+            <Warning Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warning>
+        </AdESValidationDetails>
+        <QualificationDetails>
+            <Error Key="QUAL_CERT_TRUSTED_LIST_REACHED_ANS">Unable to build a certificate chain up to a trusted list!</Error>
+        </QualificationDetails>
+        <ExtensionPeriodMin>2025-12-01T19:14:55Z</ExtensionPeriodMin>
+        <ExtensionPeriodMax>2026-11-17T04:07:56Z</ExtensionPeriodMax>
+        <SigningTime>2025-12-01T07:14:07Z</SigningTime>
+        <BestSignatureTime>2025-12-01T07:14:55Z</BestSignatureTime>
+        <SignedBy>tester2</SignedBy>
+        <SignatureLevel description="Not applicable">N/A</SignatureLevel>
+        <SignatureScope Id="DOCUMENT_FULL" scope="FULL">Full document</SignatureScope>
+        <Timestamps>
+            <Timestamp Id="TIMESTAMP_UNKNOWN-SIGNER_20251201-0714">
+                <CertificateChain/>
+                <Indication>INDETERMINATE</Indication>
+                <SubIndication>NO_SIGNING_CERTIFICATE_FOUND</SubIndication>
+                <AdESValidationDetails>
+                    <Error Key="BBB_ICS_ISCI_ANS">There is no candidate for the signing certificate!</Error>
+                    <Error Key="BBB_CV_ISI_ANS">The signature is not intact!</Error>
+                    <Error Key="ASCCM_EAA_ANS">The encryption algorithm ? is not authorised for time-stamp signature!</Error>
+                    <Warning Key="BBB_SAV_DSCACRCC_ANS">The 'Signing Certificate' attribute contains references to other certificates than those present in the certificate chain!</Warning>
+                </AdESValidationDetails>
+                <QualificationDetails>
+                    <Error Key="QUAL_CERT_TRUSTED_LIST_REACHED_ANS">Unable to build a certificate chain up to a trusted list!</Error>
+                </QualificationDetails>
+                <ProductionTime>2025-12-01T07:14:08Z</ProductionTime>
+                <ProducedBy></ProducedBy>
+                <TimestampLevel description="Not applicable">N/A</TimestampLevel>
+            </Timestamp>
+        </Timestamps>
+    </Signature>
+</SimpleReport>

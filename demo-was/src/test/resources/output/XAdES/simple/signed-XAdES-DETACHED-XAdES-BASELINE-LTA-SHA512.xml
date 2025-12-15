@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SimpleReport ValidationTime="2025-12-01T07:15:07Z" xmlns="http://dss.esig.europa.eu/validation/simple-report">
+    <ValidationPolicy>
+        <PolicyName>QES AdESQC TL based</PolicyName>
+        <PolicyDescription>Validates electronic signatures and indicates whether they are Advanced electronic Signatures (AdES), AdES supported by a Qualified Certificate (AdES/QC) or a
+		Qualified electronic Signature (QES). All certificates and their related chains supporting the signatures are validated against the EU Member State Trusted Lists (this includes
+		signer's certificate and certificates used to validate certificate validity status services - CRLs, OCSP, and time-stamps).
+	</PolicyDescription>
+    </ValidationPolicy>
+    <DocumentName>signatureFile</DocumentName>
+    <ValidSignaturesCount>1</ValidSignaturesCount>
+    <SignaturesCount>1</SignaturesCount>
+    <Signature SignatureFormat="XAdES-BASELINE-T" Id="SIGNATURE_tester2_20251201-0714">
+        <CertificateChain>
+            <Certificate Id="CERTIFICATE_tester2_20251117-0407">
+                <QualifiedName>tester2</QualifiedName>
+            </Certificate>
+            <Certificate Id="CERTIFICATE_FAKE-KISA-CA_20251117-0404">
+                <QualifiedName>FAKE-KISA CA</QualifiedName>
+            </Certificate>
+            <Certificate Id="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505" trusted="true">
+                <QualifiedName>FAKE-KISA RootCA</QualifiedName>
+            </Certificate>
+        </CertificateChain>
+        <Indication>TOTAL_PASSED</Indication>
+        <AdESValidationDetails>
+            <Warning Key="BBB_XCV_AIA_PRES_ANS">The authority info access is not present!</Warning>
+            <Warning Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warning>
+            <Warning Key="BBB_CV_DRNMND_ANS">The reference name does not match the name of the document!</Warning>
+        </AdESValidationDetails>
+        <QualificationDetails>
+            <Error Key="QUAL_CERT_TRUSTED_LIST_REACHED_ANS">Unable to build a certificate chain up to a trusted list!</Error>
+        </QualificationDetails>
+        <ExtensionPeriodMax>2026-11-17T04:07:56Z</ExtensionPeriodMax>
+        <SigningTime>2025-12-01T07:14:16Z</SigningTime>
+        <BestSignatureTime>2025-12-01T07:14:16Z</BestSignatureTime>
+        <SignedBy>tester2</SignedBy>
+        <SignatureLevel description="Not applicable">N/A</SignatureLevel>
+        <SignatureScope Id="DOCUMENT_originalFile" name="originalFile" scope="FULL">Full document</SignatureScope>
+        <Timestamps>
+            <Timestamp Id="TIMESTAMP_FAKE-KISA-TSA_20251201-0714">
+                <CertificateChain>
+                    <Certificate Id="CERTIFICATE_FAKE-KISA-TSA_20251117-0406">
+                        <QualifiedName>FAKE-KISA TSA</QualifiedName>
+                    </Certificate>
+                    <Certificate Id="CERTIFICATE_FAKE-KISA-CA_20251117-0404">
+                        <QualifiedName>FAKE-KISA CA</QualifiedName>
+                    </Certificate>
+                    <Certificate Id="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505" trusted="true">
+                        <QualifiedName>FAKE-KISA RootCA</QualifiedName>
+                    </Certificate>
+                </CertificateChain>
+                <Indication>PASSED</Indication>
+                <AdESValidationDetails>
+                    <Warning Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warning>
+                </AdESValidationDetails>
+                <QualificationDetails>
+                    <Error Key="QUAL_CERT_TRUSTED_LIST_REACHED_ANS">Unable to build a certificate chain up to a trusted list!</Error>
+                </QualificationDetails>
+                <ProductionTime>2025-12-01T07:14:16Z</ProductionTime>
+                <ProducedBy>FAKE-KISA TSA</ProducedBy>
+                <TimestampLevel description="Not applicable">N/A</TimestampLevel>
+            </Timestamp>
+            <Timestamp Id="TIMESTAMP_FAKE-KISA-TSA_20251201-0714_2">
+                <CertificateChain>
+                    <Certificate Id="CERTIFICATE_FAKE-KISA-TSA_20251117-0406">
+                        <QualifiedName>FAKE-KISA TSA</QualifiedName>
+                    </Certificate>
+                    <Certificate Id="CERTIFICATE_FAKE-KISA-CA_20251117-0404">
+                        <QualifiedName>FAKE-KISA CA</QualifiedName>
+                    </Certificate>
+                    <Certificate Id="CERTIFICATE_FAKE-KISA-RootCA_20250918-0505" trusted="true">
+                        <QualifiedName>FAKE-KISA RootCA</QualifiedName>
+                    </Certificate>
+                </CertificateChain>
+                <Indication>PASSED</Indication>
+                <AdESValidationDetails>
+                    <Warning Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warning>
+                </AdESValidationDetails>
+                <QualificationDetails>
+                    <Error Key="QUAL_CERT_TRUSTED_LIST_REACHED_ANS">Unable to build a certificate chain up to a trusted list!</Error>
+                </QualificationDetails>
+                <ProductionTime>2025-12-01T07:14:16Z</ProductionTime>
+                <ProducedBy>FAKE-KISA TSA</ProducedBy>
+                <TimestampLevel description="Not applicable">N/A</TimestampLevel>
+                <TimestampScope Id="DOCUMENT_originalFile" name="originalFile" scope="FULL">Full document</TimestampScope>
+            </Timestamp>
+        </Timestamps>
+    </Signature>
+</SimpleReport>

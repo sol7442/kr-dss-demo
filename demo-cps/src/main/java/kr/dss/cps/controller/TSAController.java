@@ -30,7 +30,7 @@ public class TSAController {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.parseMediaType("application/timestamp-reply"));
             
-            LOG.info("TSA response generated ({} bytes)", responseBytes.length);
+            LOG.info("@@@@@TSA response generated ({} bytes)", responseBytes.length);
 
             return new ResponseEntity<>(responseBytes, headers, HttpStatus.OK);
 
