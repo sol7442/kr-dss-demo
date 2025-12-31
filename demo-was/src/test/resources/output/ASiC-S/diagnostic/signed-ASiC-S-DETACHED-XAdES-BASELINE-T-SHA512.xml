@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <DiagnosticData xmlns="http://dss.esig.europa.eu/validation/diagnostic">
     <DocumentName>signatureFile</DocumentName>
-    <ValidationDate>2025-12-01T07:14:51Z</ValidationDate>
+    <ValidationDate>2025-12-31T05:10:23Z</ValidationDate>
     <ContainerInfo>
         <ContainerType>ASiC-S</ContainerType>
         <MimeTypeFilePresent>true</MimeTypeFilePresent>
@@ -12,22 +12,22 @@
         </ContentFiles>
     </ContainerInfo>
     <Signatures>
-        <Signature Id="SIGNATURE_tester2_20251201-0714">
-            <DAIdentifier>id-b3d355ebca54c670dc9d16a6dfd7ef0d</DAIdentifier>
+        <Signature Id="SIGNATURE_tester2_20251215-0019">
+            <DAIdentifier>id-136dcf4e4c61aa4d1eace653596941ea</DAIdentifier>
             <SignatureFilename>META-INF/signatures.xml</SignatureFilename>
-            <ClaimedSigningTime>2025-12-01T07:14:04Z</ClaimedSigningTime>
+            <ClaimedSigningTime>2025-12-15T00:19:13Z</ClaimedSigningTime>
             <SignatureFormat>XAdES-BASELINE-T</SignatureFormat>
             <StructuralValidation valid="true"/>
             <DigestMatchers>
-                <DigestMatcher type="REFERENCE" id="r-id-b3d355ebca54c670dc9d16a6dfd7ef0d-1" uri="270325.xml" documentName="270325.xml">
+                <DigestMatcher type="REFERENCE" id="r-id-136dcf4e4c61aa4d1eace653596941ea-1" uri="270325.xml" documentName="270325.xml">
                     <DigestMethod>SHA512</DigestMethod>
                     <DigestValue>0e3+sJ5OFjFq7YeoC4T4AZZERl8WPysKVF0D73n0/oLer+qtHcg7s9p2nRaZWE2Gk026IO0mE+/c+kwcgbyTVw==</DigestValue>
                     <DataFound>true</DataFound>
                     <DataIntact>true</DataIntact>
                 </DigestMatcher>
-                <DigestMatcher type="SIGNED_PROPERTIES" uri="#xades-id-b3d355ebca54c670dc9d16a6dfd7ef0d">
+                <DigestMatcher type="SIGNED_PROPERTIES" uri="#xades-id-136dcf4e4c61aa4d1eace653596941ea">
                     <DigestMethod>SHA512</DigestMethod>
-                    <DigestValue>axOjDCVka/XsFMyaPlyqGdTqiiiRuiwFkdX4BIOwX4VOtuQDNNNhxb9UXV0N9QO/NDT7/KFdjsL4VHSTAe72Kw==</DigestValue>
+                    <DigestValue>8+gXQngBQ/Ctein61O9SA/8Np1cf6vFi0YqDteHL3N8n4S4n5qC4cVYsPoNNumaD9je/PfzVAKoYbi4cm3srzQ==</DigestValue>
                     <DataFound>true</DataFound>
                     <DataIntact>true</DataIntact>
                 </DigestMatcher>
@@ -63,7 +63,7 @@
             </FoundCertificates>
             <FoundRevocations/>
             <FoundTimestamps>
-                <FoundTimestamp Timestamp="TIMESTAMP_UNKNOWN-SIGNER_20251201-0714"/>
+                <FoundTimestamp Timestamp="TIMESTAMP_UNKNOWN-SIGNER_20251215-0019"/>
             </FoundTimestamps>
             <FoundEvidenceRecords/>
             <SignatureScopes>
@@ -76,13 +76,13 @@
             <SignatureDigestReference>
                 <CanonicalizationMethod>http://www.w3.org/2001/10/xml-exc-c14n#</CanonicalizationMethod>
                 <DigestMethod>SHA256</DigestMethod>
-                <DigestValue>qO/wfRhLt9co/EF56HuO7wGQEsRO5pQxHR+S5q7ARKE=</DigestValue>
+                <DigestValue>63Ay8KMdzeNAbA9Paiysu7bIULBfk7NhrnwkS5aBOLk=</DigestValue>
             </SignatureDigestReference>
             <DataToBeSignedRepresentation>
                 <DigestMethod>SHA512</DigestMethod>
-                <DigestValue>Y1l/WVCl5+aTZ+vGegZjRM4/iqLJB4DaEi0xtRYrhfGjKa0rU8ulRS3G4RFko7FETbh1HcmIX8CEQ/pWqCHuCQ==</DigestValue>
+                <DigestValue>clASrNgOdC2kp49pQxikQS6L+XJ/cfZtJBRgGE8N9ZBbj70d7643zwL3CEPd2eVoSGtyaQ4UedvhE8vrC7j1Gg==</DigestValue>
             </DataToBeSignedRepresentation>
-            <SignatureValue>kgVq6Ubc4a2KMFs5G6W3JPoTPisCjlwIKddvL1ORtBF+l+PMhRjvAxmQ5Qw0EtrA08sEBCdO3Ri4F5KGrN6CV+aQGr3R+fqSZ4LqPAYZy4HXuU34hK6mEWjmSOiCKhRNQpoCfrh4w7aXPCnXz0NTAdds4zw2IwBDamcFmogRDJEdciZA35rTJZ07iDBP255PuAerWVs6bimsBBieoqBgatV27lp1hRRqVa7Bm6HwPsb/ke7i7+cZQoFqWXqTBoLAzr4ewDR4af81dzmm9BXrfgA8/ILSf2aIn+1xIsBcau5gBXRFT7tTQh6e5/djX23c0jbs2idmkRIVMqJXIBrI5XaAJpt6GYxNZl3JiJTQf/MsOawdU7RamZICxu42oKJKXgjPW44CdM2GS2EjUGr55t5Ry/A1ObsGYbwWyDnUmBG9Muw+aPGYb20RXRRVIxS25FXmmaMrGOh3uBMnhWfaGHMRXuSyiSJZLQvoCyqXSDOiPyMyoMO6uHDArNJhxPtjYoVua6DvYNBcSdB+6pNzKdomLVp98Ns9Y384MWsRxSBp2vTe7aCZTwjX7zl2ZHe2e1FApdCNu2/pPaC6KJuIU2KxHXn9ydUmRq6PAwQxV6gugwO0zxY+xjQ3wpDlCidgVF3zV2ZwG/eDCNj7XVOoqf9j8Cdz+cxB1FnlbT3sGT8=</SignatureValue>
+            <SignatureValue>W+PHxVVLMvQf/AXDkZ2kxj3mfySJRT2WAKKhCKZfRs9UECZzmQKzcrY+bHLQ5S8qGmUnweBaQXToRFHhio7XO5YbmyTtx6YAheO72p9leDSXzHTJKISqr70FI6bCHiYrcEyRAn6YomrLM8P9s1kD0j935w3RByJiX58p6x1EYMOOm28Av+yHk34zCVw6QXiMBcWIEKp8M5cqTpDOPOtuLreVkJhzFN9UdnJL8Dgl+4LxlglZw75JK+R5OGDgncKrOEd4juX4mkuN4ilHMcJ6obGxdDyequSJH8DrVoyaLCifsnjOpsbWzLTeKKIYTSTtAZdP1dqC5fVl5IvWBVOCAqAPZgcCcfCIkj6WuMf0HEFkGM/s6u6J8JOoraUi9hHeLJItEEvc6ax+N4BRisYWhjft3YkY6toCEIGY3PliwR6i8IXGLWb/eCEud3oIEBSfyZGQw3FgsdOlrxF7hboEpQWSma3AQ7XNf5V2i76s269iRr91G2WMAjHkXaMGsyWd1GUirxfe6ansBy6tM2b2L5fS8PHoVEfum96lxrIHLbslO+Zj5h+K8Pf+afZ7HiduDJcotZvYh7OC4+KNywPvosZdxriCSMeSJ9h3JXiW8pz84DPv6l4dfkezLQcI6vOSgLPzvswyHQkNlnFzTh/8WI9K6aBGYRCGgg15Bg2jLw8=</SignatureValue>
         </Signature>
     </Signatures>
     <EvidenceRecords/>
@@ -141,7 +141,7 @@
             </CertificateExtensions>
             <TrustServiceProviders/>
             <Revocations>
-                <CertificateRevocation Revocation="OCSP_FAKE-KISA-OCSP_20251201-0714_3">
+                <CertificateRevocation Revocation="OCSP_FAKE-KISA-OCSP_20251231-0510_2">
                     <Status>GOOD</Status>
                 </CertificateRevocation>
             </Revocations>
@@ -205,7 +205,7 @@
                 </CRLDistributionPoints>
             </CertificateExtensions>
             <Revocations>
-                <CertificateRevocation Revocation="OCSP_FAKE-KISA-OCSP_20251201-0714_2">
+                <CertificateRevocation Revocation="OCSP_FAKE-KISA-OCSP_20251231-0510_3">
                     <Status>GOOD</Status>
                 </CertificateRevocation>
             </Revocations>
@@ -307,7 +307,7 @@
             </CertificateExtensions>
             <TrustServiceProviders/>
             <Revocations>
-                <CertificateRevocation Revocation="OCSP_FAKE-KISA-OCSP_20251201-0714">
+                <CertificateRevocation Revocation="OCSP_FAKE-KISA-OCSP_20251231-0510">
                     <Status>GOOD</Status>
                 </CertificateRevocation>
             </Revocations>
@@ -318,13 +318,13 @@
         </Certificate>
     </UsedCertificates>
     <UsedRevocations>
-        <Revocation Id="OCSP_FAKE-KISA-OCSP_20251201-0714">
+        <Revocation Id="OCSP_FAKE-KISA-OCSP_20251231-0510">
             <Origin>EXTERNAL</Origin>
             <Type>OCSP</Type>
-            <SourceAddress>retrofit2.Retrofit$1@6f3f2340</SourceAddress>
-            <ProductionDate>2025-12-01T07:14:52Z</ProductionDate>
-            <ThisUpdate>2025-12-01T07:14:52Z</ThisUpdate>
-            <NextUpdate>2025-12-01T19:14:52Z</NextUpdate>
+            <SourceAddress>retrofit2.Retrofit$1@784dd9da</SourceAddress>
+            <ProductionDate>2025-12-31T05:10:23Z</ProductionDate>
+            <ThisUpdate>2025-12-31T05:10:23Z</ThisUpdate>
+            <NextUpdate>2025-12-31T17:10:23Z</NextUpdate>
             <CertHashExtensionPresent>false</CertHashExtensionPresent>
             <CertHashExtensionMatch>false</CertHashExtensionMatch>
             <BasicSignature>
@@ -353,16 +353,16 @@
             </FoundCertificates>
             <DigestAlgoAndValue>
                 <DigestMethod>SHA256</DigestMethod>
-                <DigestValue>HE8K/x78zk/mnU9MnSuWUhKi5HAvm+H1+1SGjevCCRY=</DigestValue>
+                <DigestValue>KU5H8ndKQ4l7C9H58JDZyZ5bkJZ22lVXiuAL5rE/eag=</DigestValue>
             </DigestAlgoAndValue>
         </Revocation>
-        <Revocation Id="OCSP_FAKE-KISA-OCSP_20251201-0714_2">
+        <Revocation Id="OCSP_FAKE-KISA-OCSP_20251231-0510_2">
             <Origin>EXTERNAL</Origin>
             <Type>OCSP</Type>
-            <SourceAddress>retrofit2.Retrofit$1@6f3f2340</SourceAddress>
-            <ProductionDate>2025-12-01T07:14:51Z</ProductionDate>
-            <ThisUpdate>2025-12-01T07:14:51Z</ThisUpdate>
-            <NextUpdate>2025-12-01T19:14:51Z</NextUpdate>
+            <SourceAddress>retrofit2.Retrofit$1@784dd9da</SourceAddress>
+            <ProductionDate>2025-12-31T05:10:23Z</ProductionDate>
+            <ThisUpdate>2025-12-31T05:10:23Z</ThisUpdate>
+            <NextUpdate>2025-12-31T17:10:23Z</NextUpdate>
             <CertHashExtensionPresent>false</CertHashExtensionPresent>
             <CertHashExtensionMatch>false</CertHashExtensionMatch>
             <BasicSignature>
@@ -391,16 +391,16 @@
             </FoundCertificates>
             <DigestAlgoAndValue>
                 <DigestMethod>SHA256</DigestMethod>
-                <DigestValue>AMW6kCDR1wLQdv4/6Hqr3iCYFwIuRmZ3dp9XKx7hCj8=</DigestValue>
+                <DigestValue>lEmvgjvUH4kOk8w6D09uHrOKCpoXUYX1e4vVQjEbMAQ=</DigestValue>
             </DigestAlgoAndValue>
         </Revocation>
-        <Revocation Id="OCSP_FAKE-KISA-OCSP_20251201-0714_3">
+        <Revocation Id="OCSP_FAKE-KISA-OCSP_20251231-0510_3">
             <Origin>EXTERNAL</Origin>
             <Type>OCSP</Type>
-            <SourceAddress>retrofit2.Retrofit$1@6f3f2340</SourceAddress>
-            <ProductionDate>2025-12-01T07:14:52Z</ProductionDate>
-            <ThisUpdate>2025-12-01T07:14:52Z</ThisUpdate>
-            <NextUpdate>2025-12-01T19:14:52Z</NextUpdate>
+            <SourceAddress>retrofit2.Retrofit$1@784dd9da</SourceAddress>
+            <ProductionDate>2025-12-31T05:10:23Z</ProductionDate>
+            <ThisUpdate>2025-12-31T05:10:23Z</ThisUpdate>
+            <NextUpdate>2025-12-31T17:10:23Z</NextUpdate>
             <CertHashExtensionPresent>false</CertHashExtensionPresent>
             <CertHashExtensionMatch>false</CertHashExtensionMatch>
             <BasicSignature>
@@ -429,16 +429,16 @@
             </FoundCertificates>
             <DigestAlgoAndValue>
                 <DigestMethod>SHA256</DigestMethod>
-                <DigestValue>0E790eKAaZ3HFzc67qljFbL/lX+8/4fNc9CR7ZYhwGY=</DigestValue>
+                <DigestValue>pPOg4YD2Mz7ObwGdhvhG4d8ie7s8QpDBDOy04ualFFU=</DigestValue>
             </DigestAlgoAndValue>
         </Revocation>
     </UsedRevocations>
     <UsedTimestamps>
-        <Timestamp Type="SIGNATURE_TIMESTAMP" Id="TIMESTAMP_UNKNOWN-SIGNER_20251201-0714">
-            <ProductionTime>2025-12-01T07:14:05Z</ProductionTime>
+        <Timestamp Type="SIGNATURE_TIMESTAMP" Id="TIMESTAMP_UNKNOWN-SIGNER_20251215-0019">
+            <ProductionTime>2025-12-15T00:19:13Z</ProductionTime>
             <DigestMatcher type="MESSAGE_IMPRINT">
                 <DigestMethod>SHA512</DigestMethod>
-                <DigestValue>ZBeimJo/IkjZFPIaIi5gkuX90nA6msrytUEYSs2By3APt2N/jSsGa9KOVESapqBosToA5YGQ8a2qmb3GCksJWQ==</DigestValue>
+                <DigestValue>uvk0/b1S89RKnijbvvF+7ZwBQjbq7sPrxn29a/UTsDtzAa0S5FXG9d2uIkhPPdoQVbm3T9kWMoo/IeO72RYF8A==</DigestValue>
                 <DataFound>true</DataFound>
                 <DataIntact>true</DataIntact>
             </DigestMatcher>
@@ -469,13 +469,13 @@
             <FoundEvidenceRecords/>
             <TimestampedObjects>
                 <TimestampedObject Token="DOCUMENT_270325-xml" Category="SIGNED_DATA"/>
-                <TimestampedObject Token="SIGNATURE_tester2_20251201-0714" Category="SIGNATURE"/>
+                <TimestampedObject Token="SIGNATURE_tester2_20251215-0019" Category="SIGNATURE"/>
                 <TimestampedObject Token="CERTIFICATE_tester2_20251117-0407" Category="CERTIFICATE"/>
             </TimestampedObjects>
             <TimestampScopes/>
             <DigestAlgoAndValue>
                 <DigestMethod>SHA256</DigestMethod>
-                <DigestValue>AIdt9nmgxxVXK83U2gTBpeAkSdQQJo1/VoKg9LhWqiw=</DigestValue>
+                <DigestValue>GvsESJPWhP3eb0yudZhwd66MjTORF83/yI7AAydpSNI=</DigestValue>
             </DigestAlgoAndValue>
         </Timestamp>
     </UsedTimestamps>

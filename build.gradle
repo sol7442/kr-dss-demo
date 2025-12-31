@@ -16,8 +16,8 @@ subprojects {
 
     // Java 버전 설정 (프로젝트 통일)
     java {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     // 인코딩 설정 (Eclipse 한글 깨짐 방지)
