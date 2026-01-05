@@ -143,7 +143,7 @@ public class SIG_TEST_BASIC {
 
         for (SignaturePackaging var : packaging) {
             signatureDocumentForm.setSignaturePackaging(var);
-            //signatureDocumentForm.setSignaturePackaging(SignaturePackaging.INTERNALLY_DETACHED); //에러발생
+            //signatureDocumentForm.setSignaturePackaging(SignaturePackaging.INTERNALLY_DETACHED);
             for (SignatureLevel lev : levels) {
                 signatureDocumentForm.setSignatureLevel(lev);
 
