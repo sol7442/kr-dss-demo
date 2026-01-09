@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DetailedReport ValidationTime="2026-01-05T07:10:04Z" xmlns="http://dss.esig.europa.eu/validation/detailed-report">
-    <Signature Id="SIGNATURE_tester2_20251231-0510">
+<DetailedReport ValidationTime="2026-01-09T00:41:39Z" xmlns="http://dss.esig.europa.eu/validation/detailed-report">
+    <Signature Id="SIGNATURE_tester2_20260108-0812">
         <ValidationProcessBasicSignature Title="Validation Process for Basic Signatures">
-            <Constraint Id="SIGNATURE_tester2_20251231-0510-FC">
+            <Constraint Id="SIGNATURE_tester2_20260108-0812-FC">
                 <Name Key="BSV_IFCRC">Is the result of the 'Format Checking' building block conclusive?</Name>
                 <Status>OK</Status>
             </Constraint>
-            <Constraint Id="SIGNATURE_tester2_20251231-0510-ISC">
+            <Constraint Id="SIGNATURE_tester2_20260108-0812-ISC">
                 <Name Key="BSV_IISCRC">Is the result of the 'Identification of Signing Certificate' building block conclusive?</Name>
                 <Status>OK</Status>
             </Constraint>
-            <Constraint Id="SIGNATURE_tester2_20251231-0510-VCI">
+            <Constraint Id="SIGNATURE_tester2_20260108-0812-VCI">
                 <Name Key="BSV_IVCIRC">Is the result of the 'Validation Context Initialization' building block conclusive?</Name>
                 <Status>OK</Status>
             </Constraint>
-            <Constraint Id="SIGNATURE_tester2_20251231-0510-XCV">
+            <Constraint Id="SIGNATURE_tester2_20260108-0812-XCV">
                 <Name Key="BSV_IXCVRC">Is the result of the 'X.509 Certificate Validation' building block conclusive?</Name>
                 <Status>OK</Status>
             </Constraint>
-            <Constraint Id="SIGNATURE_tester2_20251231-0510-CV">
+            <Constraint Id="SIGNATURE_tester2_20260108-0812-CV">
                 <Name Key="BSV_ICVRC">Is the result of the 'Cryptographic Verification' building block conclusive?</Name>
                 <Status>OK</Status>
             </Constraint>
-            <Constraint Id="SIGNATURE_tester2_20251231-0510-SAV">
+            <Constraint Id="SIGNATURE_tester2_20260108-0812-SAV">
                 <Name Key="BSV_ISAVRC">Is the result of the 'Signature Acceptance Validation' building block conclusive?</Name>
                 <Status>OK</Status>
             </Constraint>
@@ -35,12 +35,12 @@
                 <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
             </Conclusion>
             <ProofOfExistence>
-                <Time>2026-01-05T07:10:04Z</Time>
+                <Time>2026-01-09T00:41:39Z</Time>
             </ProofOfExistence>
         </ValidationProcessBasicSignature>
-        <Timestamp Id="TIMESTAMP_UNKNOWN-SIGNER_20251231-0510">
-            <ValidationProcessBasicTimestamp Type="SIGNATURE_TIMESTAMP" ProductionTime="2025-12-31T05:10:37Z" Title="Validation Process for Basic Time-stamps">
-                <Constraint Id="TIMESTAMP_UNKNOWN-SIGNER_20251231-0510-ISC">
+        <Timestamp Id="TIMESTAMP_UNKNOWN-SIGNER_20260108-0812">
+            <ValidationProcessBasicTimestamp Type="SIGNATURE_TIMESTAMP" ProductionTime="2026-01-08T08:12:24Z" Title="Validation Process for Basic Time-stamps">
+                <Constraint Id="TIMESTAMP_UNKNOWN-SIGNER_20260108-0812-ISC">
                     <Name Key="BSV_IISCRC">Is the result of the 'Identification of Signing Certificate' building block conclusive?</Name>
                     <Status>NOT OK</Status>
                     <Error Key="BSV_IISCRC_ANS">The result of the 'Identification of Signing Certificate' building block is not conclusive!</Error>
@@ -93,7 +93,7 @@
             <Indication>TOTAL_PASSED</Indication>
         </Conclusion>
     </Signature>
-    <BasicBuildingBlocks Id="TIMESTAMP_UNKNOWN-SIGNER_20251231-0510" Type="TIMESTAMP">
+    <BasicBuildingBlocks Id="TIMESTAMP_UNKNOWN-SIGNER_20260108-0812" Type="TIMESTAMP">
         <ISC Title="Identification of the Signing Certificate">
             <Constraint>
                 <Name Key="BBB_ICS_ISCI">Is there an identified candidate for the signing certificate?</Name>
@@ -141,7 +141,7 @@
                 <Name Key="ACCM">Are cryptographic constraints met for the time-stamp signature?</Name>
                 <Status>NOT OK</Status>
                 <Error Key="ASCCM_EAA_ANS">The encryption algorithm ? is not authorised for time-stamp signature!</Error>
-                <AdditionalInfo>The encryption algorithm ? is not authorised for time-stamp signature! for the token at the validation time : 2026-01-05 07:10</AdditionalInfo>
+                <AdditionalInfo>The encryption algorithm ? is not authorised for time-stamp signature! for the token at the validation time : 2026-01-09 00:41</AdditionalInfo>
             </Constraint>
             <Conclusion>
                 <Indication>INDETERMINATE</Indication>
@@ -154,8 +154,8 @@
                     <Name>UNIDENTIFIED</Name>
                     <Uri>urn:etsi:019102:algorithm:unidentified</Uri>
                 </Algorithm>
-                <ValidationTime>2026-01-05T07:10:04Z</ValidationTime>
-                <ConcernedMaterial>TIMESTAMP_UNKNOWN-SIGNER_20251231-0510</ConcernedMaterial>
+                <ValidationTime>2026-01-09T00:41:39Z</ValidationTime>
+                <ConcernedMaterial>TIMESTAMP_UNKNOWN-SIGNER_20260108-0812</ConcernedMaterial>
             </CryptographicValidation>
         </SAV>
         <CertificateChain/>
@@ -168,7 +168,7 @@
             <Warnings Key="BBB_SAV_DSCACRCC_ANS">The 'Signing Certificate' attribute contains references to other certificates than those present in the certificate chain!</Warnings>
         </Conclusion>
     </BasicBuildingBlocks>
-    <BasicBuildingBlocks Id="SIGNATURE_tester2_20251231-0510" Type="SIGNATURE">
+    <BasicBuildingBlocks Id="SIGNATURE_tester2_20260108-0812" Type="SIGNATURE">
         <FC Title="Format Checking">
             <Constraint>
                 <Name Key="BBB_FC_IEFF">Does the signature format correspond to an expected format?</Name>
@@ -236,7 +236,7 @@
             </Conclusion>
             <CertificateChain>
                 <ChainItem Id="CERTIFICATE_tester2_20251117-0407">
-                    <Source>OTHER</Source>
+                    <Source>SIGNATURE</Source>
                 </ChainItem>
                 <ChainItem Id="CERTIFICATE_FAKE-KISA-CA_20251117-0404">
                     <Source>OTHER</Source>
@@ -263,7 +263,7 @@
             <Constraint>
                 <Name Key="BBB_XCV_HPCCVVT">Has a prospective certificate chain valid at validation time been found?</Name>
                 <Status>OK</Status>
-                <AdditionalInfo>Validation time : 2026-01-05 07:10</AdditionalInfo>
+                <AdditionalInfo>Validation time : 2026-01-09 00:41</AdditionalInfo>
             </Constraint>
             <Constraint Id="CERTIFICATE_tester2_20251117-0407" BlockType="SUB_XCV">
                 <Name Key="BBB_XCV_SUB">Is the certificate validation conclusive?</Name>
@@ -343,7 +343,7 @@
                 <Constraint Id="CERTIFICATE_tester2_20251117-0407" BlockType="CRS">
                     <Name Key="BBB_XCV_IARDPFC">Is an acceptable revocation data present for the certificate?</Name>
                     <Status>OK</Status>
-                    <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260105-0710_3</AdditionalInfo>
+                    <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260109-0041</AdditionalInfo>
                 </Constraint>
                 <Constraint>
                     <Name Key="BBB_XCV_ISCR">Is the certificate not revoked?</Name>
@@ -353,25 +353,25 @@
                     <Name Key="BBB_XCV_ISCOH">Is the certificate not on hold?</Name>
                     <Status>OK</Status>
                 </Constraint>
-                <Constraint Id="OCSP_FAKE-KISA-OCSP_20260105-0710_3" BlockType="RFC">
+                <Constraint Id="OCSP_FAKE-KISA-OCSP_20260109-0041" BlockType="RFC">
                     <Name Key="BBB_XCV_RFC">Is the revocation freshness check conclusive?</Name>
                     <Status>OK</Status>
-                    <AdditionalInfo>Id = OCSP_FAKE-KISA-OCSP_20260105-0710_3</AdditionalInfo>
+                    <AdditionalInfo>Id = OCSP_FAKE-KISA-OCSP_20260109-0041</AdditionalInfo>
                 </Constraint>
                 <Constraint>
                     <Name Key="ACCM">Are cryptographic constraints met for the signature's certificate chain?</Name>
                     <Status>OK</Status>
-                    <AdditionalInfo>Signature algorithm RSA with SHA256 with key size 4096 at validation time : 2026-01-05 07:10</AdditionalInfo>
+                    <AdditionalInfo>Signature algorithm RSA with SHA256 with key size 4096 at validation time : 2026-01-09 00:41</AdditionalInfo>
                 </Constraint>
                 <Constraint>
                     <Name Key="BBB_XCV_ICTIVRSC">Is the current time in the validity range of the signer's certificate?</Name>
                     <Status>OK</Status>
-                    <AdditionalInfo>Validation time : 2026-01-05 07:10, certificate validity : 2025-11-17 04:07 - 2026-11-17 04:07</AdditionalInfo>
+                    <AdditionalInfo>Validation time : 2026-01-09 00:41, certificate validity : 2025-11-17 04:07 - 2026-11-17 04:07</AdditionalInfo>
                 </Constraint>
                 <Constraint>
                     <Name Key="BBB_XCV_ICTIVRCIRI">Is the current time in the validity range of the certificate of the issuer of the revocation information?</Name>
                     <Status>OK</Status>
-                    <AdditionalInfo>Issuer certificate CERTIFICATE_FAKE-KISA-OCSP_20251117-0406 of revocation data OCSP_FAKE-KISA-OCSP_20260105-0710_3 with validity range : 2025-11-17 04:06 - 2026-11-17 04:06 and validation time 2026-01-05 07:10</AdditionalInfo>
+                    <AdditionalInfo>Issuer certificate CERTIFICATE_FAKE-KISA-OCSP_20251117-0406 of revocation data OCSP_FAKE-KISA-OCSP_20260109-0041 with validity range : 2025-11-17 04:06 - 2026-11-17 04:06 and validation time 2026-01-09 00:41</AdditionalInfo>
                 </Constraint>
                 <Conclusion>
                     <Indication>PASSED</Indication>
@@ -379,23 +379,23 @@
                     <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                     <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                 </Conclusion>
-                <CRS Id="CERTIFICATE_tester2_20251117-0407" LatestAcceptableRevocationId="OCSP_FAKE-KISA-OCSP_20260105-0710_3" Title="Certificate Revocation Data Selector">
-                    <Constraint Id="OCSP_FAKE-KISA-OCSP_20260105-0710_3" BlockType="RAC">
+                <CRS Id="CERTIFICATE_tester2_20251117-0407" LatestAcceptableRevocationId="OCSP_FAKE-KISA-OCSP_20260109-0041" Title="Certificate Revocation Data Selector">
+                    <Constraint Id="OCSP_FAKE-KISA-OCSP_20260109-0041" BlockType="RAC">
                         <Name Key="BBB_XCV_RAC">Is the revocation acceptance check conclusive?</Name>
                         <Status>OK</Status>
-                        <AdditionalInfo>Id = OCSP_FAKE-KISA-OCSP_20260105-0710_3, thisUpdate = 2026-01-05 07:10, production time = 2026-01-05 07:10</AdditionalInfo>
+                        <AdditionalInfo>Id = OCSP_FAKE-KISA-OCSP_20260109-0041, thisUpdate = 2026-01-09 00:41, production time = 2026-01-09 00:41</AdditionalInfo>
                     </Constraint>
                     <Constraint>
                         <Name Key="BBB_XCV_IARDPFC">Is an acceptable revocation data present for the certificate?</Name>
                         <Status>OK</Status>
-                        <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260105-0710_3</AdditionalInfo>
+                        <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260109-0041</AdditionalInfo>
                     </Constraint>
                     <Conclusion>
                         <Indication>PASSED</Indication>
                         <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                         <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                     </Conclusion>
-                    <RAC Id="OCSP_FAKE-KISA-OCSP_20260105-0710_3" Title="Revocation Acceptance Checker">
+                    <RAC Id="OCSP_FAKE-KISA-OCSP_20260109-0041" Title="Revocation Acceptance Checker">
                         <Constraint>
                             <Name Key="BBB_XCV_ISCUKN">Is the revocation status known?</Name>
                             <Status>OK</Status>
@@ -419,7 +419,7 @@
                         <Constraint>
                             <Name Key="BBB_XCV_REVOC_ISSUER_VALID_AT_PROD">Has the revocation data been produced during the issuer certificate validity range?</Name>
                             <Status>OK</Status>
-                            <AdditionalInfo>Revocation data has been produced at 2026-01-05 07:10 which is in the certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
+                            <AdditionalInfo>Revocation data has been produced at 2026-01-09 00:41 which is in the certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
                         </Constraint>
                         <Constraint>
                             <Name Key="BBB_XCV_REVOC_RESPID_MATCH">Does the ResponderId match the OCSP issuer certificate?</Name>
@@ -432,12 +432,12 @@
                         <Constraint>
                             <Name Key="BBB_XCV_REVOC_AFTER_CERT_NOT_BEFORE">Has the revocation data been issued after certificate's issuance time?</Name>
                             <Status>OK</Status>
-                            <AdditionalInfo>Revocation thisUpdate 2026-01-05 07:10, certificate validity range : 2025-11-17 04:07 - 2026-11-17 04:07</AdditionalInfo>
+                            <AdditionalInfo>Revocation thisUpdate 2026-01-09 00:41, certificate validity range : 2025-11-17 04:07 - 2026-11-17 04:07</AdditionalInfo>
                         </Constraint>
                         <Constraint>
                             <Name Key="BBB_XCV_REVOC_HAS_CERT_INFO">Is the revocation data known to contain information about the certificate?</Name>
                             <Status>OK</Status>
-                            <AdditionalInfo>Revocation thisUpdate 2026-01-05 07:10 is in the certificate validity range : 2025-11-17 04:07 - 2026-11-17 04:07</AdditionalInfo>
+                            <AdditionalInfo>Revocation thisUpdate 2026-01-09 00:41 is in the certificate validity range : 2025-11-17 04:07 - 2026-11-17 04:07</AdditionalInfo>
                         </Constraint>
                         <Constraint>
                             <Name Key="BBB_CV_ISIC">Is certificate's signature intact?</Name>
@@ -451,32 +451,32 @@
                         <Constraint Id="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406" BlockType="CRS">
                             <Name Key="BBB_XCV_IARDPFC">Is an acceptable revocation data present for the certificate?</Name>
                             <Status>OK</Status>
-                            <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260105-0710_2</AdditionalInfo>
+                            <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260109-0041_2</AdditionalInfo>
                         </Constraint>
                         <Conclusion>
                             <Indication>PASSED</Indication>
                             <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                             <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                         </Conclusion>
-                        <RevocationThisUpdate>2026-01-05T07:10:04Z</RevocationThisUpdate>
-                        <RevocationProductionDate>2026-01-05T07:10:04Z</RevocationProductionDate>
-                        <CRS Id="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406" LatestAcceptableRevocationId="OCSP_FAKE-KISA-OCSP_20260105-0710_2" Title="Certificate Revocation Data Selector">
-                            <Constraint Id="OCSP_FAKE-KISA-OCSP_20260105-0710_2" BlockType="RAC">
+                        <RevocationThisUpdate>2026-01-09T00:41:39Z</RevocationThisUpdate>
+                        <RevocationProductionDate>2026-01-09T00:41:39Z</RevocationProductionDate>
+                        <CRS Id="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406" LatestAcceptableRevocationId="OCSP_FAKE-KISA-OCSP_20260109-0041_2" Title="Certificate Revocation Data Selector">
+                            <Constraint Id="OCSP_FAKE-KISA-OCSP_20260109-0041_2" BlockType="RAC">
                                 <Name Key="BBB_XCV_RAC">Is the revocation acceptance check conclusive?</Name>
                                 <Status>OK</Status>
-                                <AdditionalInfo>Id = OCSP_FAKE-KISA-OCSP_20260105-0710_2, thisUpdate = 2026-01-05 07:10, production time = 2026-01-05 07:10</AdditionalInfo>
+                                <AdditionalInfo>Id = OCSP_FAKE-KISA-OCSP_20260109-0041_2, thisUpdate = 2026-01-09 00:41, production time = 2026-01-09 00:41</AdditionalInfo>
                             </Constraint>
                             <Constraint>
                                 <Name Key="BBB_XCV_IARDPFC">Is an acceptable revocation data present for the certificate?</Name>
                                 <Status>OK</Status>
-                                <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260105-0710_2</AdditionalInfo>
+                                <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260109-0041_2</AdditionalInfo>
                             </Constraint>
                             <Conclusion>
                                 <Indication>PASSED</Indication>
                                 <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                                 <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                             </Conclusion>
-                            <RAC Id="OCSP_FAKE-KISA-OCSP_20260105-0710_2" Title="Revocation Acceptance Checker">
+                            <RAC Id="OCSP_FAKE-KISA-OCSP_20260109-0041_2" Title="Revocation Acceptance Checker">
                                 <Constraint>
                                     <Name Key="BBB_XCV_ISCUKN">Is the revocation status known?</Name>
                                     <Status>OK</Status>
@@ -500,7 +500,7 @@
                                 <Constraint>
                                     <Name Key="BBB_XCV_REVOC_ISSUER_VALID_AT_PROD">Has the revocation data been produced during the issuer certificate validity range?</Name>
                                     <Status>OK</Status>
-                                    <AdditionalInfo>Revocation data has been produced at 2026-01-05 07:10 which is in the certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
+                                    <AdditionalInfo>Revocation data has been produced at 2026-01-09 00:41 which is in the certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
                                 </Constraint>
                                 <Constraint>
                                     <Name Key="BBB_XCV_REVOC_RESPID_MATCH">Does the ResponderId match the OCSP issuer certificate?</Name>
@@ -514,12 +514,12 @@
                                 <Constraint>
                                     <Name Key="BBB_XCV_REVOC_AFTER_CERT_NOT_BEFORE">Has the revocation data been issued after certificate's issuance time?</Name>
                                     <Status>OK</Status>
-                                    <AdditionalInfo>Revocation thisUpdate 2026-01-05 07:10, certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
+                                    <AdditionalInfo>Revocation thisUpdate 2026-01-09 00:41, certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
                                 </Constraint>
                                 <Constraint>
                                     <Name Key="BBB_XCV_REVOC_HAS_CERT_INFO">Is the revocation data known to contain information about the certificate?</Name>
                                     <Status>OK</Status>
-                                    <AdditionalInfo>Revocation thisUpdate 2026-01-05 07:10 is in the certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
+                                    <AdditionalInfo>Revocation thisUpdate 2026-01-09 00:41 is in the certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
                                 </Constraint>
                                 <Constraint>
                                     <Name Key="BBB_CV_ISIC">Is certificate's signature intact?</Name>
@@ -533,31 +533,31 @@
                                 <Constraint Id="CERTIFICATE_FAKE-KISA-CA_20251117-0404" BlockType="CRS">
                                     <Name Key="BBB_XCV_IARDPFC">Is an acceptable revocation data present for the certificate?</Name>
                                     <Status>OK</Status>
-                                    <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260105-0710</AdditionalInfo>
+                                    <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260109-0041_3</AdditionalInfo>
                                 </Constraint>
                                 <Conclusion>
                                     <Indication>PASSED</Indication>
                                     <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                                     <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                                 </Conclusion>
-                                <RevocationThisUpdate>2026-01-05T07:10:04Z</RevocationThisUpdate>
-                                <RevocationProductionDate>2026-01-05T07:10:04Z</RevocationProductionDate>
-                                <CRS Id="CERTIFICATE_FAKE-KISA-CA_20251117-0404" LatestAcceptableRevocationId="OCSP_FAKE-KISA-OCSP_20260105-0710" Title="Certificate Revocation Data Selector">
-                                    <Constraint Id="OCSP_FAKE-KISA-OCSP_20260105-0710" BlockType="RAC">
+                                <RevocationThisUpdate>2026-01-09T00:41:39Z</RevocationThisUpdate>
+                                <RevocationProductionDate>2026-01-09T00:41:39Z</RevocationProductionDate>
+                                <CRS Id="CERTIFICATE_FAKE-KISA-CA_20251117-0404" LatestAcceptableRevocationId="OCSP_FAKE-KISA-OCSP_20260109-0041_3" Title="Certificate Revocation Data Selector">
+                                    <Constraint Id="OCSP_FAKE-KISA-OCSP_20260109-0041_3" BlockType="RAC">
                                         <Name Key="BBB_XCV_RAC">Is the revocation acceptance check conclusive?</Name>
                                         <Status>OK</Status>
-                                        <AdditionalInfo>Id = OCSP_FAKE-KISA-OCSP_20260105-0710, thisUpdate = 2026-01-05 07:10, production time = 2026-01-05 07:10</AdditionalInfo>
+                                        <AdditionalInfo>Id = OCSP_FAKE-KISA-OCSP_20260109-0041_3, thisUpdate = 2026-01-09 00:41, production time = 2026-01-09 00:41</AdditionalInfo>
                                     </Constraint>
                                     <Constraint>
                                         <Name Key="BBB_XCV_IARDPFC">Is an acceptable revocation data present for the certificate?</Name>
                                         <Status>OK</Status>
-                                        <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260105-0710</AdditionalInfo>
+                                        <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260109-0041_3</AdditionalInfo>
                                     </Constraint>
                                     <Conclusion>
                                         <Indication>PASSED</Indication>
                                         <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                                     </Conclusion>
-                                    <RAC Id="OCSP_FAKE-KISA-OCSP_20260105-0710" Title="Revocation Acceptance Checker">
+                                    <RAC Id="OCSP_FAKE-KISA-OCSP_20260109-0041_3" Title="Revocation Acceptance Checker">
                                         <Constraint>
                                             <Name Key="BBB_XCV_ISCUKN">Is the revocation status known?</Name>
                                             <Status>OK</Status>
@@ -581,7 +581,7 @@
                                         <Constraint>
                                             <Name Key="BBB_XCV_REVOC_ISSUER_VALID_AT_PROD">Has the revocation data been produced during the issuer certificate validity range?</Name>
                                             <Status>OK</Status>
-                                            <AdditionalInfo>Revocation data has been produced at 2026-01-05 07:10 which is in the certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
+                                            <AdditionalInfo>Revocation data has been produced at 2026-01-09 00:41 which is in the certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
                                         </Constraint>
                                         <Constraint>
                                             <Name Key="BBB_XCV_REVOC_RESPID_MATCH">Does the ResponderId match the OCSP issuer certificate?</Name>
@@ -595,26 +595,26 @@
                                         <Constraint>
                                             <Name Key="BBB_XCV_REVOC_AFTER_CERT_NOT_BEFORE">Has the revocation data been issued after certificate's issuance time?</Name>
                                             <Status>OK</Status>
-                                            <AdditionalInfo>Revocation thisUpdate 2026-01-05 07:10, certificate validity range : 2025-11-17 04:04 - 2026-11-17 04:04</AdditionalInfo>
+                                            <AdditionalInfo>Revocation thisUpdate 2026-01-09 00:41, certificate validity range : 2025-11-17 04:04 - 2026-11-17 04:04</AdditionalInfo>
                                         </Constraint>
                                         <Constraint>
                                             <Name Key="BBB_XCV_REVOC_HAS_CERT_INFO">Is the revocation data known to contain information about the certificate?</Name>
                                             <Status>OK</Status>
-                                            <AdditionalInfo>Revocation thisUpdate 2026-01-05 07:10 is in the certificate validity range : 2025-11-17 04:04 - 2026-11-17 04:04</AdditionalInfo>
+                                            <AdditionalInfo>Revocation thisUpdate 2026-01-09 00:41 is in the certificate validity range : 2025-11-17 04:04 - 2026-11-17 04:04</AdditionalInfo>
                                         </Constraint>
                                         <Conclusion>
                                             <Indication>PASSED</Indication>
                                             <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                                         </Conclusion>
-                                        <RevocationThisUpdate>2026-01-05T07:10:04Z</RevocationThisUpdate>
-                                        <RevocationProductionDate>2026-01-05T07:10:04Z</RevocationProductionDate>
+                                        <RevocationThisUpdate>2026-01-09T00:41:39Z</RevocationThisUpdate>
+                                        <RevocationProductionDate>2026-01-09T00:41:39Z</RevocationProductionDate>
                                     </RAC>
                                 </CRS>
                             </RAC>
                         </CRS>
                     </RAC>
                 </CRS>
-                <RFC Id="OCSP_FAKE-KISA-OCSP_20260105-0710_3" Title="Revocation Freshness Checker">
+                <RFC Id="OCSP_FAKE-KISA-OCSP_20260109-0041" Title="Revocation Freshness Checker">
                     <Constraint>
                         <Name Key="BBB_RFC_IRIF">Is the revocation information fresh for the certificate?</Name>
                         <Status>IGNORED</Status>
@@ -622,7 +622,7 @@
                     <Constraint>
                         <Name Key="ACCM">Are cryptographic constraints met for the revocation data signature?</Name>
                         <Status>OK</Status>
-                        <AdditionalInfo>Signature algorithm RSA with SHA256 with key size 4096 at validation time : 2026-01-05 07:10</AdditionalInfo>
+                        <AdditionalInfo>Signature algorithm RSA with SHA256 with key size 4096 at validation time : 2026-01-09 00:41</AdditionalInfo>
                     </Constraint>
                     <Conclusion>
                         <Indication>PASSED</Indication>
@@ -674,7 +674,7 @@
                 <Constraint Id="CERTIFICATE_FAKE-KISA-CA_20251117-0404" BlockType="CRS">
                     <Name Key="BBB_XCV_IARDPFC">Is an acceptable revocation data present for the certificate?</Name>
                     <Status>OK</Status>
-                    <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260105-0710</AdditionalInfo>
+                    <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260109-0041_3</AdditionalInfo>
                 </Constraint>
                 <Constraint>
                     <Name Key="BBB_XCV_ISCR">Is the certificate not revoked?</Name>
@@ -684,38 +684,38 @@
                     <Name Key="BBB_XCV_ISCOH">Is the certificate not on hold?</Name>
                     <Status>OK</Status>
                 </Constraint>
-                <Constraint Id="OCSP_FAKE-KISA-OCSP_20260105-0710" BlockType="RFC">
+                <Constraint Id="OCSP_FAKE-KISA-OCSP_20260109-0041_3" BlockType="RFC">
                     <Name Key="BBB_XCV_RFC">Is the revocation freshness check conclusive?</Name>
                     <Status>OK</Status>
-                    <AdditionalInfo>Id = OCSP_FAKE-KISA-OCSP_20260105-0710</AdditionalInfo>
+                    <AdditionalInfo>Id = OCSP_FAKE-KISA-OCSP_20260109-0041_3</AdditionalInfo>
                 </Constraint>
                 <Constraint>
                     <Name Key="ACCM">Are cryptographic constraints met for the signature's certificate chain?</Name>
                     <Status>OK</Status>
-                    <AdditionalInfo>Signature algorithm RSA with SHA256 with key size 4096 at validation time : 2026-01-05 07:10</AdditionalInfo>
+                    <AdditionalInfo>Signature algorithm RSA with SHA256 with key size 4096 at validation time : 2026-01-09 00:41</AdditionalInfo>
                 </Constraint>
                 <Conclusion>
                     <Indication>PASSED</Indication>
                     <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                     <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                 </Conclusion>
-                <CRS Id="CERTIFICATE_FAKE-KISA-CA_20251117-0404" LatestAcceptableRevocationId="OCSP_FAKE-KISA-OCSP_20260105-0710" Title="Certificate Revocation Data Selector">
-                    <Constraint Id="OCSP_FAKE-KISA-OCSP_20260105-0710" BlockType="RAC">
+                <CRS Id="CERTIFICATE_FAKE-KISA-CA_20251117-0404" LatestAcceptableRevocationId="OCSP_FAKE-KISA-OCSP_20260109-0041_3" Title="Certificate Revocation Data Selector">
+                    <Constraint Id="OCSP_FAKE-KISA-OCSP_20260109-0041_3" BlockType="RAC">
                         <Name Key="BBB_XCV_RAC">Is the revocation acceptance check conclusive?</Name>
                         <Status>OK</Status>
-                        <AdditionalInfo>Id = OCSP_FAKE-KISA-OCSP_20260105-0710, thisUpdate = 2026-01-05 07:10, production time = 2026-01-05 07:10</AdditionalInfo>
+                        <AdditionalInfo>Id = OCSP_FAKE-KISA-OCSP_20260109-0041_3, thisUpdate = 2026-01-09 00:41, production time = 2026-01-09 00:41</AdditionalInfo>
                     </Constraint>
                     <Constraint>
                         <Name Key="BBB_XCV_IARDPFC">Is an acceptable revocation data present for the certificate?</Name>
                         <Status>OK</Status>
-                        <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260105-0710</AdditionalInfo>
+                        <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260109-0041_3</AdditionalInfo>
                     </Constraint>
                     <Conclusion>
                         <Indication>PASSED</Indication>
                         <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                         <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                     </Conclusion>
-                    <RAC Id="OCSP_FAKE-KISA-OCSP_20260105-0710" Title="Revocation Acceptance Checker">
+                    <RAC Id="OCSP_FAKE-KISA-OCSP_20260109-0041_3" Title="Revocation Acceptance Checker">
                         <Constraint>
                             <Name Key="BBB_XCV_ISCUKN">Is the revocation status known?</Name>
                             <Status>OK</Status>
@@ -739,7 +739,7 @@
                         <Constraint>
                             <Name Key="BBB_XCV_REVOC_ISSUER_VALID_AT_PROD">Has the revocation data been produced during the issuer certificate validity range?</Name>
                             <Status>OK</Status>
-                            <AdditionalInfo>Revocation data has been produced at 2026-01-05 07:10 which is in the certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
+                            <AdditionalInfo>Revocation data has been produced at 2026-01-09 00:41 which is in the certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
                         </Constraint>
                         <Constraint>
                             <Name Key="BBB_XCV_REVOC_RESPID_MATCH">Does the ResponderId match the OCSP issuer certificate?</Name>
@@ -753,12 +753,12 @@
                         <Constraint>
                             <Name Key="BBB_XCV_REVOC_AFTER_CERT_NOT_BEFORE">Has the revocation data been issued after certificate's issuance time?</Name>
                             <Status>OK</Status>
-                            <AdditionalInfo>Revocation thisUpdate 2026-01-05 07:10, certificate validity range : 2025-11-17 04:04 - 2026-11-17 04:04</AdditionalInfo>
+                            <AdditionalInfo>Revocation thisUpdate 2026-01-09 00:41, certificate validity range : 2025-11-17 04:04 - 2026-11-17 04:04</AdditionalInfo>
                         </Constraint>
                         <Constraint>
                             <Name Key="BBB_XCV_REVOC_HAS_CERT_INFO">Is the revocation data known to contain information about the certificate?</Name>
                             <Status>OK</Status>
-                            <AdditionalInfo>Revocation thisUpdate 2026-01-05 07:10 is in the certificate validity range : 2025-11-17 04:04 - 2026-11-17 04:04</AdditionalInfo>
+                            <AdditionalInfo>Revocation thisUpdate 2026-01-09 00:41 is in the certificate validity range : 2025-11-17 04:04 - 2026-11-17 04:04</AdditionalInfo>
                         </Constraint>
                         <Constraint>
                             <Name Key="BBB_CV_ISIC">Is certificate's signature intact?</Name>
@@ -772,31 +772,31 @@
                         <Constraint Id="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406" BlockType="CRS">
                             <Name Key="BBB_XCV_IARDPFC">Is an acceptable revocation data present for the certificate?</Name>
                             <Status>OK</Status>
-                            <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260105-0710_2</AdditionalInfo>
+                            <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260109-0041_2</AdditionalInfo>
                         </Constraint>
                         <Conclusion>
                             <Indication>PASSED</Indication>
                             <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                             <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                         </Conclusion>
-                        <RevocationThisUpdate>2026-01-05T07:10:04Z</RevocationThisUpdate>
-                        <RevocationProductionDate>2026-01-05T07:10:04Z</RevocationProductionDate>
-                        <CRS Id="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406" LatestAcceptableRevocationId="OCSP_FAKE-KISA-OCSP_20260105-0710_2" Title="Certificate Revocation Data Selector">
-                            <Constraint Id="OCSP_FAKE-KISA-OCSP_20260105-0710_2" BlockType="RAC">
+                        <RevocationThisUpdate>2026-01-09T00:41:39Z</RevocationThisUpdate>
+                        <RevocationProductionDate>2026-01-09T00:41:39Z</RevocationProductionDate>
+                        <CRS Id="CERTIFICATE_FAKE-KISA-OCSP_20251117-0406" LatestAcceptableRevocationId="OCSP_FAKE-KISA-OCSP_20260109-0041_2" Title="Certificate Revocation Data Selector">
+                            <Constraint Id="OCSP_FAKE-KISA-OCSP_20260109-0041_2" BlockType="RAC">
                                 <Name Key="BBB_XCV_RAC">Is the revocation acceptance check conclusive?</Name>
                                 <Status>OK</Status>
-                                <AdditionalInfo>Id = OCSP_FAKE-KISA-OCSP_20260105-0710_2, thisUpdate = 2026-01-05 07:10, production time = 2026-01-05 07:10</AdditionalInfo>
+                                <AdditionalInfo>Id = OCSP_FAKE-KISA-OCSP_20260109-0041_2, thisUpdate = 2026-01-09 00:41, production time = 2026-01-09 00:41</AdditionalInfo>
                             </Constraint>
                             <Constraint>
                                 <Name Key="BBB_XCV_IARDPFC">Is an acceptable revocation data present for the certificate?</Name>
                                 <Status>OK</Status>
-                                <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260105-0710_2</AdditionalInfo>
+                                <AdditionalInfo>Latest acceptable revocation : OCSP_FAKE-KISA-OCSP_20260109-0041_2</AdditionalInfo>
                             </Constraint>
                             <Conclusion>
                                 <Indication>PASSED</Indication>
                                 <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                             </Conclusion>
-                            <RAC Id="OCSP_FAKE-KISA-OCSP_20260105-0710_2" Title="Revocation Acceptance Checker">
+                            <RAC Id="OCSP_FAKE-KISA-OCSP_20260109-0041_2" Title="Revocation Acceptance Checker">
                                 <Constraint>
                                     <Name Key="BBB_XCV_ISCUKN">Is the revocation status known?</Name>
                                     <Status>OK</Status>
@@ -820,7 +820,7 @@
                                 <Constraint>
                                     <Name Key="BBB_XCV_REVOC_ISSUER_VALID_AT_PROD">Has the revocation data been produced during the issuer certificate validity range?</Name>
                                     <Status>OK</Status>
-                                    <AdditionalInfo>Revocation data has been produced at 2026-01-05 07:10 which is in the certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
+                                    <AdditionalInfo>Revocation data has been produced at 2026-01-09 00:41 which is in the certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
                                 </Constraint>
                                 <Constraint>
                                     <Name Key="BBB_XCV_REVOC_RESPID_MATCH">Does the ResponderId match the OCSP issuer certificate?</Name>
@@ -834,24 +834,24 @@
                                 <Constraint>
                                     <Name Key="BBB_XCV_REVOC_AFTER_CERT_NOT_BEFORE">Has the revocation data been issued after certificate's issuance time?</Name>
                                     <Status>OK</Status>
-                                    <AdditionalInfo>Revocation thisUpdate 2026-01-05 07:10, certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
+                                    <AdditionalInfo>Revocation thisUpdate 2026-01-09 00:41, certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
                                 </Constraint>
                                 <Constraint>
                                     <Name Key="BBB_XCV_REVOC_HAS_CERT_INFO">Is the revocation data known to contain information about the certificate?</Name>
                                     <Status>OK</Status>
-                                    <AdditionalInfo>Revocation thisUpdate 2026-01-05 07:10 is in the certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
+                                    <AdditionalInfo>Revocation thisUpdate 2026-01-09 00:41 is in the certificate validity range : 2025-11-17 04:06 - 2026-11-17 04:06</AdditionalInfo>
                                 </Constraint>
                                 <Conclusion>
                                     <Indication>PASSED</Indication>
                                     <Warnings Key="BBB_XCV_REVOC_SELF_ISSUED_OCSP_ANS">The checked certificate shall not appear in the OCSP Responders certificate path!</Warnings>
                                 </Conclusion>
-                                <RevocationThisUpdate>2026-01-05T07:10:04Z</RevocationThisUpdate>
-                                <RevocationProductionDate>2026-01-05T07:10:04Z</RevocationProductionDate>
+                                <RevocationThisUpdate>2026-01-09T00:41:39Z</RevocationThisUpdate>
+                                <RevocationProductionDate>2026-01-09T00:41:39Z</RevocationProductionDate>
                             </RAC>
                         </CRS>
                     </RAC>
                 </CRS>
-                <RFC Id="OCSP_FAKE-KISA-OCSP_20260105-0710" Title="Revocation Freshness Checker">
+                <RFC Id="OCSP_FAKE-KISA-OCSP_20260109-0041_3" Title="Revocation Freshness Checker">
                     <Constraint>
                         <Name Key="BBB_RFC_IRIF">Is the revocation information fresh for the certificate?</Name>
                         <Status>IGNORED</Status>
@@ -859,7 +859,7 @@
                     <Constraint>
                         <Name Key="ACCM">Are cryptographic constraints met for the revocation data signature?</Name>
                         <Status>OK</Status>
-                        <AdditionalInfo>Signature algorithm RSA with SHA256 with key size 4096 at validation time : 2026-01-05 07:10</AdditionalInfo>
+                        <AdditionalInfo>Signature algorithm RSA with SHA256 with key size 4096 at validation time : 2026-01-09 00:41</AdditionalInfo>
                     </Constraint>
                     <Conclusion>
                         <Indication>PASSED</Indication>
@@ -919,17 +919,17 @@
             <Constraint>
                 <Name Key="ACCM">Are cryptographic constraints met for the signature creation?</Name>
                 <Status>OK</Status>
-                <AdditionalInfo>Signature algorithm RSA with SHA512 with key size 4096 at validation time : 2026-01-05 07:10</AdditionalInfo>
+                <AdditionalInfo>Signature algorithm RSA with SHA512 with key size 4096 at validation time : 2026-01-09 00:41</AdditionalInfo>
             </Constraint>
             <Constraint>
                 <Name Key="ACCM">Are cryptographic constraints met for the message digest?</Name>
                 <Status>OK</Status>
-                <AdditionalInfo>Digest algorithm SHA512 at validation time : 2026-01-05 07:10 for message digest with name : 270325.txt</AdditionalInfo>
+                <AdditionalInfo>Digest algorithm SHA512 at validation time : 2026-01-09 00:41 for message digest with name : 270325.txt</AdditionalInfo>
             </Constraint>
             <Constraint Id="CERTIFICATE_tester2_20251117-0407">
                 <Name Key="ACCM">Are cryptographic constraints met for the signing certificate reference?</Name>
                 <Status>OK</Status>
-                <AdditionalInfo>Digest algorithm SHA512 at validation time : 2026-01-05 07:10 for signing certificate reference with Id : CERTIFICATE_tester2_20251117-0407</AdditionalInfo>
+                <AdditionalInfo>Digest algorithm SHA512 at validation time : 2026-01-09 00:41 for signing certificate reference with Id : CERTIFICATE_tester2_20251117-0407</AdditionalInfo>
             </Constraint>
             <Conclusion>
                 <Indication>PASSED</Indication>
@@ -941,13 +941,13 @@
                     <KeyLength>4096</KeyLength>
                 </Algorithm>
                 <NotAfter>2029-01-01T00:00:00Z</NotAfter>
-                <ValidationTime>2026-01-05T07:10:04Z</ValidationTime>
-                <ConcernedMaterial>SIGNATURE_tester2_20251231-0510</ConcernedMaterial>
+                <ValidationTime>2026-01-09T00:41:39Z</ValidationTime>
+                <ConcernedMaterial>SIGNATURE_tester2_20260108-0812</ConcernedMaterial>
             </CryptographicValidation>
         </SAV>
         <CertificateChain>
             <ChainItem Id="CERTIFICATE_tester2_20251117-0407">
-                <Source>OTHER</Source>
+                <Source>SIGNATURE</Source>
             </ChainItem>
             <ChainItem Id="CERTIFICATE_FAKE-KISA-CA_20251117-0404">
                 <Source>OTHER</Source>

@@ -68,6 +68,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.springframework.core.io.UrlResource;
+
 @Controller
 @SessionAttributes(value={"ValidationForm"})
 @RequestMapping(value = "/kr-dss")
@@ -81,6 +88,10 @@ public class ValidationController extends AbstractValidationController {
 			"validationLevel", "timezoneDifference", "defaultPolicy", "policyFile", "cryptographicSuite", "signingCertificate",
 			"adjunctCertificates", "evidenceRecordFiles", "includeCertificateTokens", "includeTimestampTokens", "includeRevocationTokens",
 			"includeUserFriendlyIdentifiers", "includeSemantics" };
+
+	private final Path reportBaseDir = Paths.get(System.getProperty("java.io.tmpdir"), "kr-dss", "reports")
+			.toAbsolutePath()
+			.normalize();
 
 	@Autowired
 	private FOPService fopService;
@@ -116,13 +127,12 @@ public class ValidationController extends AbstractValidationController {
 		return VALIDATION_TILE;
 	}
 
-
 	@PostMapping(value = "/verify-signature", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public VerifySignedDocResponse verifySignature(
 			@Valid @RequestBody VerifySignedDocRequest verifySignedDocRequest,
 			HttpServletRequest request
-	) throws JsonProcessingException {
+	) throws IOException {
 
 		LOG.info("request : {}", verifySignedDocRequest.toString());
 
@@ -184,22 +194,101 @@ public class ValidationController extends AbstractValidationController {
 		} else {
 			msg = "["+indication+"] "+ subIndication;
 		}
-//		response.setMessage(indication.toString(), msg);
+
+		String format = verifySignedDocRequest.getSignatureFormat().toString();
+		String level = "";
+		if (form.getValidationLevel() == ValidationLevel.ARCHIVAL_DATA) {
+			level = "LTA";
+		} else if (form.getValidationLevel() == ValidationLevel.LONG_TERM_DATA) {
+			level = "LT";
+		} else if (form.getValidationLevel() == ValidationLevel.TIMESTAMPS) {
+			level = "T";
+		} else {
+			level = "B";
+		}
+		String sigFormat = format + "-BASELINE-" + level;
+
 		response.setSimpleReport(reports);
-		response.setDetailedReport(reports);
-//		response.setDiagnosticDate(reports);
+		response.setDetailedReport(format, level, reports);
+		response.setDiagnosticData(format, level, reports);
+		response.setEtsiValidationReport(reports);
 		response.setValid(isValid);
 
-		//2025.11.18_sujin - purpose : print reports at Front-End
-		// response.setReports(reports);
+		//fileNaming
+		response.generateFileName(verifySignedDocRequest.getSignatureFormat().toString(), form.getValidationLevel(), reports);
+		//download reports
+		response.downloadReports(reports);
+
+		//response
 		LOG.info("{}, {}, {} ", indication, subIndication, isValid);
-//		LOG.info("response.getSimple : {}", response.getSimpleReport());
-//		LOG.info("response.getDetailedReport : {}", response.getDetailedReport());
-//		LOG.info("response.getDiagnosticTree : {}", response.getDiagnosticTree());
-//		LOG.info("response.getEtsiValidationReport : {}", response.getETSIValidationReport());
 		return response;
 	}
 
+	@GetMapping(value = "/api/verify/reports/{reportType}/{fileName}")
+	@ResponseBody
+	public ResponseEntity<Resource> downloadReport(
+			@PathVariable String reportType, @PathVariable String fileName) {
+		// Check InputValues
+		LOG.info("[downloadReport] loading...");
+		if (fileName == null || fileName.isBlank()
+				|| fileName.contains("..")
+				|| fileName.contains("/") || fileName.contains("\\")
+				|| fileName.contains("\0")) {
+			return ResponseEntity.badRequest().build();
+		}
+		if (reportType == null || reportType.isBlank()
+				|| reportType.contains("..")
+				|| reportType.contains("/") || reportType.contains("\\")
+				|| reportType.contains("\0")) {
+			return ResponseEntity.badRequest().build();
+		}
+		String reportFlag = switch (reportType) {
+            case "simple", "Simple", "SIMPLE" -> "[simple]_";
+            case "detailed", "Detailed", "DETAILED" -> "[detailed]_";
+            case "diagnostic", "Diagnostic", "DIAGNOSTIC" -> "[diagnostic]_";
+            case "etsi", "Etsi", "ETSI" -> "[etsi]_";
+            default ->  //default
+                    "[etsi]_";
+        };
+
+        // 2) Setting report Path
+		Path target = reportBaseDir.resolve(reportFlag+fileName).normalize();
+		if (!target.startsWith(reportBaseDir)) {
+			return ResponseEntity.badRequest().build();
+		}
+
+		// 3) Checking isExist Directory
+		if (!Files.exists(target) || !Files.isRegularFile(target)) {
+			return ResponseEntity.notFound().build();
+		}
+
+		// 4) Content-Type (octet-stream)
+		String contentType = "application/octet-stream";
+		try {
+			String probe = Files.probeContentType(target);
+			if (probe != null && !probe.isBlank()) contentType = probe;
+		} catch (Exception ignored) {}
+
+		// 5) Loading Resource
+		Resource resource;
+		try {
+			resource = new UrlResource(target.toUri());
+			if (!resource.exists()) return ResponseEntity.notFound().build();
+		} catch (MalformedURLException e) {
+			return ResponseEntity.notFound().build();
+		}
+
+		LOG.info("[downloadReport] success...");
+
+		// 6) Download Header
+		return ResponseEntity.ok()
+				.contentType(MediaType.parseMediaType(contentType))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + reportFlag + fileName + "\"")
+				.header(HttpHeaders.CACHE_CONTROL, "no-store, no-cache, must-revalidate, max-age=0")
+				.header("Pragma", "no-cache")
+				.body(resource);
+
+	}
 	private Date getValidationTime(ValidationForm validationForm) {
 		if (validationForm.getValidationTime() != null) {
 			Calendar calendar = Calendar.getInstance();
@@ -256,28 +345,11 @@ public class ValidationController extends AbstractValidationController {
 		adjunctSource.addCertificate(issuerCertificate);
 		adjunctSource.addCertificate(signingCertificate);
 		verifier.setAdjunctCertSources(adjunctSource);
-
-		LOG.info("verifier.getCrt : {}",verifier.getTrustedCertSources().toString());
-		LOG.info("verifier.getAdjunctCert : {} ",verifier.getAdjunctCertSources().toString());
+//		LOG.info("verifier.getCrt : {}",verifier.getTrustedCertSources().toString());
+//		LOG.info("verifier.getAdjunctCert : {} ",verifier.getAdjunctCertSources().toString());
 		return verifier;
-
-		/*
-		CertificateSource adjunctCertSource = WebAppUtils.toCertificateSource(certValidationForm.getAdjunctCertificates());
-
-		CertificateVerifier cv;
-		if (adjunctCertSource == null) {
-			// reuse the default one
-			cv = certificateVerifier;
-		} else {
-			cv = new CertificateVerifierBuilder(certificateVerifier).buildCompleteCopy();
-			cv.setAdjunctCertSources(adjunctCertSource);
-		}
-
-		return cv;
-		 */
 	}
 
-	//검증 로직(상세)
 	private Reports validate(DocumentValidator documentValidator, ValidationForm validationForm) {
 		Reports reports = null;
 

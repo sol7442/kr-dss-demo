@@ -50,7 +50,6 @@ public class SignDocumentRequest {
     public SignDocumentRequest() {
     }
 
-
     // getters and setters
     public String  getDocumentBase64() { return documentBase64; }
     public void setDocumentBase64(String documentBase64) { this.documentBase64 = documentBase64; }

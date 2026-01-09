@@ -33,11 +33,9 @@ public class SignatureFormMapper {
 //                documentBytes                          // 파일 데이터
 //        );
 
-
         form.setFileName(request.getFileName());
         form.setContentType(contentType);
         form.setDocumentBytes(documentBytes);
-
 
         // 3. 나머지 필드 매핑
         form.setSigningDate(new Date());

@@ -350,8 +350,6 @@ public class SigningService {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private void fillParameters(AbstractSignatureParameters parameters, AbstractSignatureForm form) {
-
-
 //        if (form.getContentTimestamp() != null) {
 //            parameters.setContentTimestamps(
 //                    Collections.singletonList(WebAppUtils.toTimestampToken(form.getContentTimestamp())));
@@ -376,7 +374,7 @@ public class SigningService {
             //-------------------------------------------------
             CertificateToken rootCertificate = certificateVerifier.getTrustedCertSources().getBySubject(issuerCertificate.getIssuer()).iterator().next();
             parameters.setCertificateChain(rootCertificate, issuerCertificate, signingCertificate);
-//            parameters.setCertificateChain(issuerCertificate); //2025.11.13_sujin : keep original(기존꺼)
+//            parameters.setCertificateChain(issuerCertificate);
             //-------------------------------------------------
             signingCertificate.isSignedBy(issuerCertificate);
         }
@@ -420,14 +418,12 @@ public class SigningService {
         try {
         	MultipartFile file  = WebAppUtils.toMultipartFile("signatureMultipleDocumentsForm",form.getFileName(),form.getContenttype(),form.getDocumentBytes());
         	form.setDocumentToSign(file);
-        	
+
             DocumentSignatureService service = getSignatureService(form.getContainerType(), form.getSignatureForm(), form.isSignWithExpiredCertificate());
             AbstractSignatureParameters parameters = fillParameters(form);
 
             CertificateToken signingCertificate = parameters.getSigningCertificate();
-
             //---------------------------------------------------
-            //2025.11.12_sujin : add log
             List<CertificateToken> chain = parameters.getCertificateChain();
             form.setCertificate(signingCertificate.getEncoded());
 
@@ -441,7 +437,7 @@ public class SigningService {
                     })
                     .toList();
             form.setCertificateChain(chainBytes);
-            LOG.info("form.getCertificateChain : {}", form.getCertificateChain());
+//            LOG.info("form.getCertificateChain : {}", form.getCertificateChain());
             //---------------------------------------------------
             form.setEncryptionAlgorithm(EncryptionAlgorithm.forName(signingCertificate.getPublicKey().getAlgorithm()));
             form.setSigningDate(new Date());

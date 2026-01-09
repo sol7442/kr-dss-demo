@@ -1,8 +1,6 @@
 package kr.dss.demo.controller;
 
-import eu.europa.esig.dss.enumerations.MimeType;
 import eu.europa.esig.dss.model.DSSDocument;
-import eu.europa.esig.dss.model.InMemoryDocument;
 import eu.europa.esig.dss.spi.DSSUtils;
 import eu.europa.esig.dss.utils.Utils;
 import jakarta.validation.Valid;
@@ -18,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.ByteArrayInputStream;
 import java.util.Base64;
 
 
@@ -48,7 +45,7 @@ public class SignatureController extends AbstractSignatureController{
         try {
 
             SignatureDocumentForm form = SignatureFormMapper.toSignatureDocumentForm(signDocumentRequest);
-
+            LOG.info("sigForm : "+ form.getSignatureLevel());
 
             DSSDocument document = signingService.signDocument(form);
             String base64Document  = Base64.getEncoder().encodeToString(DSSUtils.toByteArray(document));

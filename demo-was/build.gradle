@@ -33,7 +33,6 @@ dependencies {
     testImplementation "org.testcontainers:junit-jupiter"
     testImplementation "org.testcontainers:mysql"
 
-
     // DSS 라이브러리들
     implementation libs.eu.europa.ec.joinup.sd.dss.dss.service
     implementation libs.eu.europa.ec.joinup.sd.dss.dss.tsl.validation
